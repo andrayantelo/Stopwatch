@@ -33,3 +33,10 @@ class stopwatch(object):
             the time to be converted in seconds
         """
         
+        time.strftime("%H:%M:%S", time.localtime())
+        output = "%02d:%02d:%02d" % (minute, sec, millisec)
+        return output
+        
+mytimer = stopwatch()
+start_time = time.localtime()
+print mytimer.format_time(start_time) 
