@@ -8,35 +8,40 @@ import string
 import re
 import tkFont
 
-class stopwatch(object):
+class Stopwatch(object):
     
     def __init__(self):
         """ Create a stopwatch timer
         Parameters:"""
         
+        pass
         
+    def __repr__(self):
+        return 'stopwatch(%s,%s)' % ()
         
     def start_timer(self):
         """Starts the timer."""
+        
         self.start_time = time.time()
         return
     
     def stop_timer(self):
-        """ Stops the timer."""
-        return
+        """ Stops the timer. Returns time elapsed."""
+        
+        self.stop_time = time.time()
+        
+        return self.stop_time - self.start_time
 
     def format_time(self, clock_time):
-        """ Convert time in seconds to a minute:second:millisecond format.
+        """ Convert time in seconds to a minute:second format.
         
         Parameters:
         clock_time: int
             the time to be converted in seconds
         """
-        
-        time.strftime("%H:%M:%S", time.localtime())
-        output = "%02d:%02d:%02d" % (minute, sec, millisec)
+        minutes, sec = divmod(clock_time, 60)
+        output = "%02d:%02d" % (minutes, sec)
         return output
         
-mytimer = stopwatch()
-start_time = time.localtime()
-print mytimer.format_time(start_time) 
+mytimer = Stopwatch()
+ 
