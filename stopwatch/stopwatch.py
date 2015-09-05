@@ -17,7 +17,7 @@ class Stopwatch(object):
         pass
         
     def __repr__(self):
-        return 'stopwatch(%s,%s)' % ()
+        return 'stopwatch()'
         
     def _start_timer(self, start_time):
         """Starts the timer."""
