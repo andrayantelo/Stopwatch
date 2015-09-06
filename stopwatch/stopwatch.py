@@ -14,15 +14,16 @@ class Stopwatch(object):
         """ Create a stopwatch timer
         Parameters:"""
         
-        pass
+        self.pause_state = False
+        self.time_of_pause = 0
         
     def __repr__(self):
         return 'stopwatch()'
         
-    def _start_timer(self, start_time):
+    def _start_timer(self):
         """Starts the timer."""
         
-        self.start_time = start_time
+        self.start_time = time.time()
         return
     
     def _stop_timer(self):
@@ -61,9 +62,14 @@ class Stopwatch(object):
     def pause(self):
         """ Pauses the stopwatch."""
         
-        time_of_pause = self.elapsed()
-        mytimer._stop_timer()
-        return time_of_pause
+        if not self.pause_state:
+            self.time_of_pause = time.time()
+            self.pause_state = True
+        if self.pause_state:
+            pause_duration = time.time() - self.time_of_pause
+            self.start_time = self.start_time + pause_duration
+            self.pause_state = False
+            
         
 
         
