@@ -23,16 +23,16 @@ class Stopwatch(object):
     
     def _stop_timer(self):
         """ Stops the timer. Returns time of stop."""
-        
-        
-        return self.stop_time - self.start_time
+        self.stop_time = time.time()
+        return self.stop_time
 
-    def format_time(self, clock_time):
-        """ Convert time in seconds to a minute:second:millisecond format.
+    def convert_time(self, clock_time):
+        """ Returns a tuple containing the minutes and seconds of a time given 
+        in seconds.
         
         Parameters:
         clock_time: int
-            the time to be converted in seconds
+            the time, in seconds, to be converted.
         """
         
         
@@ -42,6 +42,15 @@ class Stopwatch(object):
         minutes, sec = divmod(clock_time, 60)
         output = (minutes, sec)
         return output
+        
+    def format_time(self, clock_tuple):
+        """ Returns a string of the time in a 'minutes:seconds' format.
+        
+        Parameters:
+        clock_tuple: int
+            tuple containing (minutes, seconds).
+        """
+        formatted_time = "%02d:%02d" %(clock_tuple[0], clock_tuple[1])
         
     def elapsed(self):
         """ Returns the formatted time that has elapsed.

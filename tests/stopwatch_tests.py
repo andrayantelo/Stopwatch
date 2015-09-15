@@ -31,7 +31,11 @@ class TestStopwatch(unittest.TestCase):
         stop = mytimer._stop_timer()
         time_diff = stop - start
         epsilon = 0.1
-        assert_equal(time_diff < epsilon, True)
+        assert_equal(time_diff - 1 < epsilon, True)
+        
+    def test_convert_time(self):
+        pass
+        
         
 
 
