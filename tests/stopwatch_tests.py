@@ -1,25 +1,31 @@
 from nose.tools import *
 from stopwatch.stopwatch import *
-from datetime import timedelta
+import unittest
 
-
-def test_repr():
-    mytimer = Stopwatch()
-    assert_equal(mytimer.__repr__(), "Stopwatch()")
+class TestStopwatch(unittest.TestCase):
     
-def test_init():
-    mytimer = Stopwatch()
-    assert_equal(mytimer.pause_state , False)
-    assert_equal(mytimer.time_of_pause, 0)
-    assert_equal(mytimer.stop_time, 0)
-    assert_equal(mytimer.pause_duration, 0)
-    assert_equal(mytimer.elapsed_time, 0)
+    def setUp(self):
+        self.mytimer = Stopwatch()
     
-def test_start_timer():
-    mytimer = Stopwatch()
-    then = mytimer._start_timer()
-    now = time.time()
-    tdelta = now - then
-    return tdelta
+    def test_repr(self):
+        assert_equal(self.mytimer.__repr__(), "Stopwatch()")
+    
+    def test_init(self):
+        mytimer = self.mytimer
+        assert_equal(mytimer.pause_state , False)
+        assert_equal(mytimer.time_of_pause, 0)
+        assert_equal(mytimer.stop_time, 0)
+        assert_equal(mytimer.pause_duration, 0)
+        assert_equal(mytimer.elapsed_time, 0)
+        
+    def test_start_timer(self):
+        then = self.mytimer._start_timer()
+        time.sleep(1)
+        now = time.time()
+        time_diff = now - then
+        assert_equal(round(time_diff, 2), 1)
+        
+    def test_stop_timer(self):
+        pass
 
 
