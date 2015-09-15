@@ -1,12 +1,4 @@
 import time
-import subprocess
-import sys
-import Tkinter as tk
-import pygame
-from functools import partial
-import string
-import re
-import tkFont
 
 class Stopwatch(object):
     
@@ -21,13 +13,13 @@ class Stopwatch(object):
         self.elapsed_time = 0
         
     def __repr__(self):
-        return 'stopwatch()'
+        return 'Stopwatch()'
         
     def _start_timer(self):
         """Starts the timer."""
         
         self.start_time = time.time()
-        return
+        return self.start_time
     
     def _stop_timer(self):
         """ Stops the timer. Returns time elapsed."""
