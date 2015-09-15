@@ -26,6 +26,12 @@ class TestStopwatch(unittest.TestCase):
         assert_equal(round(time_diff, 2), 1)
         
     def test_stop_timer(self):
-        pass
+        start = mytimer._start_timer()
+        time.sleep(1)
+        stop = mytimer._stop_timer()
+        time_diff = stop - start
+        epsilon = 0.1
+        assert_equal(time_diff < epsilon, True)
+        
 
 

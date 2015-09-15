@@ -22,10 +22,8 @@ class Stopwatch(object):
         return self.start_time
     
     def _stop_timer(self):
-        """ Stops the timer. Returns time elapsed."""
-        print("pause duration")
-        print self.format_time(self.pause_duration)
-        self.stop_time = time.time() - self.pause_duration
+        """ Stops the timer. Returns time of stop."""
+        
         
         return self.stop_time - self.start_time
 
@@ -42,13 +40,16 @@ class Stopwatch(object):
         #milliseconds = clock_time - int(clock_time)  #does not work
         #print milliseconds
         minutes, sec = divmod(clock_time, 60)
-        output = "%02d:%02d" % (minutes, sec)
+        output = (minutes, sec)
         return output
         
     def elapsed(self):
         """ Returns the formatted time that has elapsed.
         """
-        return time.time() - self.start_time
+        print("pause duration")
+        print self.pause_duration
+        self.elapsed_time = time.time() - self.pause_duration
+        return self.elapsed_time - self.start_time
         
     def reset(self):
         """ Resets the start time to 0. """
