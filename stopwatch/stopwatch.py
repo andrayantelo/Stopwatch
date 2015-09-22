@@ -1,5 +1,4 @@
 import time
-from Tkinter import *
 
 class Stopwatch(object):
     
@@ -16,12 +15,13 @@ class Stopwatch(object):
         
     def start_timer(self):
         """Starts the timer."""
-        
+        print("timer started")
         self._start_time = time.time()
         return 
     
     def stop_timer(self):
         """ Stops the timer. Returns time of stop."""
+        print("timer stopped")
         self._stop_time = time.time()
         self.elapsed_time += (self._stop_time - self._start_time)
         return self.elapsed_time
@@ -59,11 +59,12 @@ class Stopwatch(object):
         """ Returns the time that has elapsed between starting the timer
             and stopping it.
         """
-        
+        print("time elapsed")
         return self._stop_time - self._start_time
         
     def reset(self):
         """ Resets the start time to 0. """
+        print("timer reset")
         self._start_time = time.time()
         return self._start_time
         
