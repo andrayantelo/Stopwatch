@@ -13,15 +13,13 @@ class TestStopwatch(unittest.TestCase):
     
     def test_init(self):
         mytimer = self.mytimer
-        assert_equal(mytimer.pause_state , False)
-        assert_equal(mytimer.time_of_pause, 0)
         assert_equal(mytimer._stop_time, 0)
-        assert_equal(mytimer.pause_duration, 0)
         assert_equal(mytimer.elapsed_time, 0)
         assert_equal(mytimer._start_time, 0)
         
     def test_start_timer(self):
         then = self.mytimer.start_timer()
+        then = self.mytimer._start_time
         now = time.time()
         time_diff = now - then
         assert_true(abs(time_diff < self.epsilon))
@@ -41,8 +39,6 @@ class TestStopwatch(unittest.TestCase):
         mytimer.format_time(time_min_sec)
         assert_equal(mytimer.format_time(time_min_sec), "55:45")
         
-    def test_pause(self):
-        assert_equal(mytimer.pause_state, False)
         
         
         
