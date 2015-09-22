@@ -27,7 +27,7 @@ class TestStopwatch(unittest.TestCase):
     def test_stop_timer(self):
         start = mytimer.start_timer()
         stop = mytimer.stop_timer()
-        assert_true(mytimer.elapsed_time < self.epsilon)
+        assert_true(mytimer._stop_time - mytimer._start_time < self.epsilon)
         
     def test_convert_time(self):
         time_diff = 5410.002 #seconds
@@ -39,7 +39,11 @@ class TestStopwatch(unittest.TestCase):
         mytimer.format_time(time_min_sec)
         assert_equal(mytimer.format_time(time_min_sec), "55:45")
         
-        
+    def test_elapsed(self):
+        mytimer.start_timer()
+        time.sleep(1)
+        mytimer.stop_timer()
+        assert_equal(mytimer.elapsed() <= 1 + self.epsilon, True)
         
         
         
