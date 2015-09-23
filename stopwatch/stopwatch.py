@@ -23,8 +23,8 @@ class Stopwatch(object):
         """ Stops the timer. Returns time of stop."""
         print("timer stopped")
         self._stop_time = time.time()
-        self.elapsed_time += (self._stop_time - self._start_time)
-        return self.elapsed_time
+        
+        return
 
     def convert_time(self, clock_time):
         """ Returns a tuple containing the hours, minutes, seconds and
@@ -60,7 +60,8 @@ class Stopwatch(object):
             and stopping it.
         """
         print("time elapsed")
-        return self._stop_time - self._start_time
+        self.elapsed_time += (self._stop_time - self._start_time)
+        return self.elapsed_time
         
     def reset(self):
         """ Resets the start time to 0. """
