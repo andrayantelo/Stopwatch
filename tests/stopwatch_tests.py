@@ -45,6 +45,14 @@ class TestStopwatch(unittest.TestCase):
         mytimer.stop_timer()
         assert_equal(mytimer.elapsed() <= 1 + self.epsilon, True)
         
+    def test_reset(self):
+        mytimer.start_timer()
+        mytimer.stop_timer()
+        mytimer.reset()
+        assert_equal(mytimer._start_time, 0)
+        assert_equal(mytimer._stop_time, 0)
+        assert_equal(mytimer.elapsed_time, 0)
+        
         
         
 
