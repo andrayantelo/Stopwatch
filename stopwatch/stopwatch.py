@@ -66,8 +66,10 @@ class Stopwatch(object):
     def reset(self):
         """ Resets the start time to 0. """
         print("timer reset")
-        self._start_time = time.time()
-        return self._start_time
+        self._start_time = 0
+        self._stop_time = 0
+        self.elapsed_time = 0
+        return 
         
 
         
