@@ -52,15 +52,14 @@ class Stopwatch(object):
         clock_tuple: int
             tuple containing (minutes, seconds).
         """
-        formatted_time = "%02d:%02d" %(clock_tuple[0], clock_tuple[1])
+        formatted_time = "%02d:%02d:%02d" %(clock_tuple[0], clock_tuple[1], clock_tuple[2])
         return formatted_time
         
     def elapsed(self):
         """ Returns the time that has elapsed between starting the timer
             and stopping it.
         """
-        print("time elapsed")
-        self.elapsed_time += (self._stop_time - self._start_time)
+        self.elapsed_time = (time.time() - self._start_time)
         return self.elapsed_time
         
     def reset(self):
