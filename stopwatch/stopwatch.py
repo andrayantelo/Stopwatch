@@ -53,7 +53,7 @@ class Stopwatch(object):
             tuple containing (minutes, seconds).
         """
         formatted_time = "%02d:%02d:%02d" %(clock_tuple[0], clock_tuple[1], clock_tuple[2])
-        formatted_milliseconds = "%03d" %(clock_tuple)[3]
+        formatted_milliseconds = "%03d" %clock_tuple[3]
         return (formatted_time, formatted_milliseconds)
         
     def elapsed(self):

@@ -16,10 +16,10 @@ class App():
         self.label = Label(textvariable=self.textvar, font=("Arial",16)).grid(row=1,column=1)
         #self.label.pack()
         
-        self.milli_text = StringVar()
-        self.milli = "000"
-        self.milli_text.set(self.milli)
-        self.milliseconds = Label(textvariable=self.milli_text, font=("Arial",8)).grid(row=1, column=2)
+        self.small_text = StringVar()
+        self.small_output = "000"
+        self.small_text.set(self.small_output)
+        self.small_label = Label(textvariable=self.small_text, font=("Arial",8)).grid(row=3, column=2)
         #self.milliseconds.pack()
         
         frame = Frame(self.root)
@@ -40,12 +40,21 @@ class App():
         
     def print_elapsed(self):
         if self.on_state == True: 
-            self.output = mytimer.format_time(mytimer.convert_time(mytimer.elapsed()))
-            self.output = self.output[0]
+            self.time_elapsed = mytimer.format_time(mytimer.convert_time(mytimer.elapsed()))
+            
+            self.output = self.time_elapsed[0]
             self.textvar.set(self.output)
-            self.root.after(60, self.print_elapsed)
+            
+            self.small_output = self.time_elapsed[1]
+
+            self.small_text.set(self.small_output)
+            
+            
+            self.root.after(50, self.print_elapsed)
+            
         elif self.on_state == False:
             self.textvar.set(self.output)
+            self.small_text.set(self.small_output)
         
     def start(self):
         mytimer.start_timer()
