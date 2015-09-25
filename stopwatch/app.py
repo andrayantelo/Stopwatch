@@ -13,29 +13,24 @@ class App():
         self.textvar = StringVar()
         self.output = "00:00:00"
         self.textvar.set(self.output)
-        self.label = Label(textvariable=self.textvar, font=("Arial",16)).grid(row=1,column=1)
-        #self.label.pack()
+        self.label = Label(textvariable=self.textvar, font=("Arial",16)).grid(row=0, column=0)
+        #self.label.pack(side="left")
         
         self.small_text = StringVar()
         self.small_output = "000"
         self.small_text.set(self.small_output)
-        self.small_label = Label(textvariable=self.small_text, font=("Arial",8)).grid(row=3, column=2)
-        #self.milliseconds.pack()
+        self.small_label = Label(textvariable=self.small_text, width=5, font=("Arial",8)).grid(row=0, column=0, sticky="e")
+        #self.small_label.pack(side="left")
         
         frame = Frame(self.root)
-        frame.grid(row=2)
+        frame.grid()
         
-        self.start_button = Button(frame, text="START", fg="green", command=self.start)
-        self.start_button.grid(row=2, column=1)
-        self.stop_button = Button(frame, text="STOP", fg="red", command=self.stop)
-        self.stop_button.grid(row=2, column=2)
-        self.reset_button = Button(frame, text="RESET", fg="yellow", command=self.reset)
-        self.reset_button.grid(row=2, column=3)
-        
-        self.display_button = Button(frame, text="display", fg="blue", command=self.print_elapsed)
-        self.display_button.grid(row=2, column=4)
-        
-        
+        self.start_button = Button(frame, text="START", fg="green", command=self.start).grid(row=1, column=0)
+        #self.start_button.pack(side="left")
+        self.stop_button = Button(frame, text="STOP", fg="red", command=self.stop).grid(row=1, column=1)
+        #self.stop_button.pack(side="left")
+        self.reset_button = Button(frame, text="RESET", fg="yellow", command=self.reset).grid(row=1, column=2)
+        #self.reset_button.pack(side="left")
         
         
     def print_elapsed(self):
@@ -43,10 +38,8 @@ class App():
             self.time_elapsed = mytimer.format_time(mytimer.convert_time(mytimer.elapsed()))
             
             self.output = self.time_elapsed[0]
-            self.textvar.set(self.output)
-            
             self.small_output = self.time_elapsed[1]
-
+            self.textvar.set(self.output)
             self.small_text.set(self.small_output)
             
             
