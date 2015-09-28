@@ -16,13 +16,13 @@ class Stopwatch(object):
     def start_timer(self):
         """Starts the timer."""
         print("timer started")
-        self._start_time = time.time()
+        self._start_time = time.time() - self.elapsed_time
         return 
     
     def stop_timer(self):
         """ Stops the timer. Returns time of stop."""
         print("timer stopped")
-        self._stop_time = time.time()
+        self._stop_time =  time.time()
         
         return
 
@@ -46,11 +46,11 @@ class Stopwatch(object):
         return output
         
     def format_time(self, clock_tuple):
-        """ Returns a string of the time in a 'minutes:seconds' format.
+        """ Returns tuple of the time in a (('hour:minutes:seconds'), 'milliseconds') format.
         
         Parameters:
         clock_tuple: int
-            tuple containing (minutes, seconds).
+            tuple containing (hours, minutes, sec, milliseconds).
         """
         formatted_time = "%02d:%02d:%02d" %(clock_tuple[0], clock_tuple[1], clock_tuple[2])
         formatted_milliseconds = "%03d" %clock_tuple[3]

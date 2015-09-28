@@ -14,25 +14,19 @@ class App():
         self.output = "00:00:00"
         self.textvar.set(self.output)
         self.label = Label(textvariable=self.textvar, font=("Arial",16)).grid(row=0, column=0)
-        #self.label.pack(side="left")
         
         self.small_text = StringVar()
         self.small_output = "000"
         self.small_text.set(self.small_output)
         self.small_label = Label(textvariable=self.small_text, width=5, font=("Arial",8)).grid(row=0, column=0, sticky="e")
-        #self.small_label.pack(side="left")
-        
+      
         frame = Frame(self.root)
         frame.grid()
         
         self.start_button = Button(frame, text="START", fg="green", command=self.start).grid(row=1, column=0)
-        #self.start_button.pack(side="left")
         self.stop_button = Button(frame, text="STOP", fg="red", command=self.stop).grid(row=1, column=1)
-        #self.stop_button.pack(side="left")
         self.reset_button = Button(frame, text="RESET", fg="yellow", command=self.reset).grid(row=1, column=2)
-        #self.reset_button.pack(side="left")
-        
-        
+
     def print_elapsed(self):
         if self.on_state == True: 
             self.time_elapsed = mytimer.format_time(mytimer.convert_time(mytimer.elapsed()))
@@ -56,11 +50,14 @@ class App():
         
     def stop(self):
         self.on_state = False
+        print mytimer._start_time
         self.print_elapsed()
         
     def reset(self):
+        mytimer.reset()
         self.on_state = False
         self.output = "00:00:00"
+        self.small_output = "000"
         self.print_elapsed()
         
         

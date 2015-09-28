@@ -35,9 +35,9 @@ class TestStopwatch(unittest.TestCase):
         assert_equal(time_diff, (1.0, 30.0, 10.0, 2.0 ))
         
     def test_format_time(self):
-        time_min_sec = (55, 45)
+        time_min_sec = (0, 55, 45, 0)
         mytimer.format_time(time_min_sec)
-        assert_equal(mytimer.format_time(time_min_sec), "55:45")
+        assert_equal(mytimer.format_time(time_min_sec), ("00:55:45", "000"))
         
     def test_elapsed(self):
         mytimer.start_timer()
