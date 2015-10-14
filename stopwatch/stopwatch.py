@@ -72,7 +72,6 @@ class Stopwatch(object):
         return 
         
 
-        
-        
-mytimer = Stopwatch()
+if __name__ == "__main__":
+    mytimer = Stopwatch()
  

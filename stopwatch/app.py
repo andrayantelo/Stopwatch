@@ -2,7 +2,7 @@ from Tkinter import *
 from stopwatch import *
 
 
-class App():
+class App(object):
     def __init__(self):
         
         self.root = Tk()
@@ -20,12 +20,12 @@ class App():
         self.small_text.set(self.small_output)
         self.small_label = Label(textvariable=self.small_text, width=5, font=("Arial",8)).grid(row=0, column=0, sticky="e")
       
-        frame = Frame(self.root)
+        self.frame = frame = Frame(self.root)
         frame.grid()
         
         self.start_button = Button(frame, text="START", fg="green", command=self.start).grid(row=1, column=0)
         self.stop_button = Button(frame, text="STOP", fg="red", command=self.stop).grid(row=1, column=1)
-        self.reset_button = Button(frame, text="RESET", fg="yellow", command=self.reset).grid(row=1, column=2)
+        self.reset_button = Button(frame, text="RESET", fg="orange", command=self.reset).grid(row=1, column=2)
 
     def print_elapsed(self):
         if self.on_state == True: 
@@ -62,7 +62,3 @@ class App():
         
         
     
-app = App()
-
-app.root.mainloop()
-app.root.destroy()
