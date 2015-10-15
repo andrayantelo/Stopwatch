@@ -16,7 +16,7 @@ class Stopwatch(object):
     def start_timer(self):
         """Starts the timer."""
         print("timer started")
-        self._start_time = time.time() - self.elapsed_time
+        self._start_time = time.time() 
         return 
     
     def stop_timer(self):
@@ -60,7 +60,9 @@ class Stopwatch(object):
         """ Returns the time that has elapsed between starting the timer
             and stopping it.
         """
-        self.elapsed_time = (time.time() - self._start_time)
+        
+        self.elapsed_time += (self._stop_time - self._start_time)
+        self.start_timer()
         return self.elapsed_time
         
     def reset(self):
@@ -72,6 +74,5 @@ class Stopwatch(object):
         return 
         
 
-if __name__ == "__main__":
-    mytimer = Stopwatch()
+mytimer = Stopwatch()
  

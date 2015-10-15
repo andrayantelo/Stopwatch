@@ -30,7 +30,7 @@ class App(object):
     def print_elapsed(self):
         if self.on_state == True: 
             self.time_elapsed = mytimer.format_time(mytimer.convert_time(mytimer.elapsed()))
-            
+            print self.time_elapsed
             self.output = self.time_elapsed[0]
             self.small_output = self.time_elapsed[1]
             self.textvar.set(self.output)
@@ -49,8 +49,8 @@ class App(object):
         self.print_elapsed()
         
     def stop(self):
+        #mytimer.stop_timer()
         self.on_state = False
-        print mytimer._start_time
         self.print_elapsed()
         
     def reset(self):
@@ -60,5 +60,15 @@ class App(object):
         self.small_output = "000"
         self.print_elapsed()
         
-        
+   
+def main():
+    """Run main."""
+    
+    a = App()
+    a.root.mainloop()
+
+    return 0
+
+if __name__ == '__main__':
+    main()
     
