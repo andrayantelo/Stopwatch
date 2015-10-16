@@ -2,6 +2,7 @@ from nose.tools import *
 from stopwatch.stopwatch import *
 import unittest
 
+
 class TestStopwatch(unittest.TestCase):
     
     def setUp(self):
@@ -40,10 +41,8 @@ class TestStopwatch(unittest.TestCase):
         assert_equal(mytimer.format_time(time_min_sec), ("00:55:45", "000"))
         
     def test_elapsed(self):
-        mytimer.start_timer()
-        time.sleep(1)
-        mytimer.stop_timer()
-        assert_equal(mytimer.elapsed() <= 1 + self.epsilon, True)
+        fake_time = make_fake_time_function(0,5)
+        pass
         
     def test_reset(self):
         mytimer.start_timer()

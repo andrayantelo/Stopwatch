@@ -1,14 +1,24 @@
 import time
+from timeit import default_timer as real_time
+
+
+
+def make_fake_time_function(test_numbers):
+    nums = iter(test_numbers)
+    def fake_time():
+        return nums.next()
+    return fake_time
 
 class Stopwatch(object):
     
-    def __init__(self):
+    def __init__(self, timer_func):
         """ Create a stopwatch timer
         Parameters:"""
         
         self._stop_time = 0
         self._start_time = 0
         self.elapsed_time = 0
+        self._now = timer_func
         
     def __repr__(self):
         return 'Stopwatch()'
@@ -16,13 +26,13 @@ class Stopwatch(object):
     def start_timer(self):
         """Starts the timer."""
         print("timer started")
-        self._start_time = time.time() 
+        self._start_time = self._now() 
         return 
     
     def stop_timer(self):
         """ Stops the timer. Returns time of stop."""
         print("timer stopped")
-        self._stop_time =  time.time()
+        self._stop_time =  self._now()
         
         return
 
@@ -61,6 +71,7 @@ class Stopwatch(object):
             and stopping it.
         """
         
+        
         self.elapsed_time += (self._stop_time - self._start_time)
         self.start_timer()
         return self.elapsed_time
@@ -74,5 +85,5 @@ class Stopwatch(object):
         return 
         
 
-mytimer = Stopwatch()
+mytimer = Stopwatch(real_time)
  
