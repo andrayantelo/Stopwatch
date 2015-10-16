@@ -6,7 +6,7 @@ import unittest
 class TestStopwatch(unittest.TestCase):
     
     def setUp(self):
-        self.mytimer = Stopwatch()
+        self.mytimer = Stopwatch(real_time)
         self.epsilon = 0.1
     
     def test_repr(self):
@@ -41,8 +41,15 @@ class TestStopwatch(unittest.TestCase):
         assert_equal(mytimer.format_time(time_min_sec), ("00:55:45", "000"))
         
     def test_elapsed(self):
-        fake_time = make_fake_time_function(0,5)
-        pass
+        #test_timer = Stopwatch(time.time)
+        #mytimer.start_timer()
+        #mytimer.stop_timer()
+        #assert_equal(0 <mytimer.elapsed() < self.epsilon, True)
+        #mytimer.reset()
+        mytimer.start_timer()
+        assert_equal(mytimer._start_state, True)
+        assert_equal(0 < mytimer.elapsed() - (time.time() - mytimer._start_time) < self.epsilon, True)
+        
         
     def test_reset(self):
         mytimer.start_timer()
