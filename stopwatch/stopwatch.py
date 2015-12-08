@@ -24,21 +24,21 @@ class Stopwatch(object):
         
     def start_timer(self):
         """Starts the timer."""
-        #print("timer started")
+        print("timer started")
         self._start_time = self._now() 
-        #print "this is the start time %d" %(self._start_time)
+        print "this is the start time {:.6f}".format(self._start_time)
         self._start_state = True
-        #print "this is the elapsed time %d" %(self.elapsed_time)
+        print "this is the elapsed time {:.4f}".format(self.elapsed_time)
         return 
     
     def stop_timer(self):
         """ Stops the timer. Returns time of stop."""
-        #print("timer stopped")
+        print("timer stopped")
         self._stop_time =  self._now()
-        #print "this is the stop time %d" %(self._stop_time)
-        self.elapsed_time = (self._stop_time - self._start_time)
+        print "this is the stop time {:.6f}".format(self._stop_time)
+        
         self._start_state = False
-        #print "this is the elapsed time %d" %(self.elapsed_time)
+        print "this is the elapsed time {:.4f}".format(self.elapsed_time)
         return
 
     def convert_time(self, clock_time):
@@ -53,9 +53,9 @@ class Stopwatch(object):
         clock_time = clock_time
         milliseconds = clock_time * 1000 
         sec, milliseconds = divmod(round(milliseconds,2), 1000)
-        print sec
+        #print sec
         minutes, sec = divmod(round(clock_time,2), 60)
-        print sec
+        #print sec
         hours, minutes = divmod(round(minutes,2), 60)
         output = (hours, minutes, sec, milliseconds)
         return output
@@ -77,7 +77,8 @@ class Stopwatch(object):
         """
         #if it's not running
         if not self._start_state:
-            return self.elapsed_time
+            self.elapsed_time += (self._stop_time - self._start_time)
+            return self.elapsed_time 
             
         # if it's running
         elif self._start_state:

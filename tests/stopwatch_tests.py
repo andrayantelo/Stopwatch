@@ -47,15 +47,19 @@ class TestStopwatch(unittest.TestCase):
         assert_equal(self.mytimer.format_time(time_min_sec), ("00:55:45", "000"))
         
     def test_elapsed(self):
-        #test_timer = Stopwatch(time.time)
-        #mytimer.start_timer()
-        #mytimer.stop_timer()
-        #assert_equal(0 <mytimer.elapsed() < self.epsilon, True)
-        #mytimer.reset()
         self.mytimer.start_timer()
         assert_equal(self.mytimer._start_state, True)
         assert_equal(abs(self.mytimer.elapsed() - (time.time() - self.mytimer._start_time) < self.epsilon), True)
-        mytimer.resert()
+        self.mytimer.reset()
+        self.mytimer.start_timer() 
+        self.mytimer.stop_timer()
+        first_elapsed = self.mytimer.elapsed_time
+        assert_equal(abs(self.mytimer.elapsed() - (time.time() - self.mytimer._start_time) < self.epsilon), True)
+        self.mytimer.start_timer()
+        self.mytimer.stop_timer()
+        second_elapsed = self.mytimer.elapsed_time
+        assert_true(second_elapsed > first_elapsed)
+        
         
         
     def test_reset(self):

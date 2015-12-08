@@ -8,7 +8,7 @@ class App(object):
         self.root = Tk()
         self.root.title("Stopwatch")
         
-        self.on_state = True
+        self.on_state = False
         
         self.textvar = StringVar()
         self.output = "00:00:00"
@@ -26,11 +26,15 @@ class App(object):
         self.start_button = Button(frame, text="START", fg="green", command=self.start).grid(row=1, column=0)
         self.stop_button = Button(frame, text="STOP", fg="red", command=self.stop).grid(row=1, column=1)
         self.reset_button = Button(frame, text="RESET", fg="orange", command=self.reset).grid(row=1, column=2)
+        
+        self.time_elapsed = 0
 
     def print_elapsed(self):
-        if self.on_state == True: 
+        if self.on_state == True:
+            print self.output
+            print self.small_output 
             self.time_elapsed = mytimer.format_time(mytimer.convert_time(mytimer.elapsed()))
-            print self.time_elapsed
+            #print self.time_elapsed
             self.output = self.time_elapsed[0]
             self.small_output = self.time_elapsed[1]
             self.textvar.set(self.output)
@@ -39,7 +43,8 @@ class App(object):
             
             self.root.after(50, self.print_elapsed)
             
-        elif self.on_state == False:
+        else:
+            
             self.textvar.set(self.output)
             self.small_text.set(self.small_output)
         
