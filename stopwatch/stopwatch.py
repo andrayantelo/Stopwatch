@@ -36,7 +36,7 @@ class Stopwatch(object):
         print("timer stopped")
         self._stop_time =  self._now()
         print "this is the stop time {:.6f}".format(self._stop_time)
-        
+        self.elapsed_time += (self._stop_time - self._start_time)
         self._start_state = False
         print "this is the elapsed time {:.4f}".format(self.elapsed_time)
         return
@@ -77,11 +77,11 @@ class Stopwatch(object):
         """
         #if it's not running
         if not self._start_state:
-            self.elapsed_time += (self._stop_time - self._start_time)
+            
             return self.elapsed_time 
             
         # if it's running
-        elif self._start_state:
+        else:
             self.elapsed_time = (self._now() - self._start_time)
             
         #self.start_timer()
