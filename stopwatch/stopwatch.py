@@ -17,6 +17,7 @@ class Stopwatch(object):
         self._start_time = 0
         self._start_state = False
         self.elapsed_time = 0
+        self.increment = 0
         self._now = timer_func
         
     def __repr__(self):
@@ -27,6 +28,7 @@ class Stopwatch(object):
         print("timer started")
         self._start_time = self._now() 
         print "this is the start time {:.6f}".format(self._start_time)
+        
         self._start_state = True
         print "this is the elapsed time {:.4f}".format(self.elapsed_time)
         return 
@@ -37,6 +39,7 @@ class Stopwatch(object):
         self._stop_time =  self._now()
         print "this is the stop time {:.6f}".format(self._stop_time)
         self.elapsed_time += (self._stop_time - self._start_time)
+        self.increment = self._stop_time - self._start_time
         self._start_state = False
         print "this is the elapsed time {:.4f}".format(self.elapsed_time)
         return
@@ -80,10 +83,9 @@ class Stopwatch(object):
             
             return self.elapsed_time 
             
-        # if it's running
+         #if it's running
         else:
-            self.elapsed_time = (self._now() - self._start_time)
-            
+            self.elapsed_time = (self._now() - self._start_time) + self.increment  
         #self.start_timer()
         return self.elapsed_time
         
