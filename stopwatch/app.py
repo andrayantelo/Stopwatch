@@ -48,10 +48,12 @@ class App(object):
         self.on_state = True
         self.print_elapsed()
         
+        
     def stop(self):
-        #mytimer.stop_timer()
+        mytimer.stop_timer()
         self.on_state = False
         self.print_elapsed()
+        
         
     def reset(self):
         mytimer.reset()
