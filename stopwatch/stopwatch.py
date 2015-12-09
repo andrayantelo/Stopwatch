@@ -17,7 +17,6 @@ class Stopwatch(object):
         self._start_time = 0
         self._start_state = False
         self.elapsed_time = 0
-        self.increment = 0
         self._now = timer_func
         
     def __repr__(self):
@@ -25,21 +24,26 @@ class Stopwatch(object):
         
     def start_timer(self):
         """Starts the timer."""
+        if self._start_state:
+            raise RuntimeError('Timer already started')
+            
         print("timer started")
         self._start_time = self._now() 
         print "this is the start time {:.6f}".format(self._start_time)
-        
+    
         self._start_state = True
         print "this is the elapsed time {:.4f}".format(self.elapsed_time)
         return 
     
     def stop_timer(self):
         """ Stops the timer. Returns time of stop."""
+        if not self._start_state:
+            raise RuntimeError('Timer has not been started')
         print("timer stopped")
         self._stop_time =  self._now()
         print "this is the stop time {:.6f}".format(self._stop_time)
-        self.elapsed_time += (self._stop_time - self._start_time)
-        self.increment = self._stop_time - self._start_time
+        #self.elapsed_time = (self._stop_time - self._start_time)
+        self.elapsed_time += self._stop_time - self._start_time
         self._start_state = False
         print "this is the elapsed time {:.4f}".format(self.elapsed_time)
         return
@@ -79,19 +83,21 @@ class Stopwatch(object):
             and stopping it.
         """
         #if it's not running
-        if not self._start_state:
+        #if not self._start_state:
             
-            return self.elapsed_time 
+        #    self.elapsed_time = self._stop_time - self._start_time
+        #    return self.elapsed_time
             
          #if it's running
-        else:
-            self.elapsed_time = (self._now() - self._start_time) + self.increment  
+        if self._start_state:
+            return (self._now() - self._start_time) + self.elapsed_time
         #self.start_timer()
+        #self.elapsed_time += self.increment
         return self.elapsed_time
         
     def reset(self):
         """ Resets the start time to 0. """
-        print("timer reset")
+        #print("timer reset")
         self._start_time = 0
         self._stop_time = 0
         self.elapsed_time = 0

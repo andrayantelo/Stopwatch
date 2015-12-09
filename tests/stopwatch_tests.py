@@ -1,6 +1,7 @@
 from nose.tools import *
 from stopwatch.stopwatch import *
 import unittest
+import time
 
 def make_fake_time_function(test_numbers):
     nums = iter(test_numbers)
@@ -50,15 +51,37 @@ class TestStopwatch(unittest.TestCase):
         self.mytimer.start_timer()
         assert_equal(self.mytimer._start_state, True)
         assert_equal(abs(self.mytimer.elapsed() - (time.time() - self.mytimer._start_time) < self.epsilon), True)
+        
         self.mytimer.reset()
+        
         self.mytimer.start_timer() 
+        time.sleep(1)
         self.mytimer.stop_timer()
-        first_elapsed = self.mytimer.elapsed_time
+        first_elapsed = self.mytimer.elapsed()
         assert_equal(abs(self.mytimer.elapsed() - (time.time() - self.mytimer._start_time) < self.epsilon), True)
         self.mytimer.start_timer()
+        time.sleep(1)
         self.mytimer.stop_timer()
-        second_elapsed = self.mytimer.elapsed_time
+        second_elapsed = self.mytimer.elapsed()
+        print second_elapsed
+        print first_elapsed
         assert_true(second_elapsed > first_elapsed)
+        
+        self.mytimer.reset()
+        
+        self.mytimer.start_timer()
+        self.mytimer.stop_timer()
+        time.sleep(2)
+        self.mytimer.start_timer()
+        self.mytimer.elapsed()
+        time.sleep(2)
+        self.mytimer.elapsed()
+        #print self.mytimer.elapsed()  
+        assert_true(abs(self.mytimer.elapsed() - 2) < self.epsilon)
+    
+        
+        
+        
         
         
         
