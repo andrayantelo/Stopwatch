@@ -6,6 +6,8 @@ def make_fake_time_function(test_numbers):
     def fake_time():
         return nums.next()
     return fake_time
+    
+fake_time = make_fake_time_function(range(10000))
 
 class Stopwatch(object):
     
@@ -105,5 +107,5 @@ class Stopwatch(object):
         return 
         
 
-mytimer = Stopwatch(real_time)
+mytimer = Stopwatch(fake_time)
  
