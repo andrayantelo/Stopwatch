@@ -18,13 +18,12 @@ class TestStopwatch(unittest.TestCase):
         self.mytimer = sw.Stopwatch(self.fake_time)
     
     def test_repr(self):
-        nt.assert_equal(self.mytimer.__repr__(), "Stopwatch()")
+        nt.assert_equal(repr(self.mytimer), "Stopwatch()")
     
     def test_init(self):
         nt.assert_equal(self.mytimer._stop_time, 0)
         nt.assert_equal(self.mytimer.elapsed_time, 0)
-        nt.assert_equal(self.mytimer._start_time, 0)
-        nt.assert_false(self.mytimer._start_state)
+        nt.assert_equal(self.mytimer._start_time, None)
         nt.assert_equal(self.mytimer._now, self.fake_time)
         nt.assert_equal(self.mytimer.elapsed(), 0)
         
@@ -32,15 +31,15 @@ class TestStopwatch(unittest.TestCase):
         self.mytimer.start_timer()
         
         nt.assert_equal(self.mytimer._start_time, 0)
-        nt.assert_true(self.mytimer._start_state)
+        nt.assert_true(self.mytimer._start_time is not None)
         nt.assert_raises(RuntimeError, self.mytimer.start_timer)
         
     def test_stop_timer(self):
-        start = self.mytimer.start_timer()
-        stop = self.mytimer.stop_timer()
+        self.mytimer.start_timer()
+        self.mytimer.stop_timer()
         
-        nt.assert_equal(self.mytimer._stop_time - self.mytimer._start_time, 1)
-        nt.assert_false(self.mytimer._start_state)
+        nt.assert_equal(self.mytimer._stop_time, 1)
+        nt.assert_true(self.mytimer._start_time is None)
         nt.assert_equal(self.mytimer.elapsed(), 1)
         
         self.mytimer.start_timer()
@@ -84,15 +83,17 @@ class TestStopwatch(unittest.TestCase):
         self.mytimer.stop_timer()
         
         nt.assert_equal(self.mytimer.elapsed(), 2)
-        nt.assert_equal(self.mytimer._start_time, 2)
+        nt.assert_equal(self.mytimer._start_time, None)
         nt.assert_equal(self.mytimer._stop_time, 3)
         
         self.mytimer.reset()
         
-        nt.assert_equal(self.mytimer._start_time, 0)
+        nt.assert_equal(self.mytimer._start_time, None)
         nt.assert_equal(self.mytimer._stop_time, 0)
         nt.assert_equal(self.mytimer.elapsed_time, 0)
         
         
-        
+if __name__ == '__main__':
+    unittest.main()
+
 

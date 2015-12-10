@@ -31,15 +31,12 @@ class App(object):
 
     def print_elapsed(self):
         if self.on_state == True:
-            print self.output
-            print self.small_output 
+    
             self.time_elapsed = mytimer.format_time(mytimer.convert_time(mytimer.elapsed()))
-            #print self.time_elapsed
             self.output = self.time_elapsed[0]
             self.small_output = self.time_elapsed[1]
             self.textvar.set(self.output)
             self.small_text.set(self.small_output)
-            
             
             self.root.after(50, self.print_elapsed)
             
