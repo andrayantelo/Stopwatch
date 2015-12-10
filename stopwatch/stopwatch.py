@@ -84,17 +84,11 @@ class Stopwatch(object):
         """ Returns the time that has elapsed between starting the timer
             and stopping it.
         """
-        #if it's not running
-        #if not self._start_state:
-            
-        #    self.elapsed_time = self._stop_time - self._start_time
-        #    return self.elapsed_time
-            
-         #if it's running
+        
+        #if it's running
         if self._start_state:
             return (self._now() - self._start_time) + self.elapsed_time
-        #self.start_timer()
-        #self.elapsed_time += self.increment
+        
         return self.elapsed_time
         
     def reset(self):
