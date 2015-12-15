@@ -102,21 +102,12 @@ class Stopwatch(object):
         self.start_timer()
         return self
         
-    def __exit__(self):
+    def __exit__(self, *args):
         self.stop_timer()
         
         
 mytimer = Stopwatch(real_time)
  
 
-def countdown(n):
-    while n > 0:
-        print n
-        time.sleep(1)
-        n -= 1
-    print "Countdown's up!"
-        
-with mytimer
-    countdown(5)
-print(mytimer.elapsed())
-
+if __name__ == '__main__':
+    mytimer = Stopwatch(real_time)
