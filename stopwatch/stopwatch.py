@@ -98,16 +98,25 @@ class Stopwatch(object):
     def running(self):
         return self._start_time is not None
         
-
-t = Stopwatch(real_time)
+    def __enter__(self):
+        self.start_timer()
+        return self
+        
+    def __exit__(self):
+        self.stop_timer()
+        
+        
+mytimer = Stopwatch(real_time)
  
 
 def countdown(n):
     while n > 0:
+        print n
         time.sleep(1)
         n -= 1
+    print "Countdown's up!"
         
-t.start_timer()
-countdown(5)
-t.stop_timer()
-print(t.elapsed())
+with mytimer
+    countdown(5)
+print(mytimer.elapsed())
+
