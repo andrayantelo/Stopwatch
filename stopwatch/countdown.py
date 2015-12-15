@@ -1,18 +1,17 @@
 import stopwatch as st
 import time
 
-"""
-def countdown(n):
-    while n > 0:
-        print n
-        time.sleep(1)
-        n -= 1
-    print "Countdown's up!"
-        
-with st.mytimer:
-    countdown(5)
-print(st.mytimer.elapsed())
-"""
+def countdown(duration):
+        """Counts down starting at time.
+        Parameters: 
+            duration: int (in seconds), the time to be counted down from"""
+        start_time = time.time()
+        elapsed = 0
+        while elapsed < duration:
+            print duration - elapsed
+            time.sleep(1)
+            elapsed = time.time() - start_time
+        print "time's up!"
 
 class Countdown(object):
     
@@ -29,6 +28,10 @@ class Countdown(object):
         
     def stop_countdown(self):
         """Stops the countdown timer."""
+        pass
+        
+    def reset_countdown(self):
+        """Resets the countdown timer."""
         pass
         
     def convert_time(self, time):
@@ -48,9 +51,5 @@ class Countdown(object):
         return total
         
         
-    def countdown(self, start_time):
-        """Counts down starting at time.
-        Parameters: 
-            start_time: int, the time to be counted down from"""
-        pass
+ 
         
