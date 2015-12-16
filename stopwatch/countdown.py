@@ -10,7 +10,6 @@ class Countdown(object):
         
         self.timer = st.Stopwatch(st.real_time)
         self.countdown_time = countdown_time
-        self.time_left = self.countdown_time
         
         
     def start_countdown(self):
@@ -24,8 +23,7 @@ class Countdown(object):
     def time_remaining(self):
         """returns the time left in the countdown"""
         
-        self.time_left = self.countdown_time - self.timer.elapsed()
-        return self.time_left
+        return self.countdown_time - self.timer.elapsed()
         
     def reset_countdown(self):
         """Resets the countdown timer."""
@@ -48,9 +46,9 @@ class Countdown(object):
         
 t = Countdown(5)
 with t:
-    while t.time_left > 0:
+    while t.time_remaining() > 0:
         time.sleep(1)
-        print t.time_remaining()
+        #print t.time_remaining()
 print "time's up"
 
  
