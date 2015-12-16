@@ -1,17 +1,6 @@
 import stopwatch as st
 import time
 
-def countdown(duration):
-        """Counts down starting at time.
-        Parameters: 
-            duration: int (in seconds), the time to be counted down from"""
-        start_time = time.time()
-        elapsed = 0
-        while elapsed < duration:
-            print duration - elapsed
-            time.sleep(1)
-            elapsed = time.time() - start_time
-        print "time's up!"
 
 class Countdown(object):
     
