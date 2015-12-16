@@ -16,43 +16,32 @@ def countdown(duration):
 class Countdown(object):
     
     def __init__(self, countdown_time):
-        """Creates a countdown timer."""
+        """Creates a countdown timer.
+        countdown_time: number of seconds"""
+        
         self.timer = st.Stopwatch(st.real_time)
         self.countdown_time = countdown_time
-        self.time_left = 0
-        self._start_state = False
+        self.time_left = self.countdown_time
         
-    def __repr__(self):
-        return 'Countdown()'
         
     def start_countdown(self):
         """Starts the countdown timer."""
         self.timer.start_timer()
-        self._start_state = True
         
     def stop_countdown(self):
         """Stops the countdown timer."""
         self.timer.stop_timer()
-        self._start_state = False
-        self.time_left = self.convert_time(self.countdown_time) - self.timer.elapsed()
         
     def time_remaining(self):
         """returns the time left in the countdown"""
         
-        #if countdown is still running
-        if self._start_state:
-            self.time_left =  self.convert_time(self.countdown_time) - self.timer.elapsed()
-            return self.time_left
-        
-        # if countdown is not running
-        else:
-            return self.time_left
+        self.time_left = self.countdown_time - self.timer.elapsed()
+        return self.time_left
         
     def reset_countdown(self):
         """Resets the countdown timer."""
         self.timer.reset()
         self.time_left = 0
-        self._start_state = False
         
     def input_countdown_time(self, countdown_time):
         """Changes the value of self.countdown_time
@@ -60,25 +49,20 @@ class Countdown(object):
             countdown_time: tuple of length 4, (hh, mm, ss, ms) """
         self.countdown_time = countdown_time
         
-    def convert_time(self, time):
-        """Takes a time given in hh:mm:ss:ms format and returns the number
-        of seconds it corresponds to.
-        Parameters:
-            time: tuple format (hh, mm, ss, ms) 
-        """
-        if len(time) != 4:
-            raise RuntimeError("time tuple is not of length 4")
-        hours = time[0]*3600
-        minutes = time[1]*60
-        sec = time[2]
-        millisec = time[3]*.001
+    def __enter__(self):
+        self.start_countdown()
+        return self
         
-        total = hours + minutes + sec + millisec
-        return total
+    def __exit__(self, *args):
+        self.stop_countdown()
         
         
-t = Countdown((00, 00, 15, 00))
-while t.time_left > 0:
-    pass
+t = Countdown(5)
+with t:
+    while t.time_left > 0:
+        time.sleep(1)
+        print t.time_remaining()
+print "time's up"
+
  
         
