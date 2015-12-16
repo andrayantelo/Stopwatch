@@ -15,24 +15,50 @@ def countdown(duration):
 
 class Countdown(object):
     
-    def __init__(self):
+    def __init__(self, countdown_time):
         """Creates a countdown timer."""
         self.timer = st.Stopwatch(st.real_time)
+        self.countdown_time = countdown_time
+        self.time_left = 0
+        self._start_state = False
         
     def __repr__(self):
         return 'Countdown()'
         
     def start_countdown(self):
         """Starts the countdown timer."""
-        pass
+        self.timer.start_timer()
+        self._start_state = True
         
     def stop_countdown(self):
         """Stops the countdown timer."""
-        pass
+        self.timer.stop_timer()
+        self._start_state = False
+        self.time_left = self.convert_time(self.countdown_time) - self.timer.elapsed()
+        
+    def time_remaining(self):
+        """returns the time left in the countdown"""
+        
+        #if countdown is still running
+        if self._start_state:
+            self.time_left =  self.convert_time(self.countdown_time) - self.timer.elapsed()
+            return self.time_left
+        
+        # if countdown is not running
+        else:
+            return self.time_left
         
     def reset_countdown(self):
         """Resets the countdown timer."""
-        pass
+        self.timer.reset()
+        self.time_left = 0
+        self._start_state = False
+        
+    def input_countdown_time(self, countdown_time):
+        """Changes the value of self.countdown_time
+        Parameters:
+            countdown_time: tuple of length 4, (hh, mm, ss, ms) """
+        self.countdown_time = countdown_time
         
     def convert_time(self, time):
         """Takes a time given in hh:mm:ss:ms format and returns the number
@@ -51,5 +77,8 @@ class Countdown(object):
         return total
         
         
+t = Countdown((00, 00, 15, 00))
+while t.time_left > 0:
+    pass
  
         
