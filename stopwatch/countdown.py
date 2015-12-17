@@ -43,13 +43,14 @@ class Countdown(object):
     def __exit__(self, *args):
         self.stop_countdown()
         
-        
-t = Countdown(5)
-with t:
-    while t.time_remaining() > 0:
-        time.sleep(1)
-        #print t.time_remaining()
-print "time's up"
+if __name__ == '__main__':        
+    t = Countdown(5)
+    with t:
+        while t.time_remaining() > 0:
+            time.sleep(1)
+            #print t.time_remaining()
+    print "time's up"
 
+ 
  
         
