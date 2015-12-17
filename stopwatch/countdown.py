@@ -4,11 +4,11 @@ import time
 
 class Countdown(object):
     
-    def __init__(self, countdown_time):
+    def __init__(self, countdown_time, timer_func):
         """Creates a countdown timer.
         countdown_time: number of seconds"""
         
-        self.timer = st.Stopwatch(st.real_time)
+        self.timer = st.Stopwatch(timer_func)
         self.countdown_time = countdown_time
         
         
@@ -44,7 +44,7 @@ class Countdown(object):
         self.stop_countdown()
         
 if __name__ == '__main__':        
-    t = Countdown(5)
+    t = Countdown(5, sw.real_time)
     with t:
         while t.time_remaining() > 0:
             time.sleep(1)

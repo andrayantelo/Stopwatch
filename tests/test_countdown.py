@@ -8,7 +8,7 @@ class TestCountdown(unittest.TestCase):
     
     def setUp(self):
         self.fake_time = sw.make_fake_time_function(range(10000))
-        self.countdown = cd.Countdown(10)
+        self.countdown = cd.Countdown(10, sw.fake_time)
         
     def test_init(self):
         nt.assert_true(isinstance(self.countdown.timer, sw.Stopwatch))
@@ -26,16 +26,31 @@ class TestCountdown(unittest.TestCase):
         nt.assert_false(self.countdown.timer.running)
         
     def test_time_remaining(self):
-        pass
+        self.countdown.start_countdown()
+        self.countdown.stop_countdown()
+        nt.assert_equal(self.countdown.time_remaining(), 9)
+        self.countdown.start_countdown()
+        self.countdown.stop_countdown()
+        nt.assert_equal(self.countdown.time_remaining(), 8)
         
     def test_reset_countdown(self):
-        pass
+        self.countdown.start_countdown()
+        self.countdown.stop_countdown()
+        nt.assert_true(self.countdown.time_remaining() != 10)
+        self.countdown.reset_countdown()
+        nt.assert_equal(self.countdown.time_remaining(), 10)
+        
         
     def test_input_countdown_time(self):
-        pass
+        nt.assert_equal(self.countdown.countdown_time, 10)
+        self.countdown.input_countdown_time(15)
+        nt.assert_equal(self.countdown.countdown_time, 15)
         
-    def test_enter(self):
-        pass
+    def test_context_manager(self):
+        with self.countdown:
+            nt.assert_true(self.countdown.timer.running)
+        nt.assert_false(self.countdown.timer.running)
         
-    def test_exit(self):
-        pass
+if __name__ == '__main__':
+    unittest.main()
+
