@@ -20,9 +20,6 @@ class Stopwatch(object):
         self.elapsed_time = 0
         self._now = timer_func
         
-    def __repr__(self):
-        return 'Stopwatch()'
-        
     def start_timer(self):
         """Starts the timer."""
         if self._start_time is not None:

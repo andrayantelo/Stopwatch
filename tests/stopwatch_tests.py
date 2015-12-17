@@ -1,5 +1,6 @@
 import nose.tools as nt
 import stopwatch.stopwatch as sw
+import stopwatch.countdown as cd
 import unittest
 import time
 
@@ -16,9 +17,6 @@ class TestStopwatch(unittest.TestCase):
     def setUp(self):
         self.fake_time = make_fake_time_function(range(10000))
         self.mytimer = sw.Stopwatch(self.fake_time)
-    
-    def test_repr(self):
-        nt.assert_equal(repr(self.mytimer), "Stopwatch()")
     
     def test_init(self):
         nt.assert_equal(self.mytimer._stop_time, 0)
@@ -92,8 +90,38 @@ class TestStopwatch(unittest.TestCase):
         nt.assert_equal(self.mytimer._stop_time, 0)
         nt.assert_equal(self.mytimer.elapsed_time, 0)
         
+"""class TestCountdown(unittest.TestCase):
+    
+    def setUp(self):
+        self.fake_time = make_fake_time_function(range(10000))
+        self.countdown = cd.Countdown(10)
+        
+    def test_init(self):
+        nt.assert_true(isinstance(self.countdown.timer, sw.Stopwatch))
+        
+    def test_start_countdown(self):
+        pass
+        
+    def test_stop_countdown(self):
+        pass
+        
+    def test_time_remaining(self):
+        pass
+        
+    def test_reset_countdown(self):
+        pass
+        
+    def test_input_countdown_time(self):
+        pass
+        
+    def test_enter(self):
+        pass
+        
+    def test_exit(self):
+        pass
+
         
 if __name__ == '__main__':
     unittest.main()
-
+"""
 
