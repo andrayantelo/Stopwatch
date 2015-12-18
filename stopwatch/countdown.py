@@ -1,4 +1,4 @@
-import stopwatch as st
+import stopwatch as sw
 import time
 
 
@@ -8,7 +8,7 @@ class Countdown(object):
         """Creates a countdown timer.
         countdown_time: number of seconds"""
         
-        self.timer = st.Stopwatch(timer_func)
+        self.timer = sw.Stopwatch(timer_func)
         self.countdown_time = countdown_time
         
         

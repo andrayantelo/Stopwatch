@@ -101,10 +101,8 @@ class Stopwatch(object):
         
     def __exit__(self, *args):
         self.stop_timer()
-        
-        
-mytimer = Stopwatch(real_time)
  
 
 if __name__ == '__main__':
     mytimer = Stopwatch(real_time)
+
