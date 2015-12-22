@@ -19,7 +19,7 @@ class Pomodoro(object):
             
     @property 
     def active_countdown(self):
-        if self.current_round %2 != 0:
+        if self.current_round %2 == 0:
             return self.work_countdown
         else:
             return self.break_countdown
@@ -31,10 +31,19 @@ class Pomodoro(object):
         self.active_countdown.stop_countdown()
         
     def time_remaining(self):
-        pass
+        return self.active_countdown.time_remaining()
         
     def reset_pomodoro(self):
-        pass
+        self.work_countdown.reset()
+        self.break_countdown.reset()
+        self.current_round = 0
+        self.active_countdown()
+        
+    def input_times(self, work_time, break_time):
+        """Change the work and break times"""
+        self.work_countdown.input_countdown_time(work_time)
+        self.break_countdown.input_countdown_time(break_time)
+        
         
         
         
