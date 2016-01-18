@@ -6,12 +6,11 @@ class Countdown(object):
     
     def __init__(self, countdown_time, timer_func):
         """Creates a countdown timer.
-        countdown_time: number of seconds"""
+        countdown_time: tuple (hh, mm, ss, ms)"""
         
         self.timer = sw.Stopwatch(timer_func)
-        self.countdown_time = countdown_time
-        self.time_left = 0
-        
+        self.countdown_time = self.timer.revert_time(countdown_time)
+    
         
     def start_countdown(self):
         """Starts the countdown timer."""
@@ -29,13 +28,12 @@ class Countdown(object):
     def reset_countdown(self):
         """Resets the countdown timer."""
         self.timer.reset()
-        self.time_left = self.countdown_time
         
     def input_countdown_time(self, countdown_time):
         """Changes the value of self.countdown_time
         Parameters:
-            countdown_time: tuple of length 4, (hh, mm, ss, ms) """
-        self.countdown_time = countdown_time
+            countdown_time: tuple (hh, mm, ss, ms) """
+        self.countdown_time = countdown_time 
         
     def __enter__(self):
         self.start_countdown()
@@ -49,7 +47,7 @@ if __name__ == '__main__':
     with t:
         while t.time_remaining() > 0:
             time.sleep(1)
-            #print t.time_remaining()
+            print t.time_remaining()
     print "time's up"
 
  

@@ -8,7 +8,7 @@ class TestCountdown(unittest.TestCase):
     
     def setUp(self):
         self.fake_time = sw.make_fake_time_function(range(10000))
-        self.countdown = cd.Countdown(10, sw.fake_time)
+        self.countdown = cd.Countdown((0, 0, 10, 0), sw.fake_time)
         
     def test_init(self):
         nt.assert_true(isinstance(self.countdown.timer, sw.Stopwatch))
