@@ -58,6 +58,21 @@ class Stopwatch(object):
         
         return output
         
+    def revert_time(self, time_tuple):
+        """ Takes a tuple and converts it to time in seconds.
+        
+        Parameters:
+        time_tuple: tupe
+            tuple containing (hours, minutes, sec, milliseconds).
+        """
+        
+        hour = time_tuple[0] * 3600
+        minutes = time_tuple[1] * 60
+        sec = time_tuple[2] 
+        milliseconds = time_tuple[3] * 0.001
+        
+        return hour + minutes + sec + milliseconds 
+        
     def format_time(self, clock_tuple):
         """ Returns tuple of the time in a (('hour:minutes:seconds'), 'milliseconds') format.
         
