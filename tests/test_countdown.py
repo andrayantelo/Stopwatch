@@ -43,7 +43,8 @@ class TestCountdown(unittest.TestCase):
         
     def test_input_countdown_time(self):
         nt.assert_equal(self.countdown.countdown_time, 10)
-        self.countdown.input_countdown_time(15)
+        nt.assert_raises(TypeError, self.countdown.input_countdown_time, 15)
+        self.countdown.input_countdown_time((0, 0, 15, 0))
         nt.assert_equal(self.countdown.countdown_time, 15)
         
     def test_context_manager(self):

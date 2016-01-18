@@ -5,6 +5,7 @@ import stopwatch as sw
 class App(object):
     def __init__(self):
         
+        self.my_timer = sw.Stopwatch(sw.real_time)
         self.root = tk.Tk()
         self.root.title("Stopwatch")
         
@@ -32,7 +33,7 @@ class App(object):
     def print_elapsed(self):
         if self.on_state == True:
     
-            self.time_elapsed = sw.mytimer.format_time(sw.mytimer.convert_time(sw.mytimer.elapsed()))
+            self.time_elapsed = self.my_timer.format_time(self.my_timer.convert_time(self.my_timer.elapsed()))
             self.output = self.time_elapsed[0]
             self.small_output = self.time_elapsed[1]
             self.textvar.set(self.output)
@@ -46,19 +47,19 @@ class App(object):
             self.small_text.set(self.small_output)
         
     def start(self):
-        sw.mytimer.start_timer()
+        self.my_timer.start_timer()
         self.on_state = True
         self.print_elapsed()
         
         
     def stop(self):
-        sw.mytimer.stop_timer()
+        self.my_timer.stop_timer()
         self.on_state = False
         self.print_elapsed()
         
         
     def reset(self):
-        sw.mytimer.reset()
+        self.my_timer.reset()
         self.on_state = False
         self.output = "00:00:00"
         self.small_output = "000"

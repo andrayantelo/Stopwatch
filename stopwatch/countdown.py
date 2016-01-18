@@ -33,7 +33,9 @@ class Countdown(object):
         """Changes the value of self.countdown_time
         Parameters:
             countdown_time: tuple (hh, mm, ss, ms) """
-        self.countdown_time = countdown_time 
+        if type(countdown_time) != tuple:
+            raise TypeError('input must be a tuple (hh, mm. ss. ms)')
+        self.countdown_time = self.timer.revert_time(countdown_time)
         
     def __enter__(self):
         self.start_countdown()
@@ -43,12 +45,12 @@ class Countdown(object):
         self.stop_countdown()
         
 if __name__ == '__main__':        
-    t = Countdown(5, sw.real_time)
-    with t:
-        while t.time_remaining() > 0:
-            time.sleep(1)
-            print t.time_remaining()
-    print "time's up"
+    my_countdown = Countdown((0, 0, 5, 0), sw.real_time)
+    #with t:
+    #    while t.time_remaining() > 0:
+    #        time.sleep(1)
+    #        print t.time_remaining()
+    #print "time's up"
 
  
  
