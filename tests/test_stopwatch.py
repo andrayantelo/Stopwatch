@@ -54,6 +54,7 @@ class TestStopwatch(unittest.TestCase):
         time_diff = self.mytimer.revert_time(time_diff)
         
         nt.assert_equal(time_diff, 5410.002)
+        nt.assert_raises(TypeError, self.mytimer.revert_time, 15)
         
     def test_format_time(self):
         time_min_sec = (0, 55, 45, 0)

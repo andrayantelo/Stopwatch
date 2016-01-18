@@ -65,7 +65,9 @@ class Stopwatch(object):
         time_tuple: tupe
             tuple containing (hours, minutes, sec, milliseconds).
         """
-        
+        if type(time_tuple) != tuple:
+            raise TypeError('Must input a tuple containing hh, mm, ss, ms')
+            
         hour = time_tuple[0] * 3600
         minutes = time_tuple[1] * 60
         sec = time_tuple[2] 
