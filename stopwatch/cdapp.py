@@ -4,6 +4,30 @@ import time
 import Tkinter as tk
 from functools import partial
 
+def convert_time_input(time):
+    """Takes a time given in hh:mm:ss format and returns a list
+    [h,h,m,m,s,s].
+    Parameters:
+    time: string format 'hh:mm:ss' 
+    """
+    new_time = ''
+    for letter in time:
+        if letter != ':':
+            new_time += letter
+    new_time = list(new_time)
+    if len(new_time) != 6:
+        raise RuntimeError("Time list is not of length 6")
+
+    return new_time
+    
+def revert_time_input(time):
+    """Takes a time list in [h, h, m, m, s, s] format and returns a string
+    hh:mm:ss.
+    Parameters:
+    time: list format [h,h,m,m,s,s]
+    """
+    pass
+
         
 class Cdapp(object):
     def __init__(self):
@@ -59,9 +83,22 @@ class Cdapp(object):
                 row +=1
             if n == 9:
                 column = 2
+        self.click_counter = 0
                 
     def callback(self, label):
-        print "Click {}".format(label)
+        print "Click {}".format(self.click_counter)
+        new_output = convert_time_input(self.output)
+        new_output.pop(0)
+        new_output.append(label)
+        
+        self.click_counter += 1
+        if self.click_counter > 6:
+            self.reset()
+            
+        self.output = new_output
+        print self.output
+             
+        
 
     def print_elapsed(self):
         if self.on_state == True:
@@ -103,8 +140,11 @@ class Cdapp(object):
         
         
     def reset(self):
+        print "timer is being reset"
+
         self.mycountdown.reset_countdown()
         self.on_state = False
+        self.click_counter = 0
         self.output = "{:02d}:{:02d}:{:02d}".format(int(self.countdown_time[0]), int(self.countdown_time[1]), int(self.countdown_time[2]))
         self.small_output = "000"
         self.print_elapsed()
