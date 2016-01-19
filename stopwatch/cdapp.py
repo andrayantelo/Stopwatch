@@ -2,29 +2,14 @@ import countdown as cd
 import stopwatch as sw
 import time
 import Tkinter as tk
-
-#    def convert_time(self, time):
-#        """Takes a time given in hh:mm:ss:ms format and returns the number
-#        of seconds it corresponds to.
-#        Parameters:
-#            time: tuple format (hh, mm, ss, ms) 
-#        """
-#        if len(time) != 4:
-#            raise RuntimeError("time tuple is not of length 4")
-#        hours = time[0]*3600
-#        minutes = time[1]*60
-#        sec = time[2]
-#        millisec = time[3]*.001
-        
-#        total = hours + minutes + sec + millisec
-#        return total
+from functools import partial
 
         
 class Cdapp(object):
     def __init__(self):
         self.mycountdown = cd.Countdown((0,0,3,0), sw.real_time)
         self.mytimer = sw.Stopwatch(sw.real_time)
-        #countdown_time as a tuple
+        #convert countdown_time (which is in seconds) to a tuple
         self.countdown_time = self.mytimer.convert_time(self.mycountdown.countdown_time)
         self.root = tk.Tk()
         self.root.title("Countdown")
@@ -45,11 +30,38 @@ class Cdapp(object):
         self.frame = frame = tk.Frame(self.root)
         frame.grid()
         
-        self.start_button = tk.Button(frame, text="START", fg="green", command=self.start).grid(row=1, column=0)
-        self.stop_button = tk.Button(frame, text="STOP", fg="red", command=self.stop).grid(row=1, column=1)
-        self.reset_button = tk.Button(frame, text="RESET", fg="orange", command=self.reset).grid(row=1, column=2)
+        self.start_button = tk.Button(frame, text="START", fg="green", width=5, command=self.start).grid(row=1, column=0)
+        self.stop_button = tk.Button(frame, text="STOP", fg="red", width=5, command=self.stop).grid(row=1, column=1)
+        self.reset_button = tk.Button(frame, text="RESET", fg="orange", width=5, command=self.reset).grid(row=1, column=2)
+        self.quit_button = tk.Button(frame, text="QUIT", width=5, command = self.root.quit).grid(row=1, column=3)
         
         self.time_left = 0
+        
+        #lf = tk.LabelFrame(self.root, text="Keypad", bd=3, 
+        #                   relief=tk.RIDGE).grid(columnspan=3)
+        self.button_list = [
+        '1','2','3',
+        '4','5','6',
+        '7','8','9',
+        '0']
+        row = 4
+        column = 1
+        n = 0
+        number_button = list(range(len(self.button_list)))
+        for label in self.button_list:
+            button_command = partial(self.callback, label)
+            number_button[n] = tk.Button(self.frame, text=label, width=5, command=button_command)
+            number_button[n].grid(row=row, column=column)
+            n += 1
+            column += 1
+            if column > 3:
+                column = 1
+                row +=1
+            if n == 9:
+                column = 2
+                
+    def callback(self, label):
+        print "Click {}".format(label)
 
     def print_elapsed(self):
         if self.on_state == True:
@@ -93,7 +105,7 @@ class Cdapp(object):
     def reset(self):
         self.mycountdown.reset_countdown()
         self.on_state = False
-        self.output = "00:00:00"
+        self.output = "{:02d}:{:02d}:{:02d}".format(int(self.countdown_time[0]), int(self.countdown_time[1]), int(self.countdown_time[2]))
         self.small_output = "000"
         self.print_elapsed()
         
