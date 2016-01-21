@@ -21,12 +21,20 @@ def convert_time_input(time):
     return new_time
     
 def revert_time_input(time):
-    """Takes a time list in [h, h, m, m, s, s] format and returns a string
-    hh:mm:ss.
+    """Takes a time list in [h, h, m, m, s, s] format and returns a tuple
+    (hh, mm, ss).
     Parameters:
     time: list format [h,h,m,m,s,s]
     """
-    pass
+    new_time = ''
+    for element in time:
+        new_time += str(element)
+    
+    n = 2
+    new_time = tuple([new_time[i:i+n] for i in range(0, len(new_time), n)])
+    new_time = [int(i) for i in new_time]
+        
+    return new_time
 
         
 class Cdapp(object):
