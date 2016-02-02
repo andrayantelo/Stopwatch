@@ -67,10 +67,14 @@ class Cdapp(object):
         self.frame = frame = tk.Frame(self.root)
         frame.grid()
         
-        self.start_button = tk.Button(frame, text="START", fg="green", width=5, command=self.start).grid(row=1, column=0)
-        self.stop_button = tk.Button(frame, text="STOP", fg="red", width=5, command=self.stop).grid(row=1, column=1)
-        self.reset_button = tk.Button(frame, text="RESET", fg="orange", width=5, command=self.reset).grid(row=1, column=2)
-        self.quit_button = tk.Button(frame, text="QUIT", width=5, command = self.root.quit).grid(row=1, column=3)
+        self.start_button = tk.Button(frame, text="START", fg="green", width=5, command=self.start)
+        self.start_button.grid(row=1, column=0)
+        self.stop_button = tk.Button(frame, text="STOP", fg="red", width=5, command=self.stop)
+        self.stop_button.grid(row=1, column=1)
+        self.reset_button = tk.Button(frame, text="RESET", fg="orange", width=5, command=self.reset)
+        self.reset_button.grid(row=1, column=2)
+        self.quit_button = tk.Button(frame, text="QUIT", width=5, command = self.root.quit)
+        self.quit_button.grid(row=1, column=3)
         
         self.time_left = 0
         
@@ -155,7 +159,11 @@ class Cdapp(object):
             self.small_text.set(self.small_output)
         
     def start(self):
-        
+        if not self.on_state:
+            self.start_button.config(text = "PAUSE")
+        else:
+            self.start_button.config(text = "START")
+                    
         self.mycountdown.start_countdown()
         self.on_state = True
         self.print_elapsed()
