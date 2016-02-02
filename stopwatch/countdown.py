@@ -10,7 +10,7 @@ class Countdown(object):
         
         self.timer = sw.Stopwatch(timer_func)
         #Convert time into seconds because countdown class works with seconds
-        self.countdown_time = self.timer.revert_time(countdown_time)
+        self.countdown_time = 0
     
         
     def start_countdown(self):
@@ -28,6 +28,7 @@ class Countdown(object):
         
     def reset_countdown(self):
         """Resets the countdown timer."""
+        self.countdown_time = 0
         self.timer.reset()
         
     def input_countdown_time(self, countdown_time):

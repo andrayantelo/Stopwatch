@@ -34,8 +34,9 @@ def revert_time_input(time):
     n = 2
     new_time = [new_time[i:i+n] for i in range(0, len(new_time), n)]
     new_time = tuple([int(i) for i in new_time])
+    new_tuple = (new_time[0], new_time[1], new_time[2], 00)
         
-    return new_time
+    return new_tuple
 
         
 class Cdapp(object):
@@ -109,14 +110,22 @@ class Cdapp(object):
         self.click_counter += 1
         
         if self.click_counter > 6:
+            self.output = self.new_output
             self.reset()
+            return
         
-        #[h,h,m,m,s,s] -> (hh,mm,ss)
+        #[h,h,m,m,s,s] -> (hh,mm,ss, ms (always zero))
         self.new_output = revert_time_input(self.new_output)
-       
+        
+        #change the countdown_time in the countdown instance
+        self.mycountdown.input_countdown_time(self.new_output)
+        
+        #change the countdown_Time for the Cdapp instance
+        self.countdown_time = self.mytimer.convert_time(self.mycountdown.countdown_time)
+        
         self.output = "{:02d}:{:02d}:{:02d}".format(self.new_output[0], self.new_output[1], self.new_output[2])
-        print "here is self.output at the end of callback {}".format(self.output)
-        print "here is new_output at the end of callback {}".format(self.new_output)
+        self.textvar.set(self.output)
+    
         return self.output
              
         
@@ -125,7 +134,7 @@ class Cdapp(object):
         if self.on_state == True:
     
             self.time_left = self.mytimer.format_time(self.mytimer.convert_time(self.mycountdown.time_remaining()))
-            print self.time_left
+            
             self.output = self.time_left[0]
             
             self.small_output = self.time_left[1]
@@ -168,6 +177,7 @@ class Cdapp(object):
         print "timer is being reset"
 
         self.mycountdown.reset_countdown()
+        self.countdown_time = self.mytimer.convert_time(self.mycountdown.countdown_time)
         self.on_state = False
         self.click_counter = 0
         self.output = "{:02d}:{:02d}:{:02d}".format(self.countdown_time[0], self.countdown_time[1], self.countdown_time[2])
