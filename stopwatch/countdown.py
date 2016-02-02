@@ -9,6 +9,7 @@ class Countdown(object):
         countdown_time: tuple (hh, mm, ss, ms)"""
         
         self.timer = sw.Stopwatch(timer_func)
+        #Convert time into seconds because countdown class works with seconds
         self.countdown_time = self.timer.revert_time(countdown_time)
     
         

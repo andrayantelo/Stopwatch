@@ -42,19 +42,22 @@ class Stopwatch(object):
         return
 
     def convert_time(self, clock_time):
-        """ Returns a tuple containing the hours, minutes, seconds and
-        milliseconds of a time given in seconds.
+        """ Returns a tuple containing the hours, minutes, seconds 
+        of a time given in seconds.
         
         Parameters:
         clock_time: int
             the time, in seconds, to be converted.
         """
         
-        milliseconds = clock_time * 1000 
+        if type(clock_time) == tuple and len(clock_time) == 3:
+            return clock_time
+        
+        milliseconds = clock_time * 1000
         sec, milliseconds = divmod(round(milliseconds,2), 1000)
         minutes, sec = divmod(round(clock_time,2), 60)
         hours, minutes = divmod(round(minutes,2), 60)
-        output = (hours, minutes, sec, milliseconds)
+        output = (int(hours), int(minutes), int(sec), milliseconds)
         
         return output
         
@@ -64,6 +67,7 @@ class Stopwatch(object):
         Parameters:
         time_tuple: tupe
             tuple containing (hours, minutes, sec, milliseconds).
+        {hh, mm, ss) -> sec
         """
         if type(time_tuple) != tuple:
             raise TypeError('Must input a tuple containing hh, mm, ss, ms')
@@ -73,14 +77,14 @@ class Stopwatch(object):
         sec = time_tuple[2] 
         milliseconds = time_tuple[3] * 0.001
         
-        return hour + minutes + sec + milliseconds 
+        return hour + minutes + sec + milliseconds
         
     def format_time(self, clock_tuple):
-        """ Returns tuple of the time in a (('hour:minutes:seconds'), 'milliseconds') format.
+        """ Returns tuple of the time in a (('hour:minutes:seconds'), ms) format.
         
         Parameters:
         clock_tuple: int
-            tuple containing (hours, minutes, sec, milliseconds).
+            tuple containing (hours, minutes, sec, ms).
         """
         formatted_time = "%02d:%02d:%02d" %(clock_tuple[0], clock_tuple[1], clock_tuple[2])
         formatted_milliseconds = "%03d" %clock_tuple[3]

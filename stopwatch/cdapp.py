@@ -25,23 +25,25 @@ def revert_time_input(time):
     (hh, mm, ss).
     Parameters:
     time: list format [h,h,m,m,s,s]
+    [h,h,m,m,s,s] -> (hh,mm,ss)
     """
     new_time = ''
     for element in time:
         new_time += str(element)
     
     n = 2
-    new_time = tuple([new_time[i:i+n] for i in range(0, len(new_time), n)])
-    new_time = [int(i) for i in new_time]
+    new_time = [new_time[i:i+n] for i in range(0, len(new_time), n)]
+    new_time = tuple([int(i) for i in new_time])
         
     return new_time
 
         
 class Cdapp(object):
+    #Cdapp class works with tuples for the time
     def __init__(self):
         self.mycountdown = cd.Countdown((0,0,3,0), sw.real_time)
         self.mytimer = sw.Stopwatch(sw.real_time)
-        #convert countdown_time (which is in seconds) to a tuple
+        #convert countdown_time (which is in seconds (this happens automatically when initializing a countdown)) to a tuple
         self.countdown_time = self.mytimer.convert_time(self.mycountdown.countdown_time)
         self.root = tk.Tk()
         self.root.title("Countdown")
@@ -49,8 +51,10 @@ class Cdapp(object):
         self.on_state = False
         
         self.textvar = tk.StringVar()
-        print self.countdown_time
-        self.output = "{:02d}:{:02d}:{:02d}".format(int(self.countdown_time[0]), int(self.countdown_time[1]), int(self.countdown_time[2]))
+        
+        self.new_output = (00,00,00)
+      
+        self.output = "{:02d}:{:02d}:{:02d}".format(self.countdown_time[0], self.countdown_time[1], self.countdown_time[2])
         self.textvar.set(self.output)
         self.label = tk.Label(textvariable=self.textvar, font=("Arial",16)).grid(row=0, column=0)
         
@@ -95,16 +99,25 @@ class Cdapp(object):
                 
     def callback(self, label):
         print "Click {}".format(self.click_counter)
-        new_output = convert_time_input(self.output)
-        new_output.pop(0)
-        new_output.append(label)
+        # "hh:mm:ss" -> [h,h,m,m,s,s]
+        self.new_output = convert_time_input(self.output)
+        # take off first element in new_output, and add label to the end
+        self.new_output.pop(0)
+        self.new_output.append(label)
         
+        #count up 1
         self.click_counter += 1
+        
         if self.click_counter > 6:
             self.reset()
-            
-        self.output = new_output
-        print self.output
+        
+        #[h,h,m,m,s,s] -> (hh,mm,ss)
+        self.new_output = revert_time_input(self.new_output)
+       
+        self.output = "{:02d}:{:02d}:{:02d}".format(self.new_output[0], self.new_output[1], self.new_output[2])
+        print "here is self.output at the end of callback {}".format(self.output)
+        print "here is new_output at the end of callback {}".format(self.new_output)
+        return self.output
              
         
 
@@ -112,7 +125,9 @@ class Cdapp(object):
         if self.on_state == True:
     
             self.time_left = self.mytimer.format_time(self.mytimer.convert_time(self.mycountdown.time_remaining()))
+            print self.time_left
             self.output = self.time_left[0]
+            
             self.small_output = self.time_left[1]
             self.textvar.set(self.output)
             self.small_text.set(self.small_output)
@@ -131,9 +146,11 @@ class Cdapp(object):
             self.small_text.set(self.small_output)
         
     def start(self):
+        
         self.mycountdown.start_countdown()
         self.on_state = True
         self.print_elapsed()
+        
         
         
     def stop(self):
@@ -153,9 +170,11 @@ class Cdapp(object):
         self.mycountdown.reset_countdown()
         self.on_state = False
         self.click_counter = 0
-        self.output = "{:02d}:{:02d}:{:02d}".format(int(self.countdown_time[0]), int(self.countdown_time[1]), int(self.countdown_time[2]))
+        self.output = "{:02d}:{:02d}:{:02d}".format(self.countdown_time[0], self.countdown_time[1], self.countdown_time[2])
         self.small_output = "000"
+        self.new_output = (00,00,00)
         self.print_elapsed()
+        print "here is output after being reset {}".format(self.output)
         
    
 def main():
