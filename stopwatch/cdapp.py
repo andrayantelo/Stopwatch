@@ -4,6 +4,9 @@ import time
 import Tkinter as tk
 from functools import partial
 
+def hide_me(event):
+    event.widget.pack_forget()
+
 def convert_time_input(time):
     """Takes a time given in hh:mm:ss format and returns a list
     [h,h,m,m,s,s].
@@ -69,6 +72,7 @@ class Cdapp(object):
         
         self.start_button = tk.Button(frame, text="START", fg="green", width=5, command=self.start)
         self.start_button.grid(row=1, column=0)
+        
         #self.stop_button = tk.Button(frame, text="STOP", fg="red", width=5, command=self.stop)
         #self.stop_button.grid(row=1, column=1)
         self.reset_button = tk.Button(frame, text="RESET", fg="orange", width=5, command=self.reset)
@@ -148,7 +152,9 @@ class Cdapp(object):
             #print "this is the time remaining {}" .format(self.mycountdown.time_remaining())
             
             if self.mycountdown.time_remaining() < 0:
-                self.reset()
+                self.stop()
+                if self.start_button.winfo_ismapped():
+                    self.start_button.grid_forget()
                 
             self.root.after(50, self.print_elapsed)
             
@@ -184,10 +190,12 @@ class Cdapp(object):
         
     def reset(self):
         print "timer is being reset"
+        self.start_button.grid(row=1, column=0)
 
         self.mycountdown.reset_countdown()
         self.countdown_time = self.mytimer.convert_time(self.mycountdown.countdown_time)
         self.on_state = False
+        self.start_button.config(text = "START")
         self.click_counter = 0
         self.output = "{:02d}:{:02d}:{:02d}".format(self.countdown_time[0], self.countdown_time[1], self.countdown_time[2])
         self.small_output = "000"
