@@ -69,12 +69,12 @@ class Cdapp(object):
         
         self.start_button = tk.Button(frame, text="START", fg="green", width=5, command=self.start)
         self.start_button.grid(row=1, column=0)
-        self.stop_button = tk.Button(frame, text="STOP", fg="red", width=5, command=self.stop)
-        self.stop_button.grid(row=1, column=1)
+        #self.stop_button = tk.Button(frame, text="STOP", fg="red", width=5, command=self.stop)
+        #self.stop_button.grid(row=1, column=1)
         self.reset_button = tk.Button(frame, text="RESET", fg="orange", width=5, command=self.reset)
-        self.reset_button.grid(row=1, column=2)
+        self.reset_button.grid(row=1, column=1)
         self.quit_button = tk.Button(frame, text="QUIT", width=5, command = self.root.quit)
-        self.quit_button.grid(row=1, column=3)
+        self.quit_button.grid(row=1, column=2)
         
         self.time_left = 0
         
@@ -85,8 +85,8 @@ class Cdapp(object):
         '4','5','6',
         '7','8','9',
         '0']
-        row = 4
-        column = 1
+        row = 2
+        column = 0
         n = 0
         number_button = list(range(len(self.button_list)))
         for label in self.button_list:
@@ -95,11 +95,11 @@ class Cdapp(object):
             number_button[n].grid(row=row, column=column)
             n += 1
             column += 1
-            if column > 3:
-                column = 1
+            if column > 2:
+                column = 0
                 row +=1
             if n == 9:
-                column = 2
+                column = 1
         self.click_counter = 0
                 
     def callback(self, label):
@@ -135,7 +135,7 @@ class Cdapp(object):
         
 
     def print_elapsed(self):
-        if self.on_state == True:
+        if self.on_state:
     
             self.time_left = self.mytimer.format_time(self.mytimer.convert_time(self.mycountdown.time_remaining()))
             
@@ -148,7 +148,7 @@ class Cdapp(object):
             #print "this is the time remaining {}" .format(self.mycountdown.time_remaining())
             
             if self.mycountdown.time_remaining() < 0:
-                self.stop()
+                self.reset()
                 
             self.root.after(50, self.print_elapsed)
             
@@ -160,15 +160,16 @@ class Cdapp(object):
         
     def start(self):
         if not self.on_state:
+            self.on_state = True
+            self.mycountdown.start_countdown()
+            self.print_elapsed()
             self.start_button.config(text = "PAUSE")
+            
         else:
+            self.on_state = False
+            self.mycountdown.stop_countdown()
             self.start_button.config(text = "START")
-                    
-        self.mycountdown.start_countdown()
-        self.on_state = True
-        self.print_elapsed()
-        
-        
+            
         
     def stop(self):
         self.mycountdown.stop_countdown()

@@ -29,6 +29,12 @@ class Stopwatch(object):
         self._start_state = True
         
         return 
+        
+    def _toggle_start_time(self):
+        """Toggles the start_time from None to Not None or vice versa."""
+        if self._start_time is None:
+            self._start_time = 0
+        
     
     def stop_timer(self):
         """ Stops the timer. Returns time of stop."""
