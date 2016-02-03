@@ -109,6 +109,11 @@ class Cdapp(object):
                 
     def callback(self, label):
         print "Click {}".format(self.click_counter)
+        
+        #this ensures that when reset is clicked after a number is clicked, the original countdown
+        # time reappears
+        self.reset_counter = 0
+        
         # "hh:mm:ss" -> [h,h,m,m,s,s]
         self.new_output = convert_time_input(self.output)
         # take off first element in new_output, and add label to the end
@@ -171,6 +176,9 @@ class Cdapp(object):
         #change the countdown_Time for the Cdapp instance
         self.countdown_time = self.mytimer.convert_time(self.mycountdown.countdown_time)
         
+        #setting reset counter back to zero in case start is clicked after reset has been clicked once
+        #so that it goes back to the original countdown time
+        self.reset_counter = 0
         
         print "this is the time remaining{}".format(self.mycountdown.time_remaining())
         if self.mycountdown.time_remaining() <= 0:
@@ -190,6 +198,8 @@ class Cdapp(object):
             self.mycountdown.stop_countdown()
             self.start_button.config(text = "START")
             
+        print "this is the current countdown time {}".format(self.countdown_time)
+            
         
     def stop(self):
         self.mycountdown.stop_countdown()
@@ -204,11 +214,13 @@ class Cdapp(object):
         
     def reset(self):
         print "timer is being reset"
+        
         if self.reset_counter >= 1:
             self.reset_counter = 0
             self.mycountdown.countdown_time = 0
             
         self.reset_counter += 1
+        print "this is how many times reset has been clicked {}".format(self.reset_counter)
         self.start_button.grid(row=1, column=0)
 
         self.mycountdown.reset_countdown()
@@ -222,6 +234,7 @@ class Cdapp(object):
         self.new_output = revert_time_input(self.new_output)
         self.print_elapsed()
         print "here is output after being reset {}".format(self.output)
+        print "this is the current countdown time {}".format(self.countdown_time)
         
    
 def main():
