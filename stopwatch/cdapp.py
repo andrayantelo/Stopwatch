@@ -151,7 +151,7 @@ class Cdapp(object):
             
             #print "this is the time remaining {}" .format(self.mycountdown.time_remaining())
             
-            if self.mycountdown.time_remaining() < 0:
+            if self.check_time_remaining():
                 self.stop()
                 if self.start_button.winfo_ismapped():
                     self.start_button.grid_forget()
@@ -163,8 +163,22 @@ class Cdapp(object):
             
             self.textvar.set(self.output)
             self.small_text.set(self.small_output)
+            
+    def check_time_remaining(self):
+        """Returns True if self.mycountdown.time_remaining() < 0 and False
+        otherwise."""
+        if self.mycountdown.time_remaining() < 0:
+            return True
+        else:
+            return False
+        
+        
         
     def start(self):
+        print "this is the time remaining{}".format(self.mycountdown.time_remaining())
+        if self.mycountdown.time_remaining() <= 0:
+            return 
+            
         if not self.on_state:
             self.on_state = True
             self.mycountdown.start_countdown()
