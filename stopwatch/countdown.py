@@ -28,7 +28,7 @@ class Countdown(object):
         
     def reset_countdown(self):
         """Resets the countdown timer."""
-        self.countdown_time = 0
+        #self.countdown_time = 0
         self.timer.reset()
         
     def input_countdown_time(self, countdown_time):
@@ -36,7 +36,7 @@ class Countdown(object):
         Parameters:
             countdown_time: tuple (hh, mm, ss, ms) """
         if type(countdown_time) != tuple:
-            raise TypeError('input must be a tuple (hh, mm. ss. ms)')
+            raise TypeError('input must be a tuple (hh, mm. ss, ms)')
         self.countdown_time = self.timer.revert_time(countdown_time)
         
     def __enter__(self):

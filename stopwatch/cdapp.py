@@ -45,7 +45,7 @@ def revert_time_input(time):
 class Cdapp(object):
     #Cdapp class works with tuples for the time
     def __init__(self):
-        self.mycountdown = cd.Countdown((0,0,3,0), sw.real_time)
+        self.mycountdown = cd.Countdown((0,0,0,0), sw.real_time)
         self.mytimer = sw.Stopwatch(sw.real_time)
         #convert countdown_time (which is in seconds (this happens automatically when initializing a countdown)) to a tuple
         self.countdown_time = self.mytimer.convert_time(self.mycountdown.countdown_time)
@@ -105,6 +105,7 @@ class Cdapp(object):
             if n == 9:
                 column = 1
         self.click_counter = 0
+        self.reset_counter = 0
                 
     def callback(self, label):
         print "Click {}".format(self.click_counter)
@@ -125,11 +126,7 @@ class Cdapp(object):
         #[h,h,m,m,s,s] -> (hh,mm,ss, ms (always zero))
         self.new_output = revert_time_input(self.new_output)
         
-        #change the countdown_time in the countdown instance
-        self.mycountdown.input_countdown_time(self.new_output)
         
-        #change the countdown_Time for the Cdapp instance
-        self.countdown_time = self.mytimer.convert_time(self.mycountdown.countdown_time)
         
         self.output = "{:02d}:{:02d}:{:02d}".format(self.new_output[0], self.new_output[1], self.new_output[2])
         self.textvar.set(self.output)
@@ -151,7 +148,7 @@ class Cdapp(object):
             
             #print "this is the time remaining {}" .format(self.mycountdown.time_remaining())
             
-            if self.check_time_remaining():
+            if self.mycountdown.time_remaining() < 0:
                 self.stop()
                 if self.start_button.winfo_ismapped():
                     self.start_button.grid_forget()
@@ -163,21 +160,24 @@ class Cdapp(object):
             
             self.textvar.set(self.output)
             self.small_text.set(self.small_output)
-            
-    def check_time_remaining(self):
-        """Returns True if self.mycountdown.time_remaining() < 0 and False
-        otherwise."""
-        if self.mycountdown.time_remaining() < 0:
-            return True
-        else:
-            return False
         
         
         
     def start(self):
+        print "this is the new_output {}".format(self.new_output)
+        #change the countdown_time in the countdown instance
+        self.mycountdown.input_countdown_time(self.new_output)
+        
+        #change the countdown_Time for the Cdapp instance
+        self.countdown_time = self.mytimer.convert_time(self.mycountdown.countdown_time)
+        
+        
         print "this is the time remaining{}".format(self.mycountdown.time_remaining())
         if self.mycountdown.time_remaining() <= 0:
-            return 
+            raise RuntimeError('Time remaining is zero, input a countdown time')
+            
+            
+        
             
         if not self.on_state:
             self.on_state = True
@@ -204,6 +204,11 @@ class Cdapp(object):
         
     def reset(self):
         print "timer is being reset"
+        if self.reset_counter >= 1:
+            self.reset_counter = 0
+            self.mycountdown.countdown_time = 0
+            
+        self.reset_counter += 1
         self.start_button.grid(row=1, column=0)
 
         self.mycountdown.reset_countdown()
@@ -213,7 +218,8 @@ class Cdapp(object):
         self.click_counter = 0
         self.output = "{:02d}:{:02d}:{:02d}".format(self.countdown_time[0], self.countdown_time[1], self.countdown_time[2])
         self.small_output = "000"
-        self.new_output = (00,00,00)
+        self.new_output = convert_time_input(self.output)
+        self.new_output = revert_time_input(self.new_output)
         self.print_elapsed()
         print "here is output after being reset {}".format(self.output)
         
