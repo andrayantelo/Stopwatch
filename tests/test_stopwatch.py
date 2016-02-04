@@ -38,27 +38,6 @@ class TestStopwatch(unittest.TestCase):
         
         nt.assert_equal(self.mytimer.elapsed(), 2)
         nt.assert_raises(RuntimeError, self.mytimer.stop_timer)
-               
-    #def test_convert_time(self):
-    #    time_diff = 5410 #seconds
-    #    time_diff = self.mytimer.convert_time(time_diff)
-        
-    #    nt.assert_equal(time_diff, (1.0, 30.0, 10.0))
-        
-        
-    #def test_revert_time(self):
-    #    time_diff = (1.0, 30.0, 10.0)
-    #    time_diff = self.mytimer.revert_time(time_diff)
-        
-    #    nt.assert_equal(time_diff, 5410)
-    #    nt.assert_raises(TypeError, self.mytimer.revert_time, 15)
-        
-    #def test_format_time(self):
-    #    time_min_sec = (0, 55, 45, 0)
-        
-    #    self.mytimer.format_time(time_min_sec)
-        
-    #    nt.assert_equal(self.mytimer.format_time(time_min_sec), ("00:55:45", "000"))
         
     def test_elapsed(self):
         self.mytimer.start_timer()

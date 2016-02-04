@@ -10,11 +10,11 @@ class TestCountdown(unittest.TestCase):
     def setUp(self):
         self.fake_time = uf.make_fake_time_function(range(10000))
         self.countdown = cd.Countdown(self.fake_time)
-        self.countdown.countdown_time = 10
+        self.countdown.countdowntime = (0, 0, 10, 0)
         
     def test_init(self):
         nt.assert_true(isinstance(self.countdown.timer, sw.Stopwatch))
-        nt.assert_equal(self.countdown.countdown_time, 10)
+        nt.assert_equal(self.countdown.countdowntime, 10)
         
     def test_start_countdown(self):
         self.countdown.start_countdown()
@@ -43,11 +43,11 @@ class TestCountdown(unittest.TestCase):
         nt.assert_equal(self.countdown.time_remaining(), 10)
         
         
-    def test_input_countdown_time(self):
-        nt.assert_equal(self.countdown.countdown_time, 10)
-        nt.assert_raises(TypeError, self.countdown.input_countdown_time, 15)
-        self.countdown.input_countdown_time((0, 0, 15, 0))
-        nt.assert_equal(self.countdown.countdown_time, 15)
+    def test_countdowntime_setter(self):
+        nt.assert_equal(self.countdown.countdowntime, 10)
+        nt.assert_raises(TypeError, self.countdown.countdowntime, 15)
+        self.countdown.countdowntime = (0, 0, 15, 0)
+        nt.assert_equal(self.countdown.countdowntime, 15)
         
     def test_context_manager(self):
         with self.countdown:

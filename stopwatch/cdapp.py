@@ -3,6 +3,8 @@ import stopwatch as sw
 import time
 import Tkinter as tk
 from functools import partial
+from timeit import default_timer as real_time
+import utilityfunctions as uf
 
 
 
@@ -10,19 +12,14 @@ from functools import partial
 class Cdapp(object):
     #Cdapp class works with tuples for the time
     def __init__(self):
-        self.mycountdown = cd.Countdown((0,0,0,0), sw.real_time)
-        self.mytimer = sw.Stopwatch(sw.real_time)
+        self.mycountdown = cd.Countdown(real_time)
+        self.mytimer = sw.Stopwatch(real_time)
         #convert countdown_time (which is in seconds (this happens automatically when initializing a countdown)) to a tuple
-        self.countdown_time = self.mytimer.convert_time(self.mycountdown.countdown_time)
+        self.countdown_time = uf.seconds_to_tuple(self.mycountdown.countdowntime)
         self.root = tk.Tk()
         self.root.title("Countdown")
         
-        self.on_state = False
-        
         self.textvar = tk.StringVar()
-        
-        self.new_output = (00,00,00)
-      
         self.output = "{:02d}:{:02d}:{:02d}".format(self.countdown_time[0], self.countdown_time[1], self.countdown_time[2])
         self.textvar.set(self.output)
         self.label = tk.Label(textvariable=self.textvar, font=("Arial",16)).grid(row=0, column=0)
@@ -37,9 +34,6 @@ class Cdapp(object):
         
         self.start_button = tk.Button(frame, text="START", fg="green", width=5, command=self.start)
         self.start_button.grid(row=1, column=0)
-        
-        #self.stop_button = tk.Button(frame, text="STOP", fg="red", width=5, command=self.stop)
-        #self.stop_button.grid(row=1, column=1)
         self.reset_button = tk.Button(frame, text="RESET", fg="orange", width=5, command=self.reset)
         self.reset_button.grid(row=1, column=1)
         self.quit_button = tk.Button(frame, text="QUIT", width=5, command = self.root.quit)
@@ -69,8 +63,12 @@ class Cdapp(object):
                 row +=1
             if n == 9:
                 column = 1
+                
         self.click_counter = 0
         self.reset_counter = 0
+        
+        self.on_state = False
+        self.new_output = (00,00,00)
                 
     def callback(self, label):
         print "Click {}".format(self.click_counter)
@@ -136,10 +134,10 @@ class Cdapp(object):
     def start(self):
         print "this is the new_output {}".format(self.new_output)
         #change the countdown_time in the countdown instance
-        self.mycountdown.input_countdown_time(self.new_output)
+        self.mycountdown.countdowntime = self.new_output
         
         #change the countdown_Time for the Cdapp instance
-        self.countdown_time = uf.seconds_to_tuple(self.mycountdown.countdown_time)
+        self.countdown_time = uf.seconds_to_tuple(self.mycountdown.countdowntime)
         
         #setting reset counter back to zero in case start is clicked after reset has been clicked once
         #so that it goes back to the original countdown time
@@ -182,14 +180,14 @@ class Cdapp(object):
         
         if self.reset_counter >= 1:
             self.reset_counter = 0
-            self.mycountdown.countdown_time = 0
+            self.mycountdown.countdowntime = (0,0,0,0)
             
         self.reset_counter += 1
         print "this is how many times reset has been clicked {}".format(self.reset_counter)
         self.start_button.grid(row=1, column=0)
 
         self.mycountdown.reset_countdown()
-        self.countdown_time = uf.seconds_to_tuple(self.mycountdown.countdown_time)
+        self.countdown_time = uf.seconds_to_tuple(self.mycountdown.countdowntime)
         self.on_state = False
         self.start_button.config(text = "START")
         self.click_counter = 0
