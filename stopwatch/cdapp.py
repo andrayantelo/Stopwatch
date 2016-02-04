@@ -4,42 +4,7 @@ import time
 import Tkinter as tk
 from functools import partial
 
-def hide_me(event):
-    event.widget.pack_forget()
 
-def convert_time_input(time):
-    """Takes a time given in hh:mm:ss format and returns a list
-    [h,h,m,m,s,s].
-    Parameters:
-    time: string format 'hh:mm:ss' 
-    """
-    new_time = ''
-    for letter in time:
-        if letter != ':':
-            new_time += letter
-    new_time = list(new_time)
-    if len(new_time) != 6:
-        raise RuntimeError("Time list is not of length 6")
-
-    return new_time
-    
-def revert_time_input(time):
-    """Takes a time list in [h, h, m, m, s, s] format and returns a tuple
-    (hh, mm, ss).
-    Parameters:
-    time: list format [h,h,m,m,s,s]
-    [h,h,m,m,s,s] -> (hh,mm,ss)
-    """
-    new_time = ''
-    for element in time:
-        new_time += str(element)
-    
-    n = 2
-    new_time = [new_time[i:i+n] for i in range(0, len(new_time), n)]
-    new_time = tuple([int(i) for i in new_time])
-    new_tuple = (new_time[0], new_time[1], new_time[2], 00)
-        
-    return new_tuple
 
         
 class Cdapp(object):
@@ -115,7 +80,7 @@ class Cdapp(object):
         self.reset_counter = 0
         
         # "hh:mm:ss" -> [h,h,m,m,s,s]
-        self.new_output = convert_time_input(self.output)
+        self.new_output = uf.string_to_list(self.output)
         # take off first element in new_output, and add label to the end
         self.new_output.pop(0)
         self.new_output.append(label)
@@ -129,7 +94,7 @@ class Cdapp(object):
             return
         
         #[h,h,m,m,s,s] -> (hh,mm,ss, ms (always zero))
-        self.new_output = revert_time_input(self.new_output)
+        self.new_output = uf.list_to_tuple(self.new_output)
         
         
         
@@ -143,7 +108,7 @@ class Cdapp(object):
     def print_elapsed(self):
         if self.on_state:
     
-            self.time_left = self.mytimer.format_time(self.mytimer.convert_time(self.mycountdown.time_remaining()))
+            self.time_left = uf.tuple_to_clockface(uf.seconds_to_tuple(self.mycountdown.time_remaining()))
             
             self.output = self.time_left[0]
             
@@ -174,7 +139,7 @@ class Cdapp(object):
         self.mycountdown.input_countdown_time(self.new_output)
         
         #change the countdown_Time for the Cdapp instance
-        self.countdown_time = self.mytimer.convert_time(self.mycountdown.countdown_time)
+        self.countdown_time = uf.seconds_to_tuple(self.mycountdown.countdown_time)
         
         #setting reset counter back to zero in case start is clicked after reset has been clicked once
         #so that it goes back to the original countdown time
@@ -224,14 +189,14 @@ class Cdapp(object):
         self.start_button.grid(row=1, column=0)
 
         self.mycountdown.reset_countdown()
-        self.countdown_time = self.mytimer.convert_time(self.mycountdown.countdown_time)
+        self.countdown_time = uf.seconds_to_tuple(self.mycountdown.countdown_time)
         self.on_state = False
         self.start_button.config(text = "START")
         self.click_counter = 0
         self.output = "{:02d}:{:02d}:{:02d}".format(self.countdown_time[0], self.countdown_time[1], self.countdown_time[2])
         self.small_output = "000"
-        self.new_output = convert_time_input(self.output)
-        self.new_output = revert_time_input(self.new_output)
+        self.new_output = uf.string_to_list(self.output)
+        self.new_output = uf.list_to_tuple(self.new_output)
         self.print_elapsed()
         print "here is output after being reset {}".format(self.output)
         print "this is the current countdown time {}".format(self.countdown_time)
