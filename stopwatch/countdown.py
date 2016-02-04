@@ -1,10 +1,11 @@
 import stopwatch as sw
 import time
+import utilityfunctions as uf
 
 
 class Countdown(object):
     
-    def __init__(self, countdown_time, timer_func):
+    def __init__(self, timer_func):
         """Creates a countdown timer.
         countdown_time: tuple (hh, mm, ss, ms)"""
         
@@ -37,7 +38,7 @@ class Countdown(object):
             countdown_time: tuple (hh, mm, ss, ms) """
         if type(countdown_time) != tuple:
             raise TypeError('input must be a tuple (hh, mm. ss, ms)')
-        self.countdown_time = self.timer.revert_time(countdown_time)
+        self.countdown_time = uf.tuple_to_seconds(countdown_time)
         
     def __enter__(self):
         self.start_countdown()

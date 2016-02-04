@@ -3,12 +3,14 @@ import stopwatch.stopwatch as sw
 import stopwatch.countdown as cd
 import unittest
 import time
+import stopwatch.utilityfunctions as uf
 
 class TestCountdown(unittest.TestCase):
     
     def setUp(self):
-        self.fake_time = sw.make_fake_time_function(range(10000))
-        self.countdown = cd.Countdown((0, 0, 10, 0), sw.fake_time)
+        self.fake_time = uf.make_fake_time_function(range(10000))
+        self.countdown = cd.Countdown(self.fake_time)
+        self.countdown.countdown_time = 10
         
     def test_init(self):
         nt.assert_true(isinstance(self.countdown.timer, sw.Stopwatch))

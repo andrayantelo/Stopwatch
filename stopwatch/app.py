@@ -1,5 +1,6 @@
 import Tkinter as tk
 import stopwatch as sw
+import utilityfunctions as uf
 
 
 class App(object):
@@ -33,7 +34,7 @@ class App(object):
     def print_elapsed(self):
         if self.on_state == True:
     
-            self.time_elapsed = self.my_timer.format_time(self.my_timer.convert_time(self.my_timer.elapsed()))
+            self.time_elapsed = uf.tuple_to_clockface(uf.seconds_to_tuple(self.my_timer.elapsed()))
             self.output = self.time_elapsed[0]
             self.small_output = self.time_elapsed[1]
             self.textvar.set(self.output)
