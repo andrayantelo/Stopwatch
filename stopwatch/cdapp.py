@@ -71,34 +71,34 @@ class Cdapp(object):
         self.new_output = (00,00,00)
                 
     def callback(self, label):
-        # WANT TO ADD LINE, IF TIMER IS RUNNING, DO NOTHING
+        #If timer is running, don't do anything
         if self.mycountdown.timer.running:
             print "timer is currently running"
             return
             
-        print "Click {}".format(self.click_counter)
+        #print "Click {}".format(self.click_counter)
         
         #this ensures that when reset is clicked after a number is clicked, the original countdown
         # time reappears
         self.reset_counter = 0
         
-        # "hh:mm:ss" -> [h,h,m,m,s,s]
+        # "hh:mm:ss" (what has been inputted by user using keypad) -> [h,h,m,m,s,s] 
         self.new_output = uf.string_to_list(self.output)
-        # take off first element in new_output, and add label to the end
+        # take off first element in new_output, and add label (keypad number pressed) to the end
         self.new_output.pop(0)
         self.new_output.append(label)
         
-        #count up 1
+        #count up 1, to keep track of how many spaces in hh:mm:ss have been filled
         self.click_counter += 1
         
+        #resets after the first h in hh:mm:ss has been filled (or rightmost number has moved all the way to leftmost spot)
         if self.click_counter > 6:
             self.output = self.new_output
             self.reset()
             return
         
-        #[h,h,m,m,s,s] -> (hh,mm,ss, ms (always zero))
+        #[h,h,m,m,s,s] -> (hh,mm,ss, ms (always zero)) 
         self.new_output = uf.list_to_tuple(self.new_output)
-        
         
         
         self.output = "{:02d}:{:02d}:{:02d}".format(self.new_output[0], self.new_output[1], self.new_output[2])
@@ -109,13 +109,15 @@ class Cdapp(object):
         
 
     def print_elapsed(self):
+        # if countdown is running
         if self.on_state:
     
             self.time_left = uf.tuple_to_clockface(uf.seconds_to_tuple(self.mycountdown.time_remaining()))
             
+            #separating hh:mm:ss and ms
             self.output = self.time_left[0]
-            
             self.small_output = self.time_left[1]
+            
             self.textvar.set(self.output)
             self.small_text.set(self.small_output)
             
@@ -123,12 +125,13 @@ class Cdapp(object):
             
             if self.mycountdown.time_remaining() < 0:
                 self.stop()
+                #remove start button 
                 if self.start_button.winfo_ismapped():
                     self.start_button.grid_forget()
                 
             self.root.after(50, self.print_elapsed)
             
-            
+        #if it's not running just display the current keypad output    
         else:
             
             self.textvar.set(self.output)
@@ -145,15 +148,14 @@ class Cdapp(object):
         self.countdown_time = uf.seconds_to_tuple(self.mycountdown.countdowntime)
         
         #setting reset counter back to zero in case start is clicked after reset has been clicked once
-        #so that it goes back to the original countdown time
+        #so that it goes back to the original countdown time (ensures that it resets to zero IFF reset has
+        #been clicked two times consecutively)
         self.reset_counter = 0
         
         print "this is the time remaining{}".format(self.mycountdown.time_remaining())
+        #won't run if there isn't a countdown time
         if self.mycountdown.time_remaining() <= 0:
             raise RuntimeError('Time remaining is zero, input a countdown time')
-            
-            
-        
             
         if not self.on_state:
             self.on_state = True
@@ -172,11 +174,14 @@ class Cdapp(object):
     def stop(self):
         self.mycountdown.stop_countdown()
         self.on_state = False
-        self.print_elapsed()
-        self.output = "00:00:00"
-        self.small_output = "000"
-        self.textvar.set(self.output)
-        self.small_text.set(self.small_output)
+        
+        # I don't know why I had the lines below
+        
+        #self.print_elapsed()
+        #self.output = "00:00:00"
+        #self.small_output = "000"
+        #self.textvar.set(self.output)
+        #self.small_text.set(self.small_output)
         return
         
         
