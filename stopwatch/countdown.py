@@ -56,7 +56,7 @@ class Countdown(object):
         self.stop_countdown()
         
 if __name__ == '__main__':        
-    my_countdown = Countdown((0, 0, 5, 0), real_time)
+    my_countdown = Countdown(real_time)
     #with t:
     #    while t.time_remaining() > 0:
     #        time.sleep(1)

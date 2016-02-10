@@ -71,6 +71,11 @@ class Cdapp(object):
         self.new_output = (00,00,00)
                 
     def callback(self, label):
+        # WANT TO ADD LINE, IF TIMER IS RUNNING, DO NOTHING
+        if self.mycountdown.timer.running:
+            print "timer is currently running"
+            return
+            
         print "Click {}".format(self.click_counter)
         
         #this ensures that when reset is clicked after a number is clicked, the original countdown
