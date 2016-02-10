@@ -66,7 +66,7 @@ def hide_me(event):
 
 def string_to_list(time):
     """Takes a time given in hh:mm:ss format and returns a list
-    [h,h,m,m,s,s].
+    ['h','h','m','m','s','s'].
     Parameters:
     time: string format 'hh:mm:ss' 
     """
@@ -81,11 +81,11 @@ def string_to_list(time):
     return new_time
     
 def list_to_tuple(time):
-    """Takes a time list in [h, h, m, m, s, s] format and returns a tuple
-    (hh, mm, ss).
+    """Takes a time list in ['h', 'h', 'm', 'm', 's', 's'] format and returns a tuple
+    (hh, mm, ss, ms).
     Parameters:
-    time: list format [h,h,m,m,s,s]
-    [h,h,m,m,s,s] -> (hh,mm,ss)
+    time: list format ['h','h','m','m','s','s']
+    ['h','h','m','m','s','s'] -> (hh,mm,ss, ms), ms always equal to 00
     """
     new_time = ''
     for element in time:

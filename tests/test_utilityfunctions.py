@@ -36,7 +36,7 @@ class TestUtilityfunctions(unittest.TestCase):
         #root = tk.Tk()
         #w = tk.Label(root, text="hello")
         #w.pack()
-        #nt.assert_equal(w.winfo_ismapped(), 1)
+        #gnt.assert_equal(w.winfo_ismapped(), 1)
         #uf.hide_me(w)
         #nt.assert_false(w.winfo_ismapped())
         
@@ -47,5 +47,15 @@ class TestUtilityfunctions(unittest.TestCase):
         w.winfo_ismapped()
         w.pack_forget()
         w.winfo_ismapped() """
+        
+    def test_string_to_list(self):
+        item = "13:52:10"
+        item = uf.string_to_list(item)
+        nt.assert_equal(item, ['1','3','5','2','1','0'])
+        
+    def test_list_to_tuple(self):
+        item = ['1','3','5','2','1','0']
+        item = uf.list_to_tuple(item)
+        nt.assert_equal(item, (13, 52, 10, 00))
         
         
