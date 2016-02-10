@@ -3,7 +3,7 @@ import nose.tools as nt
 import unittest
 import stopwatch.utilityfunctions as uf
 import Tkinter as tk
-import cdapp as ca
+import stopwatch.cdapp as ca
 
 class TestUtilityfunctions(unittest.TestCase):
     
@@ -32,10 +32,13 @@ class TestUtilityfunctions(unittest.TestCase):
         nt.assert_equal(uf.tuple_to_clockface(time_min_sec), ("00:55:45", "001"))
         
     def test_hide_me(self):
-        root = tk.Tk()
-        frame = tk.Frame(root)
-        test_button = tk.Button(frame)
-        test_button.pack()
+        pass
+        #root = tk.Tk()
+        #w = tk.Label(root, text="hello")
+        #w.pack()
+        #nt.assert_equal(w.winfo_ismapped(), 1)
+        #uf.hide_me(w)
+        #nt.assert_false(w.winfo_ismapped())
         
         """ Can use the following:
         root = tk.Tk()

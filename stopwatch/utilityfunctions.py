@@ -62,7 +62,7 @@ def tuple_to_clockface(clock_tuple):
     
 def hide_me(event):
     """ Hides a tkinter widget."""
-    event.widget.pack_forget()
+    event.pack_forget()
 
 def string_to_list(time):
     """Takes a time given in hh:mm:ss format and returns a list
