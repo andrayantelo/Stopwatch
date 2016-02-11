@@ -18,16 +18,21 @@ class Cdapp(object):
         self.countdown_time = uf.seconds_to_tuple(self.mycountdown.countdowntime)
         self.root = tk.Tk()
         self.root.title("Countdown")
+        #self.root.configure(bg="red")
+        
         
         self.textvar = tk.StringVar()
         self.output = "{:02d}:{:02d}:{:02d}".format(self.countdown_time[0], self.countdown_time[1], self.countdown_time[2])
         self.textvar.set(self.output)
-        self.label = tk.Label(textvariable=self.textvar, font=("Arial",16)).grid(row=0, column=0)
+        self.label = tk.Label(textvariable=self.textvar, font=("Arial",16))
+        self.label.grid(row=0, column=0)
         
         self.small_text = tk.StringVar()
         self.small_output = "000"
         self.small_text.set(self.small_output)
-        self.small_label = tk.Label(textvariable=self.small_text, width=5, font=("Arial",8)).grid(row=0, column=0, sticky="e")
+        self.small_label = tk.Label(textvariable=self.small_text,width=5, font=("Arial",8))
+        self.small_label.grid(row=0, column=0, sticky="e")
+        #self.small_label.configure(bg="red")
       
         self.frame = frame = tk.Frame(self.root)
         frame.grid()
@@ -69,6 +74,10 @@ class Cdapp(object):
         
         self.on_state = False
         self.new_output = (00,00,00)
+        
+    def flash_red(self, widget):
+        """Makes the background of the labels and root flash red."""
+        pass
                 
     def callback(self, label):
         #If timer is running, don't do anything
@@ -125,6 +134,7 @@ class Cdapp(object):
             
             if self.mycountdown.time_remaining() < 0:
                 self.stop()
+                
                 #remove start button 
                 if self.start_button.winfo_ismapped():
                     self.start_button.grid_forget()
@@ -176,12 +186,13 @@ class Cdapp(object):
         self.on_state = False
         
         # I don't know why I had the lines below
+        # so that you don'e end up wit h-1:59 after the countdown has elapsed
         
         #self.print_elapsed()
-        #self.output = "00:00:00"
-        #self.small_output = "000"
-        #self.textvar.set(self.output)
-        #self.small_text.set(self.small_output)
+        self.output = "00:00:00"
+        self.small_output = "000"
+        self.textvar.set(self.output)
+        self.small_text.set(self.small_output)
         return
         
         

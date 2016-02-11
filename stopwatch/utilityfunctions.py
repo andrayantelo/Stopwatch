@@ -43,9 +43,9 @@ def tuple_to_seconds(time_tuple):
     hour = time_tuple[0] * 3600
     minutes = time_tuple[1] * 60
     sec = time_tuple[2] 
-    milliseconds = time_tuple[3] * 0.001
+    #milliseconds = time_tuple[3] * 0.001
         
-    return hour + minutes + sec + milliseconds
+    return hour + minutes + sec #+ milliseconds
         
 def tuple_to_clockface(clock_tuple):
     """ Returns tuple of the time in a (('hour:minutes:seconds'), ms) format.
@@ -97,3 +97,13 @@ def list_to_tuple(time):
     new_tuple = (new_time[0], new_time[1], new_time[2], 00)
         
     return new_tuple
+    
+def flash_red(root, widget):
+    """Makes the background of the labels and root flash red."""
+    if widget.cget("bg") == '#d9d9d9':
+        widget.configure(bg="red")
+    else:
+        widget.configure(bg="#d9d9d9")
+        
+    #root.after(1000, flash_red(root, widget))
+    #return widget.cget("bg")
