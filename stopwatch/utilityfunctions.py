@@ -98,12 +98,9 @@ def list_to_tuple(time):
         
     return new_tuple
     
-def flash_red(root, widget):
-    """Makes the background of the labels and root flash red."""
-    if widget.cget("bg") == '#d9d9d9':
-        widget.configure(bg="red")
-    else:
-        widget.configure(bg="#d9d9d9")
-        
-    #root.after(1000, flash_red(root, widget))
+
     #return widget.cget("bg")
+    
+def return_bg_color(widget):
+    for w in widget:
+        w.configure(bg="#d9d9d9")

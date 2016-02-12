@@ -5,9 +5,9 @@ import time
 
 class Pomodoro(object):
     
-    def __init__(self, work_time, break_time):
-        self.work_countdown = cd.Countdown(work_time, sw.real_time)
-        self.break_countdown = cd.Countdown(break_time, sw.real_time)
+    def __init__(self):
+        self.work_countdown = cd.Countdown(sw.real_time)
+        self.break_countdown = cd.Countdown(sw.real_time)
         self.rounds_before_break = 4
         self.current_round = 0
         
@@ -23,6 +23,7 @@ class Pomodoro(object):
             return self.work_countdown
         else:
             return self.break_countdown
+    
             
     def start_pomodoro(self):
         self.active_countdown.start_countdown()

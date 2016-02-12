@@ -75,9 +75,24 @@ class Cdapp(object):
         self.on_state = False
         self.new_output = (00,00,00)
         
-    def flash_red(self, widget):
+        #toggle flag
+        self.keep_toggling = False
+        
+    def toggle_red(self, root, widget):
         """Makes the background of the labels and root flash red."""
-        pass
+        if not self.keep_toggling:
+            uf.return_bg_color(widget)
+            return
+        else:
+         
+            for w in widget:
+        
+                if w.cget("bg") == '#d9d9d9':
+                    w.configure(bg="red")
+                else:
+                    w.configure(bg="#d9d9d9")
+        
+            root.after(1000, self.toggle_red, root, widget)
                 
     def callback(self, label):
         #If timer is running, don't do anything
@@ -135,9 +150,14 @@ class Cdapp(object):
             if self.mycountdown.time_remaining() < 0:
                 self.stop()
                 
+                #change toggle flag
+                
                 #remove start button 
                 if self.start_button.winfo_ismapped():
                     self.start_button.grid_forget()
+                
+                self.keep_toggling = True
+                self.toggle_red(self.root, [self.root, self.label, self.small_label])
                 
             self.root.after(50, self.print_elapsed)
             
@@ -198,6 +218,8 @@ class Cdapp(object):
         
     def reset(self):
         print "timer is being reset"
+        self.keep_toggling = False
+        #uf.return_bg_color([self.root, self.label, self.small_label])
         
         if self.reset_counter >= 1:
             self.reset_counter = 0
