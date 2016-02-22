@@ -5,6 +5,7 @@ import Tkinter as tk
 from functools import partial
 from timeit import default_timer as real_time
 import utilityfunctions as uf
+import pygame as pg
 
 
 
@@ -78,6 +79,16 @@ class Cdapp(object):
         #toggle flag
         self.keep_toggling = False
         
+    def play_alert(self):
+        """Plays the time's up alert sound"""
+        
+        
+        pg.init()
+        pg.mixer.init()
+        time_up = pg.mixer.Sound("backupdings.wav")
+        
+        time_up.play()
+        
     def toggle_red(self, root, widget):
         """Makes the background of the labels and root flash red."""
         if not self.keep_toggling:
@@ -150,14 +161,21 @@ class Cdapp(object):
             if self.mycountdown.time_remaining() < 0:
                 self.stop()
                 
-                #change toggle flag
+                
                 
                 #remove start button 
                 if self.start_button.winfo_ismapped():
                     self.start_button.grid_forget()
                 
+                #change toggle flag
                 self.keep_toggling = True
                 self.toggle_red(self.root, [self.root, self.label, self.small_label])
+                #sound toggle??
+                ##
+                #play sound
+                self.play_alert()
+                
+                
                 
             self.root.after(50, self.print_elapsed)
             
