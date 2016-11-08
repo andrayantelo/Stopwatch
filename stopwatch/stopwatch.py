@@ -15,23 +15,22 @@ class Stopwatch(object):
         
     def start_timer(self):
         """Starts the timer."""
-        if self._start_time is not None:
+        if self.start_time is not None:
             raise RuntimeError('Timer already started')
             
-        self._start_time = self._now() 
-        self._start_state = True
+        self.start_time = self._now() 
         
         return 
         
     
     def stop_timer(self):
         """ Stops the timer. Returns time of stop."""
-        if self._start_time is None:
+        if self.start_time is None:
             raise RuntimeError('Timer has not been started')
-        self._stop_time =  self._now()
-        self.elapsed_time += self._stop_time - self._start_time
+        self.stop_time =  self._now()
+        self.elapsed_time += self.stop_time - self.start_time
         
-        self._start_time = None
+        self.start_time = None
 
         return
 
@@ -42,24 +41,47 @@ class Stopwatch(object):
         """
         
         #if it's running
-        if self._start_time is not None:
-            return (self._now() - self._start_time) + self.elapsed_time
+        if self.start_time is not None:
+            return (self._now() - self.start_time) + self.elapsed_time
         
         return self.elapsed_time
         
     def reset(self):
         """ Resets the start time to 0. """
         
-        self._stop_time = 0
+        self.stop_time = 0
         self.elapsed_time = 0
-        self._start_time = None
+        self.start_time = None
         
         return 
         
     @property
-    def running(self):
-        return self._start_time is not None
+    #the getter
+    def start_time(self):
+        print "geting start time value"
+        return self._start_time
         
+    #the setter
+    @start_time.setter
+    def start_time(self, value):
+        print "setting start time value"
+        self._start_time = value
+        
+    @property
+    #the getter
+    def stop_time(self):
+        "getting the stop time value"
+        return self._stop_time
+        
+    #the setter
+    @stop_time.setter
+    def stop_timer(self):
+        "setting the stop time value"
+        self._stop_time = value
+        
+        
+    
+    #what is this? look up context managers     
     def __enter__(self):
         self.start_timer()
         return self
