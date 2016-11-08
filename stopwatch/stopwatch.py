@@ -80,6 +80,15 @@ class Stopwatch(object):
         self._stop_time = value
         
         
+    @property 
+    def running(self):
+        #tells you if the timer is running, so if self._start_time = None
+        # then running will be False (because timer is not running)
+        #but if self._start_time != None then running will be True because
+        #that means the timer is running
+        return self._start_time is not None
+        
+        
     
     #what is this? look up context managers     
     def __enter__(self):

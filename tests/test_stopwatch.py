@@ -4,7 +4,10 @@ import unittest
 import time
 import stopwatch.utilityfunctions as uf
 
-    
+#see if you can use the with statement in here
+#look up and understand unittest
+#look up and understand nose.tools
+
 class TestStopwatch(unittest.TestCase):
     
     def setUp(self):
