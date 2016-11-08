@@ -6,7 +6,7 @@ class Stopwatch(object):
     
     def __init__(self, timer_func):
         """ Create a stopwatch timer
-        Parameters:"""
+        Parameters: timer_func"""
         
         self._stop_time = 0
         self._start_time = None
@@ -50,7 +50,6 @@ class Stopwatch(object):
     def reset(self):
         """ Resets the start time to 0. """
         
-        self._start_time = 0
         self._stop_time = 0
         self.elapsed_time = 0
         self._start_time = None
