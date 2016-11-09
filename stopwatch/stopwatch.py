@@ -15,18 +15,21 @@ class Stopwatch(object):
         
     def start_timer(self):
         """Starts the timer."""
+        #I think technically you can use try-except-else here
         if self.start_time is not None:
             raise RuntimeError('Timer already started')
             
         self.start_time = self._now() 
-        
+       
         return 
         
     
     def stop_timer(self):
         """ Stops the timer. Returns time of stop."""
+
         if self.start_time is None:
             raise RuntimeError('Timer has not been started')
+            
         self.stop_time =  self._now()
         self.elapsed_time += self.stop_time - self.start_time
         
