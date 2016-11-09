@@ -1,5 +1,6 @@
 #utilityfunctions testing module
 import nose.tools as nt
+import stopwatch.stopwatch as sw
 import unittest
 import stopwatch.utilityfunctions as uf
 import Tkinter as tk
