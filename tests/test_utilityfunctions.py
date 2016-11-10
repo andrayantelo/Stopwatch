@@ -22,7 +22,7 @@ class TestUtilityfunctions(unittest.TestCase):
         time_diff = (1.0, 30.0, 10.0, 1)
         time_diff = uf.tuple_to_seconds(time_diff)
         
-        nt.assert_equal(time_diff, 5410.001)
+        nt.assert_equal(time_diff, 5410)
         nt.assert_raises(TypeError, uf.tuple_to_seconds, 15)
         
     def test_tuple_to_clockface(self):
