@@ -5,10 +5,14 @@ import stopwatch as sw
 import time
 import Tkinter as tk
 from functools import partial
-from timeit import default_timer as real_time
 import utilityfunctions as uf
+
 
 class Pomapp(object):
     
     def __init__(self):
-        pass
+        self.mycountdown = cd.Countdown(sw.real_time)
+        self.mytimer = cd.Stopwatch(sw.real_time)
+        
+        
+        

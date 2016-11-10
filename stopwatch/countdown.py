@@ -14,14 +14,13 @@ class Countdown(object):
         #Convert time into seconds because countdown class works with seconds
         self._countdowntime = 0
     
+    def stop_countdown(self):
+        """Stops the countdown timer."""
+        self.timer.stop_timer()
         
     def start_countdown(self):
         """Starts the countdown timer."""
         self.timer.start_timer()
-        
-    def stop_countdown(self):
-        """Stops the countdown timer."""
-        self.timer.stop_timer()
         
     def time_remaining(self):
         """returns the time left in the countdown"""

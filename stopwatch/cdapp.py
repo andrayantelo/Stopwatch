@@ -3,7 +3,6 @@ import stopwatch as sw
 import time
 import Tkinter as tk
 from functools import partial
-from timeit import default_timer as real_time
 import utilityfunctions as uf
 import pygame as pg
 
@@ -13,8 +12,8 @@ import pygame as pg
 class Cdapp(object):
     #Cdapp class works with tuples for the time
     def __init__(self):
-        self.mycountdown = cd.Countdown(real_time)
-        self.mytimer = sw.Stopwatch(real_time)
+        self.mycountdown = cd.Countdown(sw.real_time)
+        self.mytimer = sw.Stopwatch(sw.real_time)
         #convert countdown_time (which is in seconds (this happens automatically when initializing a countdown)) to a tuple
         self.countdown_time = uf.seconds_to_tuple(self.mycountdown.countdowntime)
         self.root = tk.Tk()
