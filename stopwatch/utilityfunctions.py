@@ -1,10 +1,12 @@
 #utility functions module
 
+#first it makes an iterator out of the iterable object passed through
+
+#inner function which returns the next item in the nums iterator
+
 def make_fake_time_function(test_numbers):
-    #first it makes an iterator out of the iterable object passed through
     nums = iter(test_numbers)
     def fake_time():
-        #inner function which returns the next item in the nums iterator
         return nums.next()
     return fake_time
     
