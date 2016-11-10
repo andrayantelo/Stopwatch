@@ -66,6 +66,42 @@ class Pomapp(object):
                 row += 1
             if n == 9:
                 column = 1
+                
+    def select_countdown(self):
+        """selects the countdown to start with, either break or work 
+        countdown"""
+        pass
+                
+                
+    def play_alert(self):
+        """plays the time's up alert sound"""
+        pass
+        
+    def toggle_red(self):
+        """makes the background of the appropriate label flash red"""
+        pass
+        
+    def callback(self, label):
+        """defines what happens when you press on one of the keys on the
+        keypad"""
+        pass
+        
+    def print_to_countdown(self):
+        """prints how much time is left in the countdown"""
+        pass
+        
+    def start(self):
+        """starts the countdown (the countdown that is selected)"""
+        pass
+        
+    def stop(self):
+        """stops the selected countdown"""
+        pass
+        
+    def reset(self):
+        """resets the selected countdown"""
+        pass
+        
         
        
         
