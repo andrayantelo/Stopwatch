@@ -29,14 +29,29 @@ class Pomapp(object):
         self.work_button = tk.Button(self.work_frame, text="Work Time", width = 10).grid(row=0, column=4)
         
         self.break_label_text = tk.StringVar()
-        break_text = (str(self.break_countdown.countdowntime))
-        self.break_label_text.set(break_text)
+        break_text = uf.seconds_to_string(self.break_countdown.countdowntime)
+        self.break_label_text.set(break_text[0])
+        self.small_break_label_text = tk.StringVar()
+        self.small_break_label_text.set(break_text[1])
         
         
         self.break_label = tk.Label(self.break_frame, textvariable=self.break_label_text, width = 10, font=("Arial",16))
         self.break_label.grid(row=1, column=1)
-        self.work_label = tk.Label(self.work_frame, text="00:00:00", width=10, font=("Arial",16))
+        
+        self.small_break_label = tk.Label(self.break_frame, textvariable=self.small_break_label_text, width=5)
+        self.small_break_label.grid(row=1, column=2, sticky="w")
+        
+        self.work_label_text = tk.StringVar()
+        work_text = uf.seconds_to_string(self.work_countdown.countdowntime)
+        self.work_label_text.set(work_text[0])
+        self.small_work_label_text = tk.StringVar()
+        self.small_work_label_text.set(work_text[1])
+        
+        self.work_label = tk.Label(self.work_frame, textvariable=self.work_label_text, width=10, font=("Arial",16))
         self.work_label.grid(row=1, column=4)
+        
+        self.small_work_label = tk.Label(self.work_frame, textvariable=self.small_work_label_text, width=5)
+        self.small_work_label.grid(row=1, column=5, sticky="w")
         
         self.button_frame = tk.Frame(self.master).grid(row=3)
         
