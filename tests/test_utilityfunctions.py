@@ -59,4 +59,8 @@ class TestUtilityfunctions(unittest.TestCase):
         item = uf.list_to_tuple(item)
         nt.assert_equal(item, (13, 52, 10, 00))
         
+    def test_seconds_to_string(self):
+        number_of_seconds = 10
+        number_of_seconds = uf.seconds_to_string(number_of_seconds)
+        nt.assert_equal(number_of_seconds, ("00:00:10", "000"))
         

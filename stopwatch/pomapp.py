@@ -12,8 +12,12 @@ class Pomapp(object):
     
     def __init__(self, master):
         self.master = master
-        self.mycountdown = cd.Countdown(sw.real_time)
-        self.mytimer = sw.Stopwatch(sw.real_time)
+        
+        self.break_countdown = cd.Countdown(sw.real_time)
+        self.break_timer = sw.Stopwatch(sw.real_time)
+        
+        self.work_countdown = cd.Countdown(sw.real_time)
+        self.work_timer = sw.Stopwatch(sw.real_time)
         
         self.break_frame = tk.Frame(self.master).grid(row=0)
         
@@ -24,7 +28,12 @@ class Pomapp(object):
         self.break_button = tk.Button(self.break_frame, text="Break Time", width = 10).grid(row=0, column=1)
         self.work_button = tk.Button(self.work_frame, text="Work Time", width = 10).grid(row=0, column=4)
         
-        self.break_label = tk.Label(self.break_frame, text="00:00:00", width = 10, font=("Arial",16))
+        self.break_label_text = tk.StringVar()
+        break_text = (str(self.break_countdown.countdowntime))
+        self.break_label_text.set(break_text)
+        
+        
+        self.break_label = tk.Label(self.break_frame, textvariable=self.break_label_text, width = 10, font=("Arial",16))
         self.break_label.grid(row=1, column=1)
         self.work_label = tk.Label(self.work_frame, text="00:00:00", width=10, font=("Arial",16))
         self.work_label.grid(row=1, column=4)

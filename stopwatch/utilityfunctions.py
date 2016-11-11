@@ -108,3 +108,22 @@ def list_to_tuple(time):
 def return_bg_color(widget):
     for w in widget:
         w.configure(bg="#d9d9d9")
+        
+def seconds_to_string(time_in_seconds):
+    """Takes a time in seconds and returns a tuple of two strings "hh:mm:ss"
+    and "ms" 
+    time in seconds -> ("hh:mm:ss", "ms")
+    """
+    
+    milliseconds = time_in_seconds * 1000
+    sec, milliseconds = divmod(round(milliseconds,2), 1000)
+    minutes, sec = divmod(round(time_in_seconds,2), 60)
+    hours, minutes = divmod(round(minutes,2), 60)
+    output = (int(hours), int(minutes), int(sec), int(milliseconds))
+    output = ("{:02d}:{:02d}:{:02d}".format(output[0], output[1], output[2]), "{:03d}".format(output[3]))
+    return output
+    
+    
+    
+    
+    
