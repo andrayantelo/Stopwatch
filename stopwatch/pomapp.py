@@ -158,7 +158,11 @@ class Pomapp(object):
         
     def print_to_countdown(self):
         """prints how much time is left in the countdown"""
-        pass
+        
+        """write out what's supposed to happen
+        if the countdown is running, it needs to continuously update
+        the labels so that they display the correct time that is left 
+        in the countdown"""
         
     def start(self):
         """starts the countdown (the countdown that is selected)"""
