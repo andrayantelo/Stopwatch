@@ -8,29 +8,43 @@ from functools import partial
 import utilityfunctions as uf
 
 
+#I WAS LAST WORKING ON:FIGURING OUT HOW TO BIND A BUTTON TO A COMMAND
+#THAT HAS AN ARGUMENT
+
+#I don't want the countdowns to be able to run at the same time
+
 class Pomapp(object):
     
     def __init__(self, master):
         self.master = master
         
+        #the two different countdowns and their timers
         self.break_countdown = cd.Countdown(sw.real_time)
         self.break_timer = sw.Stopwatch(sw.real_time)
         
         self.work_countdown = cd.Countdown(sw.real_time)
         self.work_timer = sw.Stopwatch(sw.real_time)
         
+        #making separate frames for the countdowns
         self.break_frame = tk.Frame(self.master).grid(row=0)
         
         self.work_frame = tk.Frame(self.master).grid(row=0)
         
+        #giving the gui a title
         self.master.title("Pomodoro")
         
-        self.break_button = tk.Button(self.break_frame, text="Break Time", width = 10).grid(row=0, column=1)
-        self.work_button = tk.Button(self.work_frame, text="Work Time", width = 10).grid(row=0, column=4)
+        #making buttons to select the countdown you want to set/use
+        self.break_button = tk.Button(self.break_frame, text="Break Time", width = 10, command=self.select_countdown)
+        self.break_button.grid(row=0, column=1)
         
+        self.work_button = tk.Button(self.work_frame, text="Work Time", width = 10)
+        self.work_button.grid(row=0, column=4)
+        
+        #Making the labels for the break countdown, the labels are where the numbers will be printed
         self.break_label_text = tk.StringVar()
         break_text = uf.seconds_to_string(self.break_countdown.countdowntime)
         self.break_label_text.set(break_text[0])
+        #the small text is where the milliseconds are printed
         self.small_break_label_text = tk.StringVar()
         self.small_break_label_text.set(break_text[1])
         
@@ -41,9 +55,11 @@ class Pomapp(object):
         self.small_break_label = tk.Label(self.break_frame, textvariable=self.small_break_label_text, width=5)
         self.small_break_label.grid(row=1, column=2, sticky="w")
         
+        #Making the labels for the work countdown
         self.work_label_text = tk.StringVar()
         work_text = uf.seconds_to_string(self.work_countdown.countdowntime)
         self.work_label_text.set(work_text[0])
+        
         self.small_work_label_text = tk.StringVar()
         self.small_work_label_text.set(work_text[1])
         
@@ -53,6 +69,7 @@ class Pomapp(object):
         self.small_work_label = tk.Label(self.work_frame, textvariable=self.small_work_label_text, width=5)
         self.small_work_label.grid(row=1, column=5, sticky="w")
         
+        #the start/reset/quit buttons get a separate frame
         self.button_frame = tk.Frame(self.master).grid(row=3)
         
         self.start_button = tk.Button(self.break_frame, text="START", fg="green", width=5)
@@ -62,6 +79,7 @@ class Pomapp(object):
         self.quit_button = tk.Button(self.break_frame, text="QUIT", fg="red", width=5)
         self.quit_button.grid(row=2, column=3)
         
+        #separate frame for the keypad
         self.keypad_frame = tk.Frame(self.master).grid(row=2)
         
         #list of labels for the keypad buttons
@@ -91,10 +109,10 @@ class Pomapp(object):
             if n == 9:
                 column = 1
                 
-    def select_countdown(self):
+    def select_countdown(self, selected_button):
         """selects the countdown to start with, either break or work 
         countdown"""
-        pass
+        selected_button.config(relief="sunken")
                 
                 
     def play_alert(self):
