@@ -34,10 +34,10 @@ class Pomapp(object):
         self.master.title("Pomodoro")
         
         #making buttons to select the countdown you want to set/use
-        self.break_button = tk.Button(self.break_frame, text="Break Time", width = 10, command=self.select_countdown)
+        self.break_button = tk.Button(self.break_frame, text="Break Time", width = 10, command = lambda: self.select_countdown(self.break_button, self.work_button))
         self.break_button.grid(row=0, column=1)
         
-        self.work_button = tk.Button(self.work_frame, text="Work Time", width = 10)
+        self.work_button = tk.Button(self.work_frame, text="Work Time", width = 10, command = lambda: self.select_countdown(self.work_button, self.break_button))
         self.work_button.grid(row=0, column=4)
         
         #Making the labels for the break countdown, the labels are where the numbers will be printed
@@ -109,10 +109,17 @@ class Pomapp(object):
             if n == 9:
                 column = 1
                 
-    def select_countdown(self, selected_button):
+    def select_countdown(self, selected_button, unselected_button):
         """selects the countdown to start with, either break or work 
         countdown"""
-        selected_button.config(relief="sunken")
+        
+        if selected_button.cget("relief") == "raised":
+            selected_button.config(relief="sunken")
+            unselected_button.config(relief="raised")
+        else:
+            selected_button.config(relief="raised")
+            unselected_button.config(relief="sunken")
+        
                 
                 
     def play_alert(self):
