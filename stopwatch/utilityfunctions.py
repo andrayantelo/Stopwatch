@@ -118,6 +118,16 @@ def list_to_tuple(time):
 
     #return widget.cget("bg")
     
+def list_to_clockface(time):
+    """Takes a time in ['h', 'h', 'm', 'm', 's', 's'] format and returns 
+    time in a 'hour:minutes:seconds' format
+    """
+    time = list_to_tuple(time)
+    time = tuple_to_clockface(time)[0]
+    
+    return time
+    
+    
 def return_bg_color(widget):
     for w in widget:
         w.configure(bg="#d9d9d9")

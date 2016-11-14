@@ -110,6 +110,9 @@ class Pomapp(object):
             if n == 9:
                 column = 1
                 
+        self.large_output = ['0','0','0','0','0','0']
+        self.counter = 0
+                
     def select_countdown(self, selected_button, unselected_button):
         """selects the countdown to start with, either break or work 
         countdown"""
@@ -135,10 +138,22 @@ class Pomapp(object):
         """defines what happens when you press on one of the keys on the
         keypad"""
         
-        large_output = uf.sec_to_list(self.pomodoro.active_countdown.countdowntime)
-        print large_output
-        print self.countdown_labels[self.pomodoro.active_countdown]
-        print label
+        #MAYBE YOU CAN USE TRY FINALLY IN HERE
+        #THINK OF AN EXCEPT FOR THIS TRY
+        try:
+            if self.counter == 6:
+                self.large_output = ['0','0','0','0','0','0']
+                print self.large_output
+                self.counter = 0
+                return
+        # take off first element in large_output, and add label (keypad number pressed) to the end
+            self.large_output.pop(0)
+            self.large_output.append(label)
+            print self.large_output
+            self.counter += 1
+        finally:
+            self.countdown_labels[self.pomodoro.active_countdown][0].set(uf.list_to_clockface(self.large_output))
+            print label
         
     def print_to_countdown(self):
         """prints how much time is left in the countdown"""
