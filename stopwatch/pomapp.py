@@ -162,11 +162,32 @@ class Pomapp(object):
         
     def start(self):
         """starts the countdown (the countdown that is selected)"""
-        self.pomodoro.active_countdown.start_countdown()
+        #Set the active countdown's time to the input the user gave with the keypad
+        self.pomodoro.active_countdown.countdowntime = uf.list_to_tuple(self.large_output)
+       
+        #won't run if there isn't a countdown time
+        if self.pomodoro.active_countdown.time_remaining() <= 0:
+            raise RuntimeError('Time remaining is zero, input a countdown time')
+        
+        
+        if self.pomodoro.active_countdown.timer.running:
+            self.start_button.config(text = "START")
+        
+            self.stop()
+            self.print_to_countdown()
+            
+            print self.pomodoro.active_countdown.timer.running
+        else:  
+            self.start_button.config(text = "PAUSE")  
+            self.pomodoro.active_countdown.start_countdown()
+            self.print_to_countdown()
+            
+            print self.pomodoro.active_countdown.timer.running
         
     def stop(self):
         """stops the selected countdown"""
-        pass
+        self.pomodoro.active_countdown.stop_countdown()
+        
         
     def reset(self):
         """resets the selected countdown"""

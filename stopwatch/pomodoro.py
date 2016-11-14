@@ -3,6 +3,8 @@ import countdown as cd
 import time
 
 
+#NEED TO FIX THE ADVANCE ROUND FEATURE
+
 class Pomodoro(object):
     
     def __init__(self):
@@ -10,6 +12,9 @@ class Pomodoro(object):
         self.break_countdown = cd.Countdown(sw.real_time)
         self.rounds_before_break = 4
         self.current_round = 0
+        
+        #set work countdown as default
+        self._active_countdown = self.work_countdown
         
     def advance_round(self):
         
@@ -19,12 +24,14 @@ class Pomodoro(object):
             
     @property 
     def active_countdown(self):
-        if self.current_round %2 == 0:
-            return self.work_countdown
-        else:
-            return self.break_countdown
+        return self._active_countdown
     
-            
+    @active_countdown.setter
+    def active_countdown(self, active_countdown):
+        if type(active_countdown) != cd.Countdown:
+            raise TypeError('input must be an instance of Countdown')
+        self._active_countdown = active_countdown
+        
     def start_pomodoro(self):
         self.active_countdown.start_countdown()
         
@@ -49,3 +56,4 @@ class Pomodoro(object):
         
         
     
+ 
