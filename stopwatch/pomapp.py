@@ -2,6 +2,7 @@
 
 import countdown as cd
 import stopwatch as sw
+import pomodoro as pom
 import time
 import Tkinter as tk
 from functools import partial
@@ -18,12 +19,7 @@ class Pomapp(object):
     def __init__(self, master):
         self.master = master
         
-        #the two different countdowns and their timers
-        self.break_countdown = cd.Countdown(sw.real_time)
-        self.break_timer = sw.Stopwatch(sw.real_time)
-        
-        self.work_countdown = cd.Countdown(sw.real_time)
-        self.work_timer = sw.Stopwatch(sw.real_time)
+        self.pomodoro = pom.Pomodoro()
         
         #making separate frames for the countdowns
         self.break_frame = tk.Frame(self.master).grid(row=0)
@@ -42,7 +38,7 @@ class Pomapp(object):
         
         #Making the labels for the break countdown, the labels are where the numbers will be printed
         self.break_label_text = tk.StringVar()
-        break_text = uf.seconds_to_string(self.break_countdown.countdowntime)
+        break_text = uf.seconds_to_string(self.pomodoro.break_countdown.countdowntime)
         self.break_label_text.set(break_text[0])
         #the small text is where the milliseconds are printed
         self.small_break_label_text = tk.StringVar()
@@ -57,7 +53,7 @@ class Pomapp(object):
         
         #Making the labels for the work countdown
         self.work_label_text = tk.StringVar()
-        work_text = uf.seconds_to_string(self.work_countdown.countdowntime)
+        work_text = uf.seconds_to_string(self.pomodoro.work_countdown.countdowntime)
         self.work_label_text.set(work_text[0])
         
         self.small_work_label_text = tk.StringVar()
@@ -76,8 +72,8 @@ class Pomapp(object):
         self.start_button.grid(row=2, column=0)
         self.reset_button = tk.Button(self.break_frame, text="RESET", fg="orange", width=5)
         self.reset_button.grid(row=2, column=1)
-        self.quit_button = tk.Button(self.break_frame, text="QUIT", fg="red", width=5)
-        self.quit_button.grid(row=2, column=3)
+       # self.quit_button = tk.Button(self.break_frame, text="QUIT", fg="red", width=5)
+       #self.quit_button.grid(row=2, column=3)
         
         #separate frame for the keypad
         self.keypad_frame = tk.Frame(self.master).grid(row=2)
@@ -98,8 +94,8 @@ class Pomapp(object):
         
         for label in self.keypad_button_list:
             #this will be where you assign the command for each button
-            #button_command = partial(self.callback, label)
-            number_button[n] = tk.Button(self.keypad_frame, text=label, width=5)
+            button_command = partial(self.callback, label)
+            number_button[n] = tk.Button(self.keypad_frame, text=label, width=5, command=button_command)
             number_button[n].grid(row=row, column=column)
             n += 1
             column += 1
@@ -133,7 +129,7 @@ class Pomapp(object):
     def callback(self, label):
         """defines what happens when you press on one of the keys on the
         keypad"""
-        pass
+        print label
         
     def print_to_countdown(self):
         """prints how much time is left in the countdown"""
