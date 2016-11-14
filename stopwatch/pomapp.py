@@ -73,7 +73,7 @@ class Pomapp(object):
         #the start/reset/quit buttons get a separate frame
         self.button_frame = tk.Frame(self.master).grid(row=3)
         
-        self.start_button = tk.Button(self.break_frame, text="START", fg="green", width=5)
+        self.start_button = tk.Button(self.break_frame, text="START", fg="green", width=5, command=self.start)
         self.start_button.grid(row=2, column=0)
         self.reset_button = tk.Button(self.break_frame, text="RESET", fg="orange", width=5)
         self.reset_button.grid(row=2, column=1)
@@ -138,22 +138,23 @@ class Pomapp(object):
         """defines what happens when you press on one of the keys on the
         keypad"""
         
-        #MAYBE YOU CAN USE TRY FINALLY IN HERE
-        #THINK OF AN EXCEPT FOR THIS TRY
         try:
-            if self.counter == 6:
+            if self.pomodoro.active_countdown.timer.running:
+                raise RuntimeError("Timer is currently running")
+            elif self.counter == 6:
                 self.large_output = ['0','0','0','0','0','0']
-                print self.large_output
                 self.counter = 0
                 return
         # take off first element in large_output, and add label (keypad number pressed) to the end
             self.large_output.pop(0)
             self.large_output.append(label)
-            print self.large_output
+            
             self.counter += 1
+        except RuntimeError:
+            print "The timer is currently running."
         finally:
             self.countdown_labels[self.pomodoro.active_countdown][0].set(uf.list_to_clockface(self.large_output))
-            print label
+            
         
     def print_to_countdown(self):
         """prints how much time is left in the countdown"""
@@ -161,7 +162,7 @@ class Pomapp(object):
         
     def start(self):
         """starts the countdown (the countdown that is selected)"""
-        pass
+        self.pomodoro.active_countdown.start_countdown()
         
     def stop(self):
         """stops the selected countdown"""
