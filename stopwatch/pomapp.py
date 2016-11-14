@@ -65,6 +65,11 @@ class Pomapp(object):
         self.small_work_label = tk.Label(self.work_frame, textvariable=self.small_work_label_text, width=5)
         self.small_work_label.grid(row=1, column=5, sticky="w")
         
+        #define a dictionary containing labels to associate with their countdowns
+        self.countdown_labels = {self.pomodoro.work_countdown : (self.work_label_text, self.small_work_label_text),
+                               self.pomodoro.break_countdown : (self.break_label_text, self.small_break_label_text)
+                               }
+        
         #the start/reset/quit buttons get a separate frame
         self.button_frame = tk.Frame(self.master).grid(row=3)
         
@@ -129,6 +134,10 @@ class Pomapp(object):
     def callback(self, label):
         """defines what happens when you press on one of the keys on the
         keypad"""
+        
+        large_output = uf.sec_to_list(self.pomodoro.active_countdown.countdowntime)
+        print large_output
+        print self.countdown_labels[self.pomodoro.active_countdown]
         print label
         
     def print_to_countdown(self):

@@ -84,6 +84,19 @@ def string_to_list(time):
 
     return new_time
     
+def sec_to_list(time):
+    """Takes a time given in seconds and returns a list ['h','h','m','m','s','s'].
+    Parameters:
+    time in seconds
+    """
+    
+    time = seconds_to_tuple(time)
+    time = tuple_to_clockface(time)
+    time = string_to_list(time[0])
+    
+    return time
+    
+    
 def list_to_tuple(time):
     """Takes a time list in ['h', 'h', 'm', 'm', 's', 's'] format and returns a tuple
     (hh, mm, ss, ms).
