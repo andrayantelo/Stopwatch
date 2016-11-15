@@ -113,8 +113,6 @@ class Pomapp(object):
              
         #the actual_output is just the active time's countdown time 
         self.actual_output = ['0','0','0','0','0','0']
-        #the temporary_output becomes the actual_output once the pomodoro app is started
-        self.temporary_output = ['0','0','0','0','0','0']
         self.callback_counter = 0
         self.reset_counter = 0
                 
@@ -146,22 +144,26 @@ class Pomapp(object):
         keypad"""
         
         try:
+            print "this is the countdown time at the beginning of callback " + str(self.pomodoro.active_countdown.countdowntime)
+            self.callback_counter += 1
             if self.pomodoro.active_countdown.timer.running:
                 raise RuntimeError("Timer is currently running")
             elif self.callback_counter == 6:
-                self.temporary_output = ['0','0','0','0','0','0']
+                self.actual_output = ['0','0','0','0','0','0']
                 self.callback_counter = 0
                 return
             self.reset_counter = 0
         # take off first element in large_output, and add label (keypad number pressed) to the end
-            self.temporary_output.pop(0)
-            self.temporary_output.append(label)
+            self.actual_output.pop(0)
+            self.actual_output.append(label)
             
-            self.callback_counter += 1
+            
         except RuntimeError:
             print "The timer is currently running."
         finally:
-            self.countdown_labels[self.pomodoro.active_countdown][0].set(uf.list_to_clockface(self.temporary_output))
+            self.countdown_labels[self.pomodoro.active_countdown][0].set(uf.list_to_clockface(self.actual_output))
+            print "this is the countdown time at the end of callback " + str(self.pomodoro.active_countdown.countdowntime)
+            
 
             
         
@@ -193,7 +195,6 @@ class Pomapp(object):
     def start(self):
         """starts the countdown (the countdown that is selected)"""
         #Set the active countdown's time to the input the user gave with the keypad
-        self.actual_output = self.temporary_output
         self.pomodoro.active_countdown.countdowntime = uf.list_to_tuple(self.actual_output)
         self.reset_counter = 0
        
@@ -229,7 +230,10 @@ class Pomapp(object):
             
         elif self.reset_counter >= 1:
             self.reset_counter = 0
+            self.callback_counter = 0
+            self.actual_output = ['0','0','0','0','0','0']
             self.pomodoro.reset_pomodoro()
+            print "this is the countdown time " + str(self.pomodoro.active_countdown.countdowntime)
             self.countdown_labels[self.pomodoro.active_countdown][0].set(uf.sec_to_clockface(self.pomodoro.active_countdown.countdowntime)[0])
             self.countdown_labels[self.pomodoro.active_countdown][1].set("000")
         self.reset_counter += 1
