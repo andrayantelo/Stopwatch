@@ -127,6 +127,13 @@ def list_to_clockface(time):
     
     return time
     
+def sec_to_clockface(time):
+    """takes a time in seconds and returns "hh:mm:ss"""
+    
+    time = sec_to_list(time)
+    time = list_to_clockface(time)
+    return time
+    
     
 def return_bg_color(widget):
     for w in widget:

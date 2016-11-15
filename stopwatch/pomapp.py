@@ -9,9 +9,6 @@ from functools import partial
 import utilityfunctions as uf
 
 
-#I WAS LAST WORKING ON:FIGURING OUT HOW TO BIND A BUTTON TO A COMMAND
-#THAT HAS AN ARGUMENT
-
 #I don't want the countdowns to be able to run at the same time
 
 class Pomapp(object):
@@ -75,7 +72,7 @@ class Pomapp(object):
         
         self.start_button = tk.Button(self.break_frame, text="START", fg="green", width=5, command=self.start)
         self.start_button.grid(row=2, column=0)
-        self.reset_button = tk.Button(self.break_frame, text="RESET", fg="orange", width=5)
+        self.reset_button = tk.Button(self.break_frame, text="RESET", fg="orange", width=5, command=self.print_to_countdown)
         self.reset_button.grid(row=2, column=1)
        # self.quit_button = tk.Button(self.break_frame, text="QUIT", fg="red", width=5)
        #self.quit_button.grid(row=2, column=3)
@@ -163,6 +160,13 @@ class Pomapp(object):
         if the countdown is running, it needs to continuously update
         the labels so that they display the correct time that is left 
         in the countdown"""
+        
+        if self.pomodoro.active_countdown.timer.running:
+            output = uf.sec_to_clockface(self.pomodoro.time_remaining())
+            self.countdown_labels[self.pomodoro.active_countdown][0].set(output)
+            #print self.countdown_labels[self.pomodoro.active_countdown][1]
+            
+        self.master.after(50, self.print_to_countdown)
         
     def start(self):
         """starts the countdown (the countdown that is selected)"""
