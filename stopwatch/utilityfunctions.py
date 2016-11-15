@@ -128,10 +128,16 @@ def list_to_clockface(time):
     return time
     
 def sec_to_clockface(time):
-    """takes a time in seconds and returns "hh:mm:ss"""
+    """takes a time in seconds and returns ("hh:mm:ss", "ms")"""
     
-    time = sec_to_list(time)
-    time = list_to_clockface(time)
+    milliseconds = time * 1000
+    sec, milliseconds = divmod(round(milliseconds,2), 1000)
+    minutes, sec = divmod(round(time,2), 60)
+    hours, minutes = divmod(round(minutes,2), 60)
+    output = (int(hours), int(minutes), int(sec), milliseconds)
+        
+    
+    time = tuple_to_clockface(output)
     return time
     
     

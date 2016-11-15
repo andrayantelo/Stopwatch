@@ -163,10 +163,18 @@ class Pomapp(object):
         
         if self.pomodoro.active_countdown.timer.running:
             output = uf.sec_to_clockface(self.pomodoro.time_remaining())
-            self.countdown_labels[self.pomodoro.active_countdown][0].set(output)
+            self.countdown_labels[self.pomodoro.active_countdown][0].set(output[0])
+            self.countdown_labels[self.pomodoro.active_countdown][1].set(output[1])
             #print self.countdown_labels[self.pomodoro.active_countdown][1]
+            print "this is the time remaining..."
+            print self.pomodoro.active_countdown.time_remaining()
             
-        self.master.after(50, self.print_to_countdown)
+            
+            if self.pomodoro.active_countdown.time_remaining() < 0:
+                self.stop()
+                
+            
+            self.master.after(50, self.print_to_countdown)
         
     def start(self):
         """starts the countdown (the countdown that is selected)"""
@@ -195,6 +203,12 @@ class Pomapp(object):
     def stop(self):
         """stops the selected countdown"""
         self.pomodoro.active_countdown.stop_countdown()
+        
+        #the following two lines are done so that you don't end up with negative
+        #numbers on the number display on the gui
+        
+        self.countdown_labels[self.pomodoro.active_countdown][0].set("00:00:00")
+        self.countdown_labels[self.pomodoro.active_countdown][1].set("000")
         
         
     def reset(self):
