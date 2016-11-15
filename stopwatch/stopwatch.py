@@ -61,25 +61,21 @@ class Stopwatch(object):
     @property
     #the getter
     def start_time(self):
-        print "geting start time value"
         return self._start_time
         
     #the setter
     @start_time.setter
     def start_time(self, value):
-        print "setting start time value"
         self._start_time = value
         
     @property
     #the getter
     def stop_time(self):
-        print "getting the stop time value"
         return self._stop_time
         
     #the setter
     @stop_time.setter
     def stop_time(self, value):
-        print "setting the stop time value"
         self._stop_time = value
         
         

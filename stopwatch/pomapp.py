@@ -66,13 +66,17 @@ class Pomapp(object):
         self.countdown_labels = {self.pomodoro.work_countdown : (self.work_label_text, self.small_work_label_text),
                                self.pomodoro.break_countdown : (self.break_label_text, self.small_break_label_text)
                                }
+                               
+        #define a dictionary containing the countdowns associated with their buttons
+        self.countdown_buttons = {self.work_button : self.pomodoro.work_countdown,
+                                  self.break_button : self.pomodoro.break_countdown}
         
         #the start/reset/quit buttons get a separate frame
         self.button_frame = tk.Frame(self.master).grid(row=3)
         
         self.start_button = tk.Button(self.break_frame, text="START", fg="green", width=5, command=self.start)
         self.start_button.grid(row=2, column=0)
-        self.reset_button = tk.Button(self.break_frame, text="RESET", fg="orange", width=5, command=self.print_to_countdown)
+        self.reset_button = tk.Button(self.break_frame, text="RESET", fg="orange", width=5, command=self.reset)
         self.reset_button.grid(row=2, column=1)
        # self.quit_button = tk.Button(self.break_frame, text="QUIT", fg="red", width=5)
        #self.quit_button.grid(row=2, column=3)
@@ -106,9 +110,13 @@ class Pomapp(object):
                 row += 1
             if n == 9:
                 column = 1
-                
-        self.large_output = ['0','0','0','0','0','0']
-        self.counter = 0
+             
+        #the actual_output is just the active time's countdown time 
+        self.actual_output = ['0','0','0','0','0','0']
+        #the temporary_output becomes the actual_output once the pomodoro app is started
+        self.temporary_output = ['0','0','0','0','0','0']
+        self.callback_counter = 0
+        self.reset_counter = 0
                 
     def select_countdown(self, selected_button, unselected_button):
         """selects the countdown to start with, either break or work 
@@ -121,7 +129,9 @@ class Pomapp(object):
             selected_button.config(relief="raised")
             unselected_button.config(relief="sunken")
         
-                
+        #make the selected countdown the active countdown
+        self.pomodoro.active_countdown = self.countdown_buttons[selected_button]
+        
                 
     def play_alert(self):
         """plays the time's up alert sound"""
@@ -138,19 +148,21 @@ class Pomapp(object):
         try:
             if self.pomodoro.active_countdown.timer.running:
                 raise RuntimeError("Timer is currently running")
-            elif self.counter == 6:
-                self.large_output = ['0','0','0','0','0','0']
-                self.counter = 0
+            elif self.callback_counter == 6:
+                self.temporary_output = ['0','0','0','0','0','0']
+                self.callback_counter = 0
                 return
+            self.reset_counter = 0
         # take off first element in large_output, and add label (keypad number pressed) to the end
-            self.large_output.pop(0)
-            self.large_output.append(label)
+            self.temporary_output.pop(0)
+            self.temporary_output.append(label)
             
-            self.counter += 1
+            self.callback_counter += 1
         except RuntimeError:
             print "The timer is currently running."
         finally:
-            self.countdown_labels[self.pomodoro.active_countdown][0].set(uf.list_to_clockface(self.large_output))
+            self.countdown_labels[self.pomodoro.active_countdown][0].set(uf.list_to_clockface(self.temporary_output))
+
             
         
     def print_to_countdown(self):
@@ -165,13 +177,15 @@ class Pomapp(object):
             output = uf.sec_to_clockface(self.pomodoro.time_remaining())
             self.countdown_labels[self.pomodoro.active_countdown][0].set(output[0])
             self.countdown_labels[self.pomodoro.active_countdown][1].set(output[1])
-            #print self.countdown_labels[self.pomodoro.active_countdown][1]
-            print "this is the time remaining..."
-            print self.pomodoro.active_countdown.time_remaining()
-            
             
             if self.pomodoro.active_countdown.time_remaining() < 0:
                 self.stop()
+                #the following two lines are done so that you don't end up with negative
+                #numbers on the number display on the gui
+                
+                self.start_button.config(text = "START")
+                self.countdown_labels[self.pomodoro.active_countdown][0].set("00:00:00")
+                self.countdown_labels[self.pomodoro.active_countdown][1].set("000")
                 
             
             self.master.after(50, self.print_to_countdown)
@@ -179,7 +193,9 @@ class Pomapp(object):
     def start(self):
         """starts the countdown (the countdown that is selected)"""
         #Set the active countdown's time to the input the user gave with the keypad
-        self.pomodoro.active_countdown.countdowntime = uf.list_to_tuple(self.large_output)
+        self.actual_output = self.temporary_output
+        self.pomodoro.active_countdown.countdowntime = uf.list_to_tuple(self.actual_output)
+        self.reset_counter = 0
        
         #won't run if there isn't a countdown time
         if self.pomodoro.active_countdown.time_remaining() <= 0:
@@ -187,33 +203,37 @@ class Pomapp(object):
         
         
         if self.pomodoro.active_countdown.timer.running:
-            self.start_button.config(text = "START")
-        
             self.stop()
             self.print_to_countdown()
+            self.start_button.config(text = "START")
             
             print self.pomodoro.active_countdown.timer.running
         else:  
-            self.start_button.config(text = "PAUSE")  
             self.pomodoro.active_countdown.start_countdown()
             self.print_to_countdown()
+            self.start_button.config(text = "PAUSE")  
             
             print self.pomodoro.active_countdown.timer.running
         
     def stop(self):
         """stops the selected countdown"""
         self.pomodoro.active_countdown.stop_countdown()
-        
-        #the following two lines are done so that you don't end up with negative
-        #numbers on the number display on the gui
-        
-        self.countdown_labels[self.pomodoro.active_countdown][0].set("00:00:00")
-        self.countdown_labels[self.pomodoro.active_countdown][1].set("000")
-        
+        print self.pomodoro.active_countdown.timer.running
         
     def reset(self):
         """resets the selected countdown"""
-        pass
+        
+        if self.reset_counter == 0:
+            self.countdown_labels[self.pomodoro.active_countdown][0].set(uf.list_to_clockface(self.actual_output))
+            self.countdown_labels[self.pomodoro.active_countdown][1].set("000")
+            
+        elif self.reset_counter >= 1:
+            self.reset_counter = 0
+            self.pomodoro.reset_pomodoro()
+            self.countdown_labels[self.pomodoro.active_countdown][0].set(uf.sec_to_clockface(self.pomodoro.active_countdown.countdowntime)[0])
+            self.countdown_labels[self.pomodoro.active_countdown][1].set("000")
+        self.reset_counter += 1
+        print self.reset_counter
         
         
        
