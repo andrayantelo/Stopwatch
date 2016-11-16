@@ -223,23 +223,41 @@ class Pomapp(object):
         
     def reset(self):
         """resets the selected countdown"""
+        print "this is the reset_counter at the beginning of reset " + str(self.reset_counter)
+        print "this is the self.actual_output at the beginning being reset " + str(self.actual_output)
+        print "this is the countdowntime at the beginning being reset " + str(self.pomodoro.active_countdown.countdowntime)
+        print "this is the time remaining at the beginning being reset " + str(self.pomodoro.time_remaining())
         
-        if self.reset_counter == 0:
-            self.countdown_labels[self.pomodoro.active_countdown][0].set(uf.list_to_clockface(self.actual_output))
-            self.countdown_labels[self.pomodoro.active_countdown][1].set("000")
-            
-        elif self.reset_counter >= 1:
+        if self.reset_counter >= 1:
             self.reset_counter = 0
             self.callback_counter = 0
+            self.pomodoro.active_countdown.countdowntime = (0,0,0,0)
             self.actual_output = ['0','0','0','0','0','0']
-            self.pomodoro.reset_pomodoro()
-            print "this is the countdown time " + str(self.pomodoro.active_countdown.countdowntime)
-            self.countdown_labels[self.pomodoro.active_countdown][0].set(uf.sec_to_clockface(self.pomodoro.active_countdown.countdowntime)[0])
-            self.countdown_labels[self.pomodoro.active_countdown][1].set("000")
+            print "this is the countdowntime right after setting it equal to zero: " + str(self.pomodoro.active_countdown.countdowntime)
+            
+        
+        self.pomodoro.reset_pomodoro()
+        
         self.reset_counter += 1
-        print self.reset_counter
         
+        print "this is the countdowntime before you set the text variable: " + str(uf.sec_to_clockface(self.pomodoro.active_countdown.countdowntime)[0])
+        self.countdown_labels[self.pomodoro.active_countdown][0].set(uf.sec_to_clockface(self.pomodoro.active_countdown.countdowntime)[0])
+        self.countdown_labels[self.pomodoro.active_countdown][1].set("000")
         
+        print "this is the reset_counter at the end of reset " + str(self.reset_counter)
+        print "this is the self.actual_output after being reset " + str(self.actual_output)
+        print "this is the countdowntime after being reset " + str(self.pomodoro.active_countdown.countdowntime)
+        print "this is the time remaining after being reset " + str(self.pomodoro.time_remaining())
+        print "this should be identical to the line above" + str(self.pomodoro.active_countdown.time_remaining())
+        print "this is self.actual_output at the end of reset" + str(self.actual_output)
+        
+#TODO:
+#FIX RESET
+#HAVE THE COUNTDOWN SELECTION PROCESS ACTUALLY WORK
+#HAVE THE COUNTDOWNS ACTUALLY TOGGLE
+#ADD BELLS AND WHISTLES  
+#ADD BETTER COMMENTS
+#FIX A FEW FORMATTING ISSUES      
        
         
 

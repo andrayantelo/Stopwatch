@@ -42,9 +42,10 @@ class Pomodoro(object):
         return self.active_countdown.time_remaining()
         
     def reset_pomodoro(self):
-        self.work_countdown.countdowntime = (0,0,0,0)
-        self.break_countdown.countdowntime = (0,0,0,0)
+        
         self.current_round = 0
+        self.work_countdown.reset_countdown()
+        self.break_countdown.reset_countdown()
         
     def input_times(self, work_time, break_time):
         """Change the work and break times"""
