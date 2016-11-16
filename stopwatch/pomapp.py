@@ -190,16 +190,28 @@ class Pomapp(object):
                 self.start_button.config(text = "START")
                 self.countdown_labels[self.pomodoro.active_countdown][0].set("00:00:00")
                 self.countdown_labels[self.pomodoro.active_countdown][1].set("000")
-                self.pomodoro.toggle_countdown()
+                #the next line is done so that after a countdown is done, if you input a number, it starts from 0
+                self.actual_output[self.pomodoro.active_countdown] = ['0','0','0','0','0','0']
+                
+                #self.toggle_countdown()
+                
                 print "this is now the active_countdown: " + self.pomodoro.active_countdown.name
                 
             
             self.master.after(50, self.print_to_countdown)
+            
+    def toggle_countdown(self):
+        """this will toggle the countdown, and start it."""
+        self.pomodoro.toggle_countdown()
+        self.start()
+        
         
     def start(self):
         """starts the countdown (the countdown that is selected)"""
         #Set the active countdown's time to the input the user gave with the keypad
+        print "this is the time remaining at the beginning of the start method: " + str(self.pomodoro.time_remaining())
         self.pomodoro.active_countdown.countdowntime = uf.list_to_tuple(self.actual_output[self.pomodoro.active_countdown])
+        print "this is the time remaining after the first line in start method: " + str(self.pomodoro.time_remaining())
         self.reset_counter = 0
        
         #won't run if there isn't a countdown time
@@ -236,7 +248,7 @@ class Pomapp(object):
             self.reset_counter = 0
             self.callback_counter = 0
             self.pomodoro.active_countdown.countdowntime = (0,0,0,0)
-            self.actual_output[self.pomodoro.active_countdown] = ['0','0','0','0','0','0']
+            #self.actual_output[self.pomodoro.active_countdown] = ['0','0','0','0','0','0']
             print "this is the countdowntime right after setting it equal to zero: " + str(self.pomodoro.active_countdown.countdowntime)
             
         
@@ -266,7 +278,7 @@ class Pomapp(object):
 #FIX A FEW FORMATTING ISSUES      
        
         
-
+#THE PROBLEM: COUNTDOWN ENDS, CLICK RESET ONCE, TRY TO START AGAIN AND IT FAILS
 def main():
     """run main."""
     #creating the root window of our application with the Tk class
