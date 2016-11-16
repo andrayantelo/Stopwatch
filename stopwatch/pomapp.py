@@ -168,8 +168,6 @@ class Pomapp(object):
             self.countdown_labels[self.pomodoro.active_countdown][0].set(uf.list_to_clockface(self.actual_output[self.pomodoro.active_countdown]))
             print "this is the countdown time at the end of callback " + str(self.pomodoro.active_countdown.countdowntime)
             
-
-            
         
     def print_to_countdown(self):
         """prints how much time is left in the countdown"""
@@ -192,6 +190,8 @@ class Pomapp(object):
                 self.start_button.config(text = "START")
                 self.countdown_labels[self.pomodoro.active_countdown][0].set("00:00:00")
                 self.countdown_labels[self.pomodoro.active_countdown][1].set("000")
+                self.pomodoro.toggle_countdown()
+                print "this is now the active_countdown: " + self.pomodoro.active_countdown.name
                 
             
             self.master.after(50, self.print_to_countdown)
@@ -257,7 +257,7 @@ class Pomapp(object):
         
 #TODO:
 #FIX RESET *
-#HAVE THE COUNTDOWN SELECTION PROCESS ACTUALLY WORK
+#HAVE THE COUNTDOWN SELECTION PROCESS ACTUALLY WORK *
 #HAVE THE COUNTDOWNS ACTUALLY TOGGLE
 #when your timer ends, figure out what you want to happen when the user tries to input a number without resetting first. 
      #in the countdown app, it appears that the countdown has reset
