@@ -6,10 +6,14 @@ from timeit import default_timer as real_time
 
 class Countdown(object):
     
-    def __init__(self, timer_func):
+    
+    #11/16/2016 ADDED NAME ATTRIBUTE, THIS WILL BREAK OTHER MODULES THAT USE COUNTDOWN EXCEPT THE POMODORO STUFF
+    #CAN REMOVE AFTER SELECTION PROCESS IN POMODORO WORKS
+    def __init__(self, timer_func, name):
         """Creates a countdown timer.
         countdown_time: tuple (hh, mm, ss, ms)"""
         
+        self.name = name
         self.timer = sw.Stopwatch(timer_func)
         #Convert time into seconds because countdown class works with seconds
         self._countdowntime = 0

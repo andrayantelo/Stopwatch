@@ -112,7 +112,10 @@ class Pomapp(object):
                 column = 1
              
         #the actual_output is just the active time's countdown time 
-        self.actual_output = ['0','0','0','0','0','0']
+        #dictionary containing the countdowns with their associated display outputs
+        self.actual_output = {self.pomodoro.work_countdown: ['0','0','0','0','0','0'],
+                              self.pomodoro.break_countdown: ['0','0','0','0','0','0']}
+                              
         self.callback_counter = 0
         self.reset_counter = 0
                 
@@ -129,6 +132,7 @@ class Pomapp(object):
         
         #make the selected countdown the active countdown
         self.pomodoro.active_countdown = self.countdown_buttons[selected_button]
+        print "this is now the current countdown: " + str(self.pomodoro.active_countdown.name)
         
                 
     def play_alert(self):
@@ -149,19 +153,19 @@ class Pomapp(object):
             if self.pomodoro.active_countdown.timer.running:
                 raise RuntimeError("Timer is currently running")
             elif self.callback_counter == 6:
-                self.actual_output = ['0','0','0','0','0','0']
+                self.actual_output[self.pomodoro.active_countdown] = ['0','0','0','0','0','0']
                 self.callback_counter = 0
                 return
             self.reset_counter = 0
         # take off first element in large_output, and add label (keypad number pressed) to the end
-            self.actual_output.pop(0)
-            self.actual_output.append(label)
+            self.actual_output[self.pomodoro.active_countdown].pop(0)
+            self.actual_output[self.pomodoro.active_countdown].append(label)
             
             
         except RuntimeError:
             print "The timer is currently running."
         finally:
-            self.countdown_labels[self.pomodoro.active_countdown][0].set(uf.list_to_clockface(self.actual_output))
+            self.countdown_labels[self.pomodoro.active_countdown][0].set(uf.list_to_clockface(self.actual_output[self.pomodoro.active_countdown]))
             print "this is the countdown time at the end of callback " + str(self.pomodoro.active_countdown.countdowntime)
             
 
@@ -195,7 +199,7 @@ class Pomapp(object):
     def start(self):
         """starts the countdown (the countdown that is selected)"""
         #Set the active countdown's time to the input the user gave with the keypad
-        self.pomodoro.active_countdown.countdowntime = uf.list_to_tuple(self.actual_output)
+        self.pomodoro.active_countdown.countdowntime = uf.list_to_tuple(self.actual_output[self.pomodoro.active_countdown])
         self.reset_counter = 0
        
         #won't run if there isn't a countdown time
@@ -224,7 +228,7 @@ class Pomapp(object):
     def reset(self):
         """resets the selected countdown"""
         print "this is the reset_counter at the beginning of reset " + str(self.reset_counter)
-        print "this is the self.actual_output at the beginning being reset " + str(self.actual_output)
+        print "this is the self.actual_output at the beginning being reset " + str(self.actual_output[self.pomodoro.active_countdown])
         print "this is the countdowntime at the beginning being reset " + str(self.pomodoro.active_countdown.countdowntime)
         print "this is the time remaining at the beginning being reset " + str(self.pomodoro.time_remaining())
         
@@ -232,7 +236,7 @@ class Pomapp(object):
             self.reset_counter = 0
             self.callback_counter = 0
             self.pomodoro.active_countdown.countdowntime = (0,0,0,0)
-            self.actual_output = ['0','0','0','0','0','0']
+            self.actual_output[self.pomodoro.active_countdown] = ['0','0','0','0','0','0']
             print "this is the countdowntime right after setting it equal to zero: " + str(self.pomodoro.active_countdown.countdowntime)
             
         
@@ -245,16 +249,18 @@ class Pomapp(object):
         self.countdown_labels[self.pomodoro.active_countdown][1].set("000")
         
         print "this is the reset_counter at the end of reset " + str(self.reset_counter)
-        print "this is the self.actual_output after being reset " + str(self.actual_output)
+        print "this is the self.actual_output after being reset " + str(self.actual_output[self.pomodoro.active_countdown])
         print "this is the countdowntime after being reset " + str(self.pomodoro.active_countdown.countdowntime)
         print "this is the time remaining after being reset " + str(self.pomodoro.time_remaining())
         print "this should be identical to the line above" + str(self.pomodoro.active_countdown.time_remaining())
-        print "this is self.actual_output at the end of reset" + str(self.actual_output)
+        print "this is self.actual_output at the end of reset" + str(self.actual_output[self.pomodoro.active_countdown])
         
 #TODO:
-#FIX RESET
+#FIX RESET *
 #HAVE THE COUNTDOWN SELECTION PROCESS ACTUALLY WORK
 #HAVE THE COUNTDOWNS ACTUALLY TOGGLE
+#when your timer ends, figure out what you want to happen when the user tries to input a number without resetting first. 
+     #in the countdown app, it appears that the countdown has reset
 #ADD BELLS AND WHISTLES  
 #ADD BETTER COMMENTS
 #FIX A FEW FORMATTING ISSUES      
