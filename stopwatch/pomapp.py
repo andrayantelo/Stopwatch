@@ -191,7 +191,7 @@ class Pomapp(object):
                 self.countdown_labels[self.pomodoro.active_countdown][0].set("00:00:00")
                 self.countdown_labels[self.pomodoro.active_countdown][1].set("000")
                 #the next line is done so that after a countdown is done, if you input a number, it starts from 0
-                self.actual_output[self.pomodoro.active_countdown] = ['0','0','0','0','0','0']
+                #self.actual_output[self.pomodoro.active_countdown] = ['0','0','0','0','0','0']
                 
                 #self.toggle_countdown()
                 
@@ -248,7 +248,7 @@ class Pomapp(object):
             self.reset_counter = 0
             self.callback_counter = 0
             self.pomodoro.active_countdown.countdowntime = (0,0,0,0)
-            #self.actual_output[self.pomodoro.active_countdown] = ['0','0','0','0','0','0']
+            self.actual_output[self.pomodoro.active_countdown] = ['0','0','0','0','0','0']
             print "this is the countdowntime right after setting it equal to zero: " + str(self.pomodoro.active_countdown.countdowntime)
             
         
@@ -256,7 +256,6 @@ class Pomapp(object):
         
         self.reset_counter += 1
         
-        print "this is the countdowntime before you set the text variable: " + str(uf.sec_to_clockface(self.pomodoro.active_countdown.countdowntime)[0])
         self.countdown_labels[self.pomodoro.active_countdown][0].set(uf.sec_to_clockface(self.pomodoro.active_countdown.countdowntime)[0])
         self.countdown_labels[self.pomodoro.active_countdown][1].set("000")
         
@@ -264,7 +263,6 @@ class Pomapp(object):
         print "this is the self.actual_output after being reset " + str(self.actual_output[self.pomodoro.active_countdown])
         print "this is the countdowntime after being reset " + str(self.pomodoro.active_countdown.countdowntime)
         print "this is the time remaining after being reset " + str(self.pomodoro.time_remaining())
-        print "this should be identical to the line above" + str(self.pomodoro.active_countdown.time_remaining())
         print "this is self.actual_output at the end of reset" + str(self.actual_output[self.pomodoro.active_countdown])
         
 #TODO:
@@ -278,7 +276,6 @@ class Pomapp(object):
 #FIX A FEW FORMATTING ISSUES      
        
         
-#THE PROBLEM: COUNTDOWN ENDS, CLICK RESET ONCE, TRY TO START AGAIN AND IT FAILS
 def main():
     """run main."""
     #creating the root window of our application with the Tk class
