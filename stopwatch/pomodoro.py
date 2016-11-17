@@ -14,7 +14,7 @@ class Pomodoro(object):
         self.current_round = 0
         
         #set work countdown as default
-        self._active_countdown = self.work_countdown
+        self._active_countdown = None
         
     def advance_round(self):
         

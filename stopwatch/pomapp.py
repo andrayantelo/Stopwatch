@@ -68,7 +68,7 @@ class Pomapp(object):
                                }
                                
         #define a dictionary containing the countdowns associated with their buttons
-        self.countdown_buttons = {self.work_button : self.pomodoro.work_countdown,
+        self.countdown_button = {self.work_button : self.pomodoro.work_countdown,
                                   self.break_button : self.pomodoro.break_countdown}
         
         #the start/reset/quit buttons get a separate frame
@@ -136,7 +136,7 @@ class Pomapp(object):
             unselected_button.config(relief="sunken")
         
         #make the selected countdown the active countdown
-        self.pomodoro.active_countdown = self.countdown_buttons[selected_button]
+        self.pomodoro.active_countdown = self.countdown_button[selected_button]
         print "this is now the current countdown: " + str(self.pomodoro.active_countdown.name)
         
                 
@@ -201,12 +201,13 @@ class Pomapp(object):
             
             if self.pomodoro.active_countdown.time_remaining() < 0:
                 self.stop()
-                self.start_button.config(text = "START")
                 
                 #the following two lines are done so that you don't end up with negative
                 #numbers on the number display on the gui
                 
-                self.countdown_labels[self.pomodoro.active_countdown][0].set("00:00:00")
+                #self.countdown_labels[self.pomodoro.active_countdown][0].set("00:00:00")
+                #self.countdown_labels[self.pomodoro.active_countdown][1].set("000")
+                self.countdown_labels[self.pomodoro.active_countdown][0].set(uf.sec_to_clockface(self.pomodoro.active_countdown.countdowntime)[0])
                 self.countdown_labels[self.pomodoro.active_countdown][1].set("000")
                 
                 #the next line is done so that after a countdown is done, if you input a number, it starts from 0 - NOT NEEDED?
@@ -218,7 +219,7 @@ class Pomapp(object):
                 print "this is the countdowntime of {} right before you toggle countdowns: ".format(str(self.pomodoro.active_countdown.name)) \
                  + str(self.pomodoro.active_countdown.countdowntime)
                 
-                #self.toggle_countdown()
+                self.toggle_countdown()
                 
             
             self.master.after(50, self.print_to_countdown)
@@ -273,6 +274,7 @@ class Pomapp(object):
     def stop(self):
         """stops the selected countdown"""
         self.pomodoro.active_countdown.stop_countdown()
+        self.start_button.config(text = "START")
         print self.pomodoro.active_countdown.timer.running
         
     def reset(self):
@@ -300,11 +302,12 @@ class Pomapp(object):
         
         #have the gui display the countdown's countdowntime obtained from the countdown object
         self.countdown_labels[self.pomodoro.active_countdown][0].set(uf.sec_to_clockface(self.pomodoro.active_countdown.countdowntime)[0])
+        self.countdown_labels[self.pomodoro.active_countdown][1].set("000")
         
         #set the actual output using the countdowntime of the countdown object
         self.actual_output[self.pomodoro.active_countdown] = uf.sec_to_list(self.pomodoro.active_countdown.countdowntime)
         
-        self.countdown_labels[self.pomodoro.active_countdown][1].set("000")
+        
         
         print "this is the reset_counter of {} at the end of reset ".format(self.pomodoro.active_countdown.name) \
          + str(self.reset_counter[self.pomodoro.active_countdown])
@@ -317,9 +320,13 @@ class Pomapp(object):
 #TODO:
 #FIX RESET *
 #HAVE THE COUNTDOWN SELECTION PROCESS ACTUALLY WORK *
+#WHEN A COUNTDOWN FINISHES, I WANT IT'S COUNTDOWN TIME DISPLAYED WHILE THE OTHER COUNTDOWN IS GOING *
+#FIGURE OUT WHAT TO DO WTIH START/PAUSE.. *
 #HAVE THE COUNTDOWNS ACTUALLY TOGGLE
+#when a timer has stopped, it show's it's countdown time that you input, so you click reset, it appears like nothing happens
+    #need to have it reset to 0
 #when your timer ends, figure out what you want to happen when the user tries to input a number without resetting first. 
-     #in the countdown app, it appears that the countdown has reset
+    #in the countdown app, it appears that the countdown has reset
 #ADD BELLS AND WHISTLES  
 #ADD BETTER COMMENTS
 #FIX A FEW FORMATTING ISSUES      
