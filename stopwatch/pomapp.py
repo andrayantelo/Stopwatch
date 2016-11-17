@@ -7,6 +7,7 @@ import time
 import Tkinter as tk
 from functools import partial
 import utilityfunctions as uf
+import pygame as pg
 
 
 #I don't want the countdowns to be able to run at the same time

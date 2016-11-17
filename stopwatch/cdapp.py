@@ -81,8 +81,6 @@ class Cdapp(object):
     def play_alert(self):
         """Plays the time's up alert sound"""
         
-        
-        pg.init()
         pg.mixer.init()
         time_up = pg.mixer.Sound("backupdings.wav")
         
