@@ -143,7 +143,10 @@ class Pomapp(object):
                 
     def play_alert(self):
         """plays the time's up alert sound"""
-        pass
+        
+        pg.mixer.init()
+        time_up = pg.mixer.Sound("backupdings.wav")
+        time_up.play()
         
     def toggle_red(self):
         """makes the background of the appropriate label flash red"""
