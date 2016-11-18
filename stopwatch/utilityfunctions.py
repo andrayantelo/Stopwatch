@@ -96,6 +96,15 @@ def sec_to_list(time):
     
     return time
     
+def list_to_sec(time):
+    """ takes a time given in a list ['h','h','m','m','s','s'] and returns the time
+    in seconds"""
+    
+    time = list_to_tuple(time)
+    time = tuple_to_seconds(time)
+    
+    return time
+    
     
 def list_to_tuple(time):
     """Takes a time list in ['h', 'h', 'm', 'm', 's', 's'] format and returns a tuple

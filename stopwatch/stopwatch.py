@@ -52,6 +52,9 @@ class Stopwatch(object):
     def reset(self):
         """ Resets the start time to 0. """
         
+        if self.start_time is not None:
+            raise RuntimeError("The timer is currently running")
+            
         self.stop_time = 0
         self.elapsed_time = 0
         self.start_time = None
