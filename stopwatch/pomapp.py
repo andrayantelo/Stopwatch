@@ -259,8 +259,8 @@ class Pomapp(object):
     def stop(self):
         """stops the selected countdown"""
         
-        if self.pomodoro.active_countdown == None or not self.pomodoro.active_countdown.timer.running:
-            raise RuntimeError("the pomodoro is currently not running")
+        if self.pomodoro.active_countdown == None:
+            raise RuntimeError("Have not selected a countdown")
         
         #stop the countdown
         self.pomodoro.active_countdown.stop_countdown()
