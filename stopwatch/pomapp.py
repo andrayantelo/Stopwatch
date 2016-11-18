@@ -29,10 +29,10 @@ class Pomapp(object):
         
         #making buttons to select the countdown you want to set/use
         self.break_button = tk.Button(self.break_frame, text="Break Time", width = 10, command = lambda: self.select_countdown(self.break_button, self.work_button))
-        self.break_button.grid(row=0, column=1)
+        self.break_button.grid(row=0, column=0)
         
         self.work_button = tk.Button(self.work_frame, text="Work Time", width = 10, command = lambda: self.select_countdown(self.work_button, self.break_button))
-        self.work_button.grid(row=0, column=4)
+        self.work_button.grid(row=0, column=5)
         
         #Making the labels for the break countdown, the labels are where the numbers will be printed
         self.break_label_text = tk.StringVar()
@@ -45,10 +45,10 @@ class Pomapp(object):
         
         
         self.break_label = tk.Label(self.break_frame, textvariable=self.break_label_text, width = 10, font=("Arial",16))
-        self.break_label.grid(row=1, column=1)
+        self.break_label.grid(row=1, column=0)
         
         self.small_break_label = tk.Label(self.break_frame, textvariable=self.small_break_label_text, width=5)
-        self.small_break_label.grid(row=1, column=2, sticky="w")
+        self.small_break_label.grid(row=1, column=1, sticky="w")
         
         #Making the labels for the work countdown
         self.work_label_text = tk.StringVar()
@@ -59,10 +59,10 @@ class Pomapp(object):
         self.small_work_label_text.set(work_text[1])
         
         self.work_label = tk.Label(self.work_frame, textvariable=self.work_label_text, width=10, font=("Arial",16))
-        self.work_label.grid(row=1, column=4)
+        self.work_label.grid(row=1, column=5)
         
         self.small_work_label = tk.Label(self.work_frame, textvariable=self.small_work_label_text, width=5)
-        self.small_work_label.grid(row=1, column=5, sticky="w")
+        self.small_work_label.grid(row=1, column=6, sticky="w")
         
         #define a dictionary containing labels to associate with their countdowns
         self.countdown_label = {self.pomodoro.work_countdown : (self.work_label_text, self.small_work_label_text),
@@ -80,12 +80,12 @@ class Pomapp(object):
         #the start/reset/quit buttons get a separate frame
         self.button_frame = tk.Frame(self.master).grid(row=3)
         
-        self.start_button = tk.Button(self.break_frame, text="START", fg="green", width=5, command=self.start)
-        self.start_button.grid(row=2, column=0)
-        self.reset_button = tk.Button(self.break_frame, text="RESET", fg="orange", width=5, command=self.reset)
-        self.reset_button.grid(row=2, column=1)
-        self.stop_button = tk.Button(self.break_frame, text="STOP", fg="red", width=5, command=self.stop)
-        self.stop_button.grid(row=2, column=3)
+        self.start_button = tk.Button(self.button_frame, text="START", fg="green", width=5, command=self.start)
+        self.start_button.grid(row=2, column=2)
+        self.reset_button = tk.Button(self.button_frame, text="RESET", fg="orange", width=5, command=self.reset)
+        self.reset_button.grid(row=2, column=3)
+        self.stop_button = tk.Button(self.button_frame, text="STOP", fg="red", width=5, command=self.stop)
+        self.stop_button.grid(row=2, column=4)
         
         #separate frame for the keypad
         self.keypad_frame = tk.Frame(self.master).grid(row=2)
@@ -97,7 +97,7 @@ class Pomapp(object):
                                    '0']
         
         row=4
-        column=0
+        column=2
         n=0
         #makes the list [0,1,2,3,4,5,6,7,8,9]
         #list() is there for python3 support. in python 2.7 it is redundant
@@ -111,11 +111,11 @@ class Pomapp(object):
             number_button[n].grid(row=row, column=column)
             n += 1
             column += 1
-            if column > 2:
-                column = 0
+            if column > 4:
+                column = 2
                 row += 1
             if n == 9:
-                column = 1
+                column = 2
              
         #the actual_output is just the active time's countdown time 
         #dictionary containing the countdowns with their associated display outputs
