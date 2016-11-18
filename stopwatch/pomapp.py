@@ -255,10 +255,12 @@ class Pomapp(object):
             self.print_to_countdown()
             self.start_button.config(text = "PAUSE")  
             
-            print self.pomodoro.active_countdown.timer.running
         
     def stop(self):
         """stops the selected countdown"""
+        
+        if self.pomodoro.active_countdown == None or not self.pomodoro.active_countdown.timer.running:
+            raise RuntimeError("the pomodoro is currently not running")
         
         #stop the countdown
         self.pomodoro.active_countdown.stop_countdown()
