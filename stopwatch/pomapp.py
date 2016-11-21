@@ -115,7 +115,7 @@ class Pomapp(object):
                 column = 2
                 row += 1
             if n == 9:
-                column = 2
+                column = 3
              
         #the actual_output is just the active time's countdown time 
         #dictionary containing the countdowns with their associated display outputs
@@ -184,8 +184,6 @@ class Pomapp(object):
             #display on gui
             self.countdown_label[self.pomodoro.active_countdown][0].set(uf.list_to_clockface(self.actual_output[self.pomodoro.active_countdown]))
             
-            #Set the active countdown's time to the input the user gave with the keypad
-            self.pomodoro.active_countdown.countdowntime = uf.list_to_tuple(self.actual_output[self.pomodoro.active_countdown])
             
         
     def print_to_countdown(self):
@@ -233,7 +231,8 @@ class Pomapp(object):
     def start(self):
         """starts the countdown (the countdown that is selected)"""
         
-        
+        #Set the active countdown's time to the input the user gave with the keypad
+        self.pomodoro.active_countdown.countdowntime = uf.list_to_tuple(self.actual_output[self.pomodoro.active_countdown])
         self.actual_output[self.pomodoro.active_countdown] = uf.sec_to_list(self.pomodoro.active_countdown.countdowntime)
         
         self.reset_counter[self.pomodoro.active_countdown] = 0
@@ -292,23 +291,7 @@ class Pomapp(object):
         self.actual_output[self.pomodoro.active_countdown] = uf.sec_to_list(self.pomodoro.active_countdown.countdowntime)
         
 
-        
-#TODO:
-#FIX RESET *
-#HAVE THE COUNTDOWN SELECTION PROCESS ACTUALLY WORK *
-#WHEN A COUNTDOWN FINISHES, I WANT IT'S COUNTDOWN TIME DISPLAYED WHILE THE OTHER COUNTDOWN IS GOING *
-#FIGURE OUT WHAT TO DO WTIH START/PAUSE.. *
-#HAVE THE COUNTDOWNS ACTUALLY TOGGLE *
-#when a timer has stopped, it show's it's countdown time that you input, so you click reset, it appears like nothing happens
-    #need to have it reset to 0 *
-#say you click stop in the middle of everything, switch countdowns, change the countdown time on that one, and then hit start agian
-    #right now the app automatically starts from the beginning of the countdown in the original countdown, want that? yes *
-#ADD BELLS AND WHISTLES  
-#ADD BETTER COMMENTS
-#FIX A FEW FORMATTING ISSUES      
-       
-        
-#THE PROBLEM: COUNTDOWN ENDS, CLICK RESET ONCE, TRY TO START AGAIN AND IT FAILS *
+
 def main():
     """run main."""
     #creating the root window of our application with the Tk class
