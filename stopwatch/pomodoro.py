@@ -8,10 +8,8 @@ import time
 class Pomodoro(object):
     
     def __init__(self):
-        self.work_countdown = cd.Countdown(sw.real_time, "work")
-        self.break_countdown = cd.Countdown(sw.real_time, "break")
-        self.rounds_before_break = 4
-        self.current_round = 0
+        self.work_countdown = cd.Countdown(sw.real_time)
+        self.break_countdown = cd.Countdown(sw.real_time)
         
         #set work countdown as default
         self._active_countdown = None
@@ -28,11 +26,11 @@ class Pomodoro(object):
     
     @active_countdown.setter
     def active_countdown(self, countdown):
-        if type(active_countdown) == None:
-            self._active_countdown = countdown
-            
-        if not isinstance(countdown, cd.Countdown):
-            raise TypeError('input must be an instance of Countdown')
+        if countdown is not None:
+            if not isinstance(countdown, cd.Countdown):
+                raise TypeError('active_countdown must be an instance of\
+                Countdown or None. Got: {}'.format(type(countdown)))
+                
         self._active_countdown = countdown
         
     def start_pomodoro(self):
