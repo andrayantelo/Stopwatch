@@ -87,6 +87,9 @@ class Pomapp(object):
         self.stop_button = tk.Button(self.button_frame, text="STOP", fg="red", width=5, command=self.stop)
         self.stop_button.grid(row=2, column=4)
         
+        self.clear_button = tk.Button(self.button_frame, text="CLEAR", width=5, command=self.clear)
+        self.clear_button.grid(row=2, column=5)
+        
         #separate frame for the keypad
         self.keypad_frame = tk.Frame(self.master).grid(row=2)
         
@@ -266,6 +269,32 @@ class Pomapp(object):
         
         #change button text back to "START" from "PAUSE"
         self.start_button.config(text = "START")
+        
+        #change stop button text from "STOP" to "CLEAR"
+        self.stop_button.config(text = "CLEAR")
+        
+    def clear(self):
+        """resets both countdowns after they are stopped."""
+        
+        #change stop button text from "CLEAR" to "STOP"
+        self.stop_button.config(text = "STOP")
+        
+        #reset both countdowns
+        self.pomodoro.reset_pomodoro()
+        
+        #set the countdown times equal to 0, because reset_pomodoro() does not do that
+        self.pomodoro.break_countdown.countdowntime = (0,0,0,0)
+        self.pomodoro.work_countdown.countdowntime = (0,0,0,0)
+        
+        #change the display back to 0's
+        self.countdown_label[self.pomodoro.break_countdown][0].set(uf.sec_to_clockface(self.pomodoro.break_countdown.countdowntime)[0])
+        self.countdown_label[self.pomodoro.break_countdown][1].set("000")
+        self.countdown_label[self.pomodoro.work_countdown][0].set(uf.sec_to_clockface(self.pomodoro.work_countdown.countdowntime)[0])
+        self.countdown_label[self.pomodoro.work_countdown][1].set("000")
+        
+        #change the self.actual_outputs back to 0
+        self.actual_output[self.pomodoro.break_countdown] = uf.sec_to_list(self.pomodoro.break_countdown.countdowntime)
+        self.actual_output[self.pomodoro.work_countdown] = uf.sec_to_list(self.pomodoro.work_countdown.countdowntime)
 
         
     def reset(self):
