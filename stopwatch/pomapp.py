@@ -248,7 +248,7 @@ class Pomapp(object):
             self.print_to_countdown()
             self.start_button.config(text = "START")
             
-            print self.pomodoro.active_countdown.timer.running
+            
         else:  
             self.pomodoro.active_countdown.start_countdown()
             self.print_to_countdown()
