@@ -84,11 +84,8 @@ class Pomapp(object):
         self.start_button.grid(row=2, column=2)
         self.reset_button = tk.Button(self.button_frame, text="RESET", fg="orange", width=5, command=self.reset)
         self.reset_button.grid(row=2, column=3)
-        self.stop_button = tk.Button(self.button_frame, text="STOP", fg="red", width=5, command=self.stop)
+        self.stop_button = tk.Button(self.button_frame, text="STOP", fg="red", width=5, command=self.manual_stop)
         self.stop_button.grid(row=2, column=4)
-        
-        self.clear_button = tk.Button(self.button_frame, text="CLEAR", width=5, command=self.clear)
-        self.clear_button.grid(row=2, column=5)
         
         #separate frame for the keypad
         self.keypad_frame = tk.Frame(self.master).grid(row=2)
@@ -133,6 +130,8 @@ class Pomapp(object):
         self.reset_counter = {self.pomodoro.work_countdown: 0,
                               self.pomodoro.break_countdown: 0}
                               
+        #have a stop_state so that you can know when the stop button should stop or clear
+        self.stop_state = False
                 
     def select_countdown(self, selected_button, unselected_button):
         """selects the countdown to start with, either break or work 
@@ -259,25 +258,45 @@ class Pomapp(object):
             
         
     def stop(self):
-        """stops the selected countdown"""
+        """stops the selected countdown while pomodoro is running"""
         
         if self.pomodoro.active_countdown == None:
             raise RuntimeError("Have not selected a countdown")
         
         #stop the countdown
         self.pomodoro.active_countdown.stop_countdown()
-        
+    
         #change button text back to "START" from "PAUSE"
         self.start_button.config(text = "START")
+            
+            
+    def manual_stop(self):
+        """stops both countdown manually when the stop button is pressed"""
+            
+        if self.pomodoro.active_countdown == None:
+            raise RuntimeError("Have not selected a countdown")
         
-        #change stop button text from "STOP" to "CLEAR"
-        self.stop_button.config(text = "CLEAR")
+        
+        if not self.stop_state:
+            self.stop_state = True
+            #stop the countdown
+            self.pomodoro.active_countdown.stop_countdown()
+        
+            #change button text back to "START" from "PAUSE"
+            self.start_button.config(text = "START")
+        
+            #change stop button text from "STOP" to "CLEAR"
+            self.stop_button.config(text = "CLEAR")
+            
+        else:
+            self.clear()
         
     def clear(self):
         """resets both countdowns after they are stopped."""
         
         #change stop button text from "CLEAR" to "STOP"
         self.stop_button.config(text = "STOP")
+        self.stop_state = False
         
         #reset both countdowns
         self.pomodoro.reset_pomodoro()
@@ -295,6 +314,13 @@ class Pomapp(object):
         #change the self.actual_outputs back to 0
         self.actual_output[self.pomodoro.break_countdown] = uf.sec_to_list(self.pomodoro.break_countdown.countdowntime)
         self.actual_output[self.pomodoro.work_countdown] = uf.sec_to_list(self.pomodoro.work_countdown.countdowntime)
+        
+        #make sure both break and work time buttons are raised
+        self.work_button.config(relief="raised")
+        self.break_button.config(relief="raised")
+        
+        #make neither countdown be the active countdown
+        self.pomodoro.active_countdown = None
 
         
     def reset(self):

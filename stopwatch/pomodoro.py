@@ -27,10 +27,13 @@ class Pomodoro(object):
         return self._active_countdown
     
     @active_countdown.setter
-    def active_countdown(self, active_countdown):
-        if type(active_countdown) != cd.Countdown:
+    def active_countdown(self, countdown):
+        if type(active_countdown) == None:
+            self._active_countdown = countdown
+            
+        if not isinstance(countdown, cd.Countdown):
             raise TypeError('input must be an instance of Countdown')
-        self._active_countdown = active_countdown
+        self._active_countdown = countdown
         
     def start_pomodoro(self):
         self.active_countdown.start_countdown()
