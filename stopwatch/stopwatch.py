@@ -90,9 +90,6 @@ class Stopwatch(object):
         #that means the timer is running
         return self._start_time is not None
         
-        
-    
-    #what is this? look up context managers     
     def __enter__(self):
         self.start_timer()
         return self

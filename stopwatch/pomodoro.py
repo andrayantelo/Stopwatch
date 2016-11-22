@@ -13,12 +13,6 @@ class Pomodoro(object):
         
         #set work countdown as default
         self._active_countdown = None
-        
-    def advance_round(self):
-        
-        self.current_round += 1
-        if self.current_round >= self.rounds_before_break:
-            self.current_round = 0
             
     @property 
     def active_countdown(self):
