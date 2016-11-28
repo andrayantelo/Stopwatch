@@ -319,6 +319,10 @@ class Pomapp(object):
         
         #make neither countdown be the active countdown
         self.pomodoro.active_countdown = None
+        
+        #have to reset callback counter
+        self.callback_counter[work_countdown] = 0
+        self.callback_counter[break_countdown] = 0
 
         
     def reset(self):
@@ -329,6 +333,9 @@ class Pomapp(object):
             self.reset_counter[self.pomodoro.active_countdown] = 0
             self.pomodoro.active_countdown.countdowntime = (0,0,0,0)
         
+        
+        #reset the callback counter
+        self.callback_counter[self.pomodoro.active_countdown] = 0
         
         #so that the time_remaining is not < 0
         self.pomodoro.reset_pomodoro()
