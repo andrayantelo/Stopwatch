@@ -19,6 +19,10 @@ class Pomapp(object):
         
         self.pomodoro = pom.Pomodoro()
         
+        #give names to the two countdown objects
+        self.name = {self.pomodoro.work_countdown: "work",
+                     self.pomodoro.break_countdown: "break"}
+        
         #making separate frames for the countdowns
         self.break_frame = tk.Frame(self.master).grid(row=0)
         
@@ -131,7 +135,12 @@ class Pomapp(object):
                               self.pomodoro.break_countdown: 0}
                               
         #have a stop_state so that you can know when the stop button should stop or clear
+        #this is for the manual_stop method
         self.stop_state = False
+        
+        #rounds counter, to count how many rounds of work-break countdowns you have done
+        self.rounds_counter = 0
+    
                 
     def select_countdown(self, selected_button, unselected_button):
         """selects the countdown to start with, either break or work 
@@ -168,6 +177,9 @@ class Pomapp(object):
         
         if self.pomodoro.active_countdown.timer.running:
             raise RuntimeError("Timer is currently running")
+            
+        if self.stop_state:
+            raise RuntimeError("Timer needs to be reset")
                 
         if self.callback_counter[self.pomodoro.active_countdown] == 6:
             print "the program is about to make self.actual output equal to 0"
@@ -181,6 +193,7 @@ class Pomapp(object):
             
         #display on gui
         self.countdown_label[self.pomodoro.active_countdown][0].set(uf.list_to_clockface(self.actual_output[self.pomodoro.active_countdown]))
+        print str(self.callback_counter[self.pomodoro.active_countdown])
             
             
         
@@ -195,7 +208,7 @@ class Pomapp(object):
             #when the time is up
             if self.pomodoro.active_countdown.time_remaining() < 0:
                 self.play_alert()
-                self.stop()
+                self.manual_stop()
                 
                 #the following two lines are done so that you don't end up with negative
                 #numbers on the number display on the gui
@@ -245,7 +258,7 @@ class Pomapp(object):
         
         
         if self.pomodoro.active_countdown.timer.running:
-            self.stop()
+            self.manual_stop()
             self.print_to_countdown()
             self.start_button.config(text = "START")
             
@@ -275,7 +288,6 @@ class Pomapp(object):
         if self.pomodoro.active_countdown == None:
             raise RuntimeError("Have not selected a countdown")
         
-        
         if not self.stop_state:
             self.stop_state = True
             #stop the countdown
@@ -286,6 +298,11 @@ class Pomapp(object):
         
             #change stop button text from "STOP" to "CLEAR"
             self.stop_button.config(text = "CLEAR")
+            
+            #count a round every time a break_countdown ends
+            if self.name[self.pomodoro.active_countdown] == "break":
+                self.rounds_counter += 1
+                print str(self.rounds_counter) + " rounds"
             
         else:
             self.clear()
@@ -321,8 +338,8 @@ class Pomapp(object):
         self.pomodoro.active_countdown = None
         
         #have to reset callback counter
-        self.callback_counter[work_countdown] = 0
-        self.callback_counter[break_countdown] = 0
+        self.callback_counter[self.pomodoro.work_countdown] = 0
+        self.callback_counter[self.pomodoro.break_countdown] = 0
 
         
     def reset(self):
@@ -333,6 +350,8 @@ class Pomapp(object):
             self.reset_counter[self.pomodoro.active_countdown] = 0
             self.pomodoro.active_countdown.countdowntime = (0,0,0,0)
         
+        #when reset is clicked, timer is no longer in stop mode
+        self.stop_state = False
         
         #reset the callback counter
         self.callback_counter[self.pomodoro.active_countdown] = 0
