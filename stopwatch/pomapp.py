@@ -210,6 +210,11 @@ class Pomapp(object):
                 self.play_alert()
                 self.manual_stop()
                 
+                #count a round every time a break_countdown ends
+                if self.name[self.pomodoro.active_countdown] == "break":
+                    self.rounds_counter += 1
+                    print str(self.rounds_counter) + " rounds"
+                
                 #the following two lines are done so that you don't end up with negative
                 #numbers on the number display on the gui
             
@@ -299,10 +304,6 @@ class Pomapp(object):
             #change stop button text from "STOP" to "CLEAR"
             self.stop_button.config(text = "CLEAR")
             
-            #count a round every time a break_countdown ends
-            if self.name[self.pomodoro.active_countdown] == "break":
-                self.rounds_counter += 1
-                print str(self.rounds_counter) + " rounds"
             
         else:
             self.clear()
@@ -340,6 +341,10 @@ class Pomapp(object):
         #have to reset callback counter
         self.callback_counter[self.pomodoro.work_countdown] = 0
         self.callback_counter[self.pomodoro.break_countdown] = 0
+        
+        #reset the rounds counter
+        self.rounds_counter[self.pomodoro.work_countdown] = 0
+        self.rounds_counter[self.pomodoro.break_countdown] = 0
 
         
     def reset(self):
