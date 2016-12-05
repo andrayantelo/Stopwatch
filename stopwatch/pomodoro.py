@@ -49,7 +49,7 @@ class Pomodoro(object):
         
     @property
     def is_work(self):
-        return self.active_countdown is self.pomodoro.work_countdown
+        return self.active_countdown is self.work_countdown
     
     def toggle_countdown(self):
         "have the active countdown toggle between countdowns"""

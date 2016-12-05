@@ -20,9 +20,9 @@ class Pomapp(object):
         self.pomodoro = pom.Pomodoro()
         
         #making separate frames for the countdowns
-        self.break_frame = tk.Frame(self.master).grid(row=0)
+        self.break_frame = tk.Frame(self.master).grid(row=0, column = 1)
         
-        self.work_frame = tk.Frame(self.master).grid(row=0)
+        self.work_frame = tk.Frame(self.master).grid(row=0, column = 5)
         
         #giving the gui a title
         self.master.title("Pomodoro")
@@ -136,6 +136,17 @@ class Pomapp(object):
         
         #rounds counter, to count how many rounds of work-break countdowns you have done
         self.rounds_counter = 0
+        
+        #have a rounds counter between the work and break countdown
+        #set its string variable
+        self.rounds_label_text = tk.StringVar()
+        self.rounds_label_text.set(str(self.rounds_counter) + " rounds")
+        
+        #make a frame for it
+        self.rounds_frame = tk.Frame(self.master).grid(row=0, column=3)
+        #then a label
+        self.rounds_label = tk.Label(self.rounds_frame, textvariable = self.rounds_label_text, width = 10)
+        self.rounds_label.grid(row=0, column =3)
     
                 
     def select_countdown(self, selected_button, unselected_button):
@@ -210,6 +221,10 @@ class Pomapp(object):
                 #counting the number of times someone has done the work portion
                 if self.pomodoro.is_work:
                     self.rounds_counter += 1
+                    if self.rounds_counter == 1:
+                        self.rounds_label_text.set(str(self.rounds_counter) + " round")
+                    else:
+                        self.rounds_label_text.set(str(self.rounds_counter) + " rounds")
                     print str(self.rounds_counter) + " rounds"
                 
                 #the following two lines are done so that you don't end up with negative
@@ -340,8 +355,10 @@ class Pomapp(object):
         self.callback_counter[self.pomodoro.break_countdown] = 0
         
         #reset the rounds counter
-        self.rounds_counter[self.pomodoro.work_countdown] = 0
-        self.rounds_counter[self.pomodoro.break_countdown] = 0
+        self.rounds_counter = 0
+        
+        #reset the rounds counter on the gui
+        self.rounds_label_text.set(str(self.rounds_counter) + " rounds")
 
         
     def reset(self):
