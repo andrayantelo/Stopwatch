@@ -78,7 +78,7 @@ class Pomapp(object):
                                  self.pomodoro.break_countdown : self.break_button}
         
         #the start/reset/quit buttons get a separate frame
-        self.button_frame = tk.Frame(self.master).grid(row=3)
+        self.button_frame = tk.Frame(self.master).grid(row=3, column=2, columnspan=3)
         
         self.start_button = tk.Button(self.button_frame, text="START", fg="green", width=5, command=self.start)
         self.start_button.grid(row=2, column=2)
@@ -170,10 +170,6 @@ class Pomapp(object):
         pg.mixer.init()
         time_up = pg.mixer.Sound("backupdings.wav")
         time_up.play()
-        
-    def toggle_red(self):
-        """makes the background of the appropriate label flash red"""
-        pass
         
     def callback(self, label):
         """defines what happens when you press on one of the keys on the
@@ -285,19 +281,6 @@ class Pomapp(object):
             self.print_to_countdown()
             self.start_button.config(text = "PAUSE")  
             
-        
-    def stop(self):
-        """stops the selected countdown while pomodoro is running"""
-        
-        if self.pomodoro.active_countdown == None:
-            raise RuntimeError("Have not selected a countdown")
-        
-        #stop the countdown
-        self.pomodoro.active_countdown.stop_countdown()
-    
-        #change button text back to "START" from "PAUSE"
-        self.start_button.config(text = "START")
-            
             
     def manual_stop(self):
         """stops both countdown manually when the stop button is pressed"""
@@ -363,7 +346,15 @@ class Pomapp(object):
         
     def reset(self):
         """resets the selected countdown"""
+        print self.countdown_label[self.pomodoro.active_countdown][0].get()
+        print uf.sec_to_clockface(self.pomodoro.active_countdown.countdowntime)[0]
         
+        #if what's currently displayed on the gui is equal to the countdown time
+        #then you reset to zero, so we increment the reset counter by 1
+        if self.countdown_label[self.pomodoro.active_countdown][0].get() == uf.sec_to_clockface(self.pomodoro.active_countdown.countdowntime)[0]:
+            #print "it worked, increment reset counter"
+            self.reset_counter[self.pomodoro.active_countdown] = 1
+            
         #if reset has been clicked twice, everything gets fully reset to 0
         if self.reset_counter[self.pomodoro.active_countdown] >= 1:
             self.reset_counter[self.pomodoro.active_countdown] = 0
@@ -388,6 +379,7 @@ class Pomapp(object):
         #the gui will display whatever the countdown time has been reset to
         self.actual_output[self.pomodoro.active_countdown] = uf.sec_to_list(self.pomodoro.active_countdown.countdowntime)
         
+        #print str(self.reset_counter[self.pomodoro.active_countdown]) + " this is the reset counter at the end of reset method"
 
 
 def main():
