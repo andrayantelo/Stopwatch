@@ -46,10 +46,14 @@ class Pomodoro(object):
         """Change the work and break times"""
         self.work_countdown.countdowntime = work_time
         self.break_countdown.countdowntime = break_time
+        
+    @property
+    def is_work(self):
+        return self.active_countdown is self.pomodoro.work_countdown
     
     def toggle_countdown(self):
         "have the active countdown toggle between countdowns"""
-        if self.active_countdown == self.work_countdown:
+        if self.is_work:
             self.active_countdown = self.break_countdown
         else:
             self.active_countdown = self.work_countdown

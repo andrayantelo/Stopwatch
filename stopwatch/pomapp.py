@@ -19,10 +19,6 @@ class Pomapp(object):
         
         self.pomodoro = pom.Pomodoro()
         
-        #give names to the two countdown objects
-        self.name = {self.pomodoro.work_countdown: "work",
-                     self.pomodoro.break_countdown: "break"}
-        
         #making separate frames for the countdowns
         self.break_frame = tk.Frame(self.master).grid(row=0)
         
@@ -210,8 +206,9 @@ class Pomapp(object):
                 self.play_alert()
                 self.manual_stop()
                 
-                #count a round every time a break_countdown ends
-                if self.name[self.pomodoro.active_countdown] == "break":
+                #count a round every time a work_countdown ends, you are
+                #counting the number of times someone has done the work portion
+                if self.pomodoro.is_work:
                     self.rounds_counter += 1
                     print str(self.rounds_counter) + " rounds"
                 
