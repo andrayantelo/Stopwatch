@@ -196,7 +196,7 @@ class Pomapp(object):
             
         #display on gui
         self.countdown_label[self.pomodoro.active_countdown][0].set(uf.list_to_clockface(self.actual_output[self.pomodoro.active_countdown]))
-        print str(self.callback_counter[self.pomodoro.active_countdown])
+        
             
             
         
@@ -221,7 +221,7 @@ class Pomapp(object):
                         self.rounds_label_text.set(str(self.rounds_counter) + " round")
                     else:
                         self.rounds_label_text.set(str(self.rounds_counter) + " rounds")
-                    print str(self.rounds_counter) + " rounds"
+                    
                 
                 #the following two lines are done so that you don't end up with negative
                 #numbers on the number display on the gui
