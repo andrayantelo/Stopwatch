@@ -4,10 +4,10 @@ import countdown as cd
 import stopwatch as sw
 import pomodoro as pom
 import time
-import Tkinter as tk
+import tkinter as tk
 from functools import partial
 import utilityfunctions as uf
-import pygame as pg
+from pygame import mixer
 
 
 #I don't want the countdowns to be able to run at the same time
@@ -167,9 +167,12 @@ class Pomapp(object):
     def play_alert(self):
         """plays the time's up alert sound"""
         
-        pg.mixer.init()
-        time_up = pg.mixer.Sound("backupdings.wav")
+        mixer.init()
+        
+        time_up = mixer.Sound("backupdings.wav")
         time_up.play()
+        time.sleep(1)
+        
         
     def callback(self, label):
         """defines what happens when you press on one of the keys on the
@@ -185,7 +188,7 @@ class Pomapp(object):
             raise RuntimeError("Timer needs to be reset")
                 
         if self.callback_counter[self.pomodoro.active_countdown] == 6:
-            print "the program is about to make self.actual output equal to 0"
+            print("the program is about to make self.actual output equal to 0")
             self.actual_output[self.pomodoro.active_countdown] = ['0','0','0','0','0','0']
             self.callback_counter[self.pomodoro.active_countdown] = 0
             
@@ -209,6 +212,7 @@ class Pomapp(object):
             self.countdown_label[self.pomodoro.active_countdown][1].set(output[1])
             
             #when the time is up
+            #Consider changing this to when time remaining is less than or equal to 0 TODO
             if self.pomodoro.active_countdown.time_remaining() < 0:
                 self.play_alert()
                 self.manual_stop()
@@ -346,8 +350,8 @@ class Pomapp(object):
         
     def reset(self):
         """resets the selected countdown"""
-        print self.countdown_label[self.pomodoro.active_countdown][0].get()
-        print uf.sec_to_clockface(self.pomodoro.active_countdown.countdowntime)[0]
+        print(self.countdown_label[self.pomodoro.active_countdown][0].get())
+        print(uf.sec_to_clockface(self.pomodoro.active_countdown.countdowntime)[0])
         
         #if what's currently displayed on the gui is equal to the countdown time
         #then you reset to zero, so we increment the reset counter by 1

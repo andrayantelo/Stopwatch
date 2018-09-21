@@ -1,7 +1,7 @@
 import countdown as cd
 import stopwatch as sw
 import time
-import Tkinter as tk
+import tkinter as tk
 from functools import partial
 import utilityfunctions as uf
 import pygame as pg
