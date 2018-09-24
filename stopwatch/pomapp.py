@@ -8,6 +8,7 @@ import tkinter as tk
 from functools import partial
 import utilityfunctions as uf
 from pygame import mixer
+from sys import exit
 
 
 #I don't want the countdowns to be able to run at the same time
@@ -167,12 +168,15 @@ class Pomapp(object):
     def play_alert(self):
         """plays the time's up alert sound"""
         
-        mixer.init()
+        #mixer.init()
         
-        time_up = mixer.Sound("backupdings.wav")
-        time_up.play()
-        time.sleep(1)
-        
+        #time_up = mixer.Sound("backupdings.wav")
+        #time_up.play()
+        notification_root = tk.Tk()
+        notification_root.after(2000, lambda: notification_root.destroy())
+        message = tk.Message(notification_root, text="Time's up")
+        message.pack()
+       
         
     def callback(self, label):
         """defines what happens when you press on one of the keys on the
@@ -212,7 +216,6 @@ class Pomapp(object):
             self.countdown_label[self.pomodoro.active_countdown][1].set(output[1])
             
             #when the time is up
-            #Consider changing this to when time remaining is less than or equal to 0 TODO
             if self.pomodoro.active_countdown.time_remaining() < 0:
                 self.play_alert()
                 self.manual_stop()
