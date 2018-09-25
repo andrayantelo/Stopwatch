@@ -173,9 +173,11 @@ class Pomapp(object):
         #time_up = mixer.Sound("backupdings.wav")
         #time_up.play()
         notification_root = tk.Tk()
-        notification_root.after(2000, lambda: notification_root.destroy())
-        message = tk.Message(notification_root, text="Time's up")
+        #notification_root.after(5000, lambda: notification_root.destroy())
+        message = tk.Message(notification_root, text="Time's up!")
+        message.config(bg="salmon", font=('helvetica', 24), padx=50, pady=50, width=500)
         message.pack()
+        uf.flash_color((notification_root, message))
        
         
     def callback(self, label):
