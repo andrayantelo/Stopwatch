@@ -153,6 +153,13 @@ def return_bg_color(widget):
     for w in widget:
         w.configure(bg="#d9d9d9")
         
+def flash_color(widget_tuple):
+	og_color = widget_tuple[1].cget("bg")
+	next_color = "turquoise" if og_color == "salmon" else "salmon"
+	widget_tuple[1].config(bg=next_color)
+	widget_tuple[0].after(500, flash_color, widget_tuple)
+	
+        
 def seconds_to_string(time_in_seconds):
     """Takes a time in seconds and returns a tuple of two strings "hh:mm:ss"
     and "ms" 

@@ -43,7 +43,7 @@ class Countdown(object):
         Parameters:
             countdown_time: tuple (hh, mm, ss, ms) """
         if type(countdown_time) != tuple:
-            raise TypeError('input must be a tuple (hh, mm. ss, ms)')
+            raise TypeError('input must be a tuple (hh, mm, ss, ms)')
             
         self._countdowntime = uf.tuple_to_seconds(countdown_time)
         
@@ -57,11 +57,12 @@ class Countdown(object):
         
 if __name__ == '__main__':        
     my_countdown = Countdown(real_time)
-    #with t:
+    #my_countdown.countdowntime = (0, 0, 5, 0)
+    #with my_countdown as t:
     #    while t.time_remaining() > 0:
-    #        time.sleep(1)
-    #        print t.time_remaining()
-    #print "time's up"
+    #        print(round(t.time_remaining()))
+    #        time.sleep(1)          
+    #print("time's up")
 
  
  
