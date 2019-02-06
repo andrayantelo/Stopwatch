@@ -16,9 +16,11 @@ from sys import exit
 class Pomapp(object):
     
     def __init__(self, master):
+		# list all attributes before building the widget
         self.master = master
-        
         self.pomodoro = pom.Pomodoro()
+        
+        
         
         #making separate frames for the countdowns
         self.break_frame = tk.Frame(self.master).grid(row=0, column = 1)
@@ -148,6 +150,7 @@ class Pomapp(object):
         #then a label
         self.rounds_label = tk.Label(self.rounds_frame, textvariable = self.rounds_label_text, width = 10)
         self.rounds_label.grid(row=0, column =3)
+        
     
                 
     def select_countdown(self, selected_button, unselected_button):
