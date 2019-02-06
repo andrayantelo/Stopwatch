@@ -22,7 +22,7 @@ class Pomapp(object):
         self.master = master
         self.pomodoro = pom.Pomodoro()
         
-        # set custom font
+        # set custom font TODO
         self.custom_font = tk_font.Font(family="Helvetica",size=16)
         
         #the actual_output is just the active time's countdown time 
@@ -62,6 +62,10 @@ class Pomapp(object):
         
     def build_notebook(self):
         # Make the notebook
+        # TODO design a notebook with a tab for the actual pomodoro
+        # a tab for the day's work effort
+        # a tab for the week's work effort
+        # a tab for lifetime work effort
         self.notebook = Notebook(self.master, width=200, height=200)
         print(self.notebook.winfo_class())
         
