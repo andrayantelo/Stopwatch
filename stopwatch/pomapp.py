@@ -66,6 +66,7 @@ class Pomapp(object):
         # a tab for the day's work effort
         # a tab for the week's work effort
         # a tab for lifetime work effort
+        # test comment for commit
         self.notebook = Notebook(self.master, width=200, height=200)
         print(self.notebook.winfo_class())
         
