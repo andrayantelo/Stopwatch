@@ -9,6 +9,8 @@ from functools import partial
 import utilityfunctions as uf
 from pygame import mixer
 from sys import exit
+from tkinter.ttk import *
+import tkinter.font as tk_font
 
 
 #I don't want the countdowns to be able to run at the same time
@@ -20,9 +22,76 @@ class Pomapp(object):
         self.master = master
         self.pomodoro = pom.Pomodoro()
         
+        # set custom font
+        self.custom_font = tk_font.Font(family="Helvetica",size=16)
+        
+        #the actual_output is just the active time's countdown time 
+        #dictionary containing the countdowns with their associated display outputs
+        self.actual_output = {self.pomodoro.work_countdown: ['0','0','0','0','0','0'],
+                              self.pomodoro.break_countdown: ['0','0','0','0','0','0']}
+                              
+        #this dictionary will ensure that each countdown has it's own callback counter
+        self.callback_counter = {self.pomodoro.work_countdown: 0,
+                                  self.pomodoro.break_countdown: 0}
+        
+        #ensure each countdown has it's own reset counter
+        self.reset_counter = {self.pomodoro.work_countdown: 0,
+                              self.pomodoro.break_countdown: 0}
+                              
+        #have a stop_state so that you can know when the stop button should stop or clear
+        #this is for the manual_stop method
+        self.stop_state = False
+        
+        #rounds counter, to count how many rounds of work-break countdowns you have done
+        self.rounds_counter = 0
+        
+        #have a rounds counter between the work and break countdown
+        #set its string variable
+        self.rounds_label_text = tk.StringVar()
+        self.rounds_label_text.set(str(self.rounds_counter) + " rounds")
+        
+        #make a frame for it
+        self.rounds_frame = tk.Frame(self.master).grid(row=0, column=3)
+        #then a label
+        self.rounds_label = tk.Label(self.rounds_frame, textvariable = self.rounds_label_text, width = 10, font=self.custom_font)
+        self.rounds_label.grid(row=0, column =3)
+        
+        #Build widget TODO
+        #self.build_timer_widget()
+        #self.build_notebook()
+        
+    def build_notebook(self):
+        # Make the notebook
+        self.notebook = Notebook(self.master, width=200, height=200)
+        print(self.notebook.winfo_class())
+        
+        style = Style()
+        style.theme_create( "MyStyle", parent="alt", settings={
+            "TNotebook": {"configure": {"tabmargins": [2, 5, 2, 0] } },
+            "TNotebook.Tab": {"configure": {"padding": [100, 100] },}})
+
+        style.theme_use("MyStyle")
+        
+	        
+        # Make 1st tab
+        f1 = tk.Frame(self.notebook)
+	        
+        # Add the tab
+        self.notebook.add(f1, text="First Tab")
+	        
+        # Make 2nd tab
+        f2 = tk.Frame(self.notebook)
+	        
+        # Add 2nd tab
+        self.notebook.add(f2, text="Second Tab")
+	        
+        self.notebook.enable_traversal()
+        
+        self.notebook.pack(expand=True, fill=tk.BOTH)
         
         
-        #making separate frames for the countdowns
+    def build_timer_widget(self):
+		#making separate frames for the countdowns
         self.break_frame = tk.Frame(self.master).grid(row=0, column = 1)
         
         self.work_frame = tk.Frame(self.master).grid(row=0, column = 5)
@@ -119,39 +188,7 @@ class Pomapp(object):
                 row += 1
             if n == 9:
                 column = 3
-             
-        #the actual_output is just the active time's countdown time 
-        #dictionary containing the countdowns with their associated display outputs
-        self.actual_output = {self.pomodoro.work_countdown: ['0','0','0','0','0','0'],
-                              self.pomodoro.break_countdown: ['0','0','0','0','0','0']}
-                              
-        #this dictionary will ensure that each countdown has it's own callback counter
-        self.callback_counter = {self.pomodoro.work_countdown: 0,
-                                  self.pomodoro.break_countdown: 0}
-        
-        #ensure each countdown has it's own reset counter
-        self.reset_counter = {self.pomodoro.work_countdown: 0,
-                              self.pomodoro.break_countdown: 0}
-                              
-        #have a stop_state so that you can know when the stop button should stop or clear
-        #this is for the manual_stop method
-        self.stop_state = False
-        
-        #rounds counter, to count how many rounds of work-break countdowns you have done
-        self.rounds_counter = 0
-        
-        #have a rounds counter between the work and break countdown
-        #set its string variable
-        self.rounds_label_text = tk.StringVar()
-        self.rounds_label_text.set(str(self.rounds_counter) + " rounds")
-        
-        #make a frame for it
-        self.rounds_frame = tk.Frame(self.master).grid(row=0, column=3)
-        #then a label
-        self.rounds_label = tk.Label(self.rounds_frame, textvariable = self.rounds_label_text, width = 10)
-        self.rounds_label.grid(row=0, column =3)
-        
-    
+                
                 
     def select_countdown(self, selected_button, unselected_button):
         """selects the countdown to start with, either break or work 
