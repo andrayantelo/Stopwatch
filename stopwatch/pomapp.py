@@ -10,7 +10,7 @@ import utilityfunctions as uf
 from pygame import mixer
 from sys import exit
 from tkinter.ttk import *
-import tkinter.font as tk_font
+import tkinter.font as tkFont
 
 
 #I don't want the countdowns to be able to run at the same time
@@ -23,7 +23,7 @@ class Pomapp(object):
         self.pomodoro = pom.Pomodoro()
         
         # set custom font TODO
-        self.custom_font = tk_font.Font(family="Helvetica",size=16)
+        self.custom_font = tkFont.Font(family="Helvetica")
         
         #the actual_output is just the active time's countdown time 
         #dictionary containing the countdowns with their associated display outputs
@@ -45,20 +45,9 @@ class Pomapp(object):
         #rounds counter, to count how many rounds of work-break countdowns you have done
         self.rounds_counter = 0
         
-        #have a rounds counter between the work and break countdown
-        #set its string variable
-        self.rounds_label_text = tk.StringVar()
-        self.rounds_label_text.set(str(self.rounds_counter) + " rounds")
-        
-        #make a frame for it
-        self.rounds_frame = tk.Frame(self.master).grid(row=0, column=3)
-        #then a label
-        self.rounds_label = tk.Label(self.rounds_frame, textvariable = self.rounds_label_text, width = 10, font=self.custom_font)
-        self.rounds_label.grid(row=0, column =3)
-        
         #Build widget TODO
         #self.build_timer_widget()
-        #self.build_notebook()
+        self.build_notebook()
         
     def build_notebook(self):
         # Make the notebook
@@ -66,14 +55,27 @@ class Pomapp(object):
         # a tab for the day's work effort
         # a tab for the week's work effort
         # a tab for lifetime work effort
-        # test comment for commit
+        
+        self.tab_font = tkFont.Font(size=14)
+        
         self.notebook = Notebook(self.master, width=200, height=200)
         print(self.notebook.winfo_class())
         
         style = Style()
-        style.theme_create( "MyStyle", parent="alt", settings={
-            "TNotebook": {"configure": {"tabmargins": [2, 5, 2, 0] } },
-            "TNotebook.Tab": {"configure": {"padding": [100, 100] },}})
+        style.theme_create("MyStyle", parent="alt",
+             settings={
+                 "TNotebook": {
+                     "configure": {
+                         "tabmargins": [2, 5, 2, 0] 
+                     }
+                 },
+                 "TNotebook.Tab": {
+                     "configure": {
+                         "padding": [5, 5] 
+                     },
+                 }
+             }
+         )
 
         style.theme_use("MyStyle")
         
@@ -96,6 +98,21 @@ class Pomapp(object):
         
         
     def build_timer_widget(self):
+		# Builds the timer interface. In the notebook it would be the tab
+		# that has the two timers (work countdown and break countdown)
+		# the number of rounds done, and the start, reset, and clear buttons
+		
+		#have a rounds counter between the work and break countdown
+        #set its string variable
+        self.rounds_label_text = tk.StringVar()
+        self.rounds_label_text.set(str(self.rounds_counter) + " rounds")
+        
+        #make a frame for it
+        self.rounds_frame = tk.Frame(self.master).grid(row=0, column=3)
+        #then a label
+        self.rounds_label = tk.Label(self.rounds_frame, textvariable = self.rounds_label_text, width = 10, font=self.custom_font)
+        self.rounds_label.grid(row=0, column =3)
+        
 		#making separate frames for the countdowns
         self.break_frame = tk.Frame(self.master).grid(row=0, column = 1)
         
