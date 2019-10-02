@@ -18,8 +18,14 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/andrayantelo/pomodoroapp",
     packages=find_packages(),
+    install_requires=[
+        'pygame'
+    ],
+    entry_points = { 
+        'console_scripts' : ['pomodoroapp=pomodoroapp.pomapp:main'],
+    },
     classifiers=[	
-          "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
     ],
     python_requires='>=3.5',
 )

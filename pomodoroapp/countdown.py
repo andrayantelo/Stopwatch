@@ -1,6 +1,6 @@
-import stopwatch as sw
+import pomodoroapp.stopwatch as sw
 import time
-import utilityfunctions as uf
+import pomodoroapp.utilityfunctions as uf
 from timeit import default_timer as real_time
 
 

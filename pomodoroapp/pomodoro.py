@@ -1,5 +1,5 @@
-import stopwatch as sw
-import countdown as cd
+import pomodoroapp.stopwatch as sw
+import pomodoroapp.countdown as cd
 import time
 
 

@@ -1,12 +1,12 @@
 #pomodoro gui
 
-import countdown as cd
-import stopwatch as sw
-import pomodoro as pom
+import pomodoroapp.countdown as cd
+import pomodoroapp.stopwatch as sw
+import pomodoroapp.pomodoro as pom
 import time
 import tkinter as tk
 from functools import partial
-import utilityfunctions as uf
+import pomodoroapp.utilityfunctions as uf
 from pygame import mixer
 from sys import exit
 
