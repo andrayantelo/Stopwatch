@@ -10,7 +10,7 @@ with open("README.md", "r") as fh:
     
 setup(
     name="pomodoroapp",
-    version="0.0.3",
+    version="0.0.4",
     author="Andrea Anaya",
     author_email="andrayantelo@gmail.com",
     description="Pomodoro GUI App",
