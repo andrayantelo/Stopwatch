@@ -5,16 +5,16 @@ except ImportError:
     from distutils.core import setup
 
 config = {
-    'description': 'My Project',
+    'description': 'Pomodoro App',
     'author': 'Andrea Anaya',
-    'url': 'URL to get it at.',
+    'url': 'https://github.com/andrayantelo/pomodoroapp',
     'download_url': 'Where to download it.',
     'author-email': 'andrayantelo@gmail.com.',
     'version': '0.1',
     'install_requires': ['nose'],
-    'packages': ['stopwatch'],
+    'packages': ['pomodoroapp'],
     'scripts': [],
-    'name': 'stopwatch'
+    'name': 'pomodoroapp'
 }
 
 setup(**config)
