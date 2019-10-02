@@ -60,4 +60,4 @@ target/
 
 # virtual environments
 stopwatch_env
-python3update
+my_env

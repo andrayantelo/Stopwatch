@@ -14,10 +14,6 @@ config = {
     'packages': ['pomodoroapp'],
     'name': 'pomodoroapp',
     'license': 'GPL3'
-     classifiers=[
-          "License :: OSI Approved :: "
-          "GNU General Public License v3",
-      ]
 }
 
 setup(**config)
