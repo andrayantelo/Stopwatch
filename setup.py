@@ -1,5 +1,6 @@
 try:
     from setuptools import setup
+    from setuptools import find_packages
     
 except ImportError:
     from distutils.core import setup
@@ -16,10 +17,9 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/andrayantelo/pomodoroapp",
-    packages=setuptools.find_packages(),
+    packages=find_packages(),
     classifiers=[	
-          "License :: OSI Approved :: "	
-          "GNU General Public License v3",	
+          "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
     ],
     python_requires='>=3.5',
 )
