@@ -1,2 +1,2 @@
-# Stopwatch
-Stopwatch made with Python and Tkinter
+# Pomodoro App
+Pomodoro timer made with Python and Tkinter
