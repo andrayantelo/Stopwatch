@@ -8,13 +8,16 @@ config = {
     'description': 'Pomodoro App',
     'author': 'Andrea Anaya',
     'url': 'https://github.com/andrayantelo/pomodoroapp',
-    'download_url': 'Where to download it.',
     'author-email': 'andrayantelo@gmail.com.',
     'version': '0.1',
     'install_requires': ['nose'],
     'packages': ['pomodoroapp'],
-    'scripts': [],
-    'name': 'pomodoroapp'
+    'name': 'pomodoroapp',
+    'license': 'GPL3'
+     classifiers=[
+          "License :: OSI Approved :: "
+          "GNU General Public License v3",
+      ]
 }
 
 setup(**config)
