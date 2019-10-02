@@ -185,7 +185,7 @@ class Cdapp(object):
         
         
     def start(self):
-        print("this is the new_output {}".format(self.new_output))
+        #print("this is the new_output {}".format(self.new_output))
         #change the countdown_time in the countdown instance
         self.mycountdown.countdowntime = self.new_output
         
@@ -197,7 +197,7 @@ class Cdapp(object):
         #been clicked two times consecutively)
         self.reset_counter = 0
         
-        print("this is the time remaining{}".format(self.mycountdown.time_remaining()))
+        #print("this is the time remaining{}".format(self.mycountdown.time_remaining()))
         #won't run if there isn't a countdown time
         if self.mycountdown.time_remaining() <= 0:
             raise RuntimeError('Time remaining is zero, input a countdown time')
@@ -213,7 +213,7 @@ class Cdapp(object):
             self.mycountdown.stop_countdown()
             self.start_button.config(text = "START")
             
-        print("this is the current countdown time {}".format(self.countdown_time))
+        #print("this is the current countdown time {}".format(self.countdown_time))
             
         
     def stop(self):
@@ -232,7 +232,7 @@ class Cdapp(object):
         
         
     def reset(self):
-        print("timer is being reset")
+        #print("timer is being reset")
         self.keep_toggling = False
         #uf.return_bg_color([self.root, self.label, self.small_label])
         
@@ -241,7 +241,7 @@ class Cdapp(object):
             self.mycountdown.countdowntime = (0,0,0,0)
             
         self.reset_counter += 1
-        print("this is how many times reset has been clicked {}".format(self.reset_counter))
+        #print("this is how many times reset has been clicked {}".format(self.reset_counter))
         self.start_button.grid(row=1, column=0)
 
         self.mycountdown.reset_countdown()
@@ -254,8 +254,8 @@ class Cdapp(object):
         self.new_output = uf.string_to_list(self.output)
         self.new_output = uf.list_to_tuple(self.new_output)
         self.print_elapsed()
-        print("here is output after being reset {}".format(self.output))
-        print("this is the current countdown time {}".format(self.countdown_time))
+        #print("here is output after being reset {}".format(self.output))
+        #print("this is the current countdown time {}".format(self.countdown_time))
         
    
 def main():

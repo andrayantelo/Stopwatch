@@ -197,7 +197,7 @@ class Pomapp(object):
             raise RuntimeError("Timer needs to be reset")
                 
         if self.callback_counter[self.pomodoro.active_countdown] == 6:
-            print("the program is about to make self.actual output equal to 0")
+            #print("the program is about to make self.actual output equal to 0")
             self.actual_output[self.pomodoro.active_countdown] = ['0','0','0','0','0','0']
             self.callback_counter[self.pomodoro.active_countdown] = 0
             
@@ -358,8 +358,8 @@ class Pomapp(object):
         
     def reset(self):
         """resets the selected countdown"""
-        print(self.countdown_label[self.pomodoro.active_countdown][0].get())
-        print(uf.sec_to_clockface(self.pomodoro.active_countdown.countdowntime)[0])
+        #print(self.countdown_label[self.pomodoro.active_countdown][0].get())
+        #print(uf.sec_to_clockface(self.pomodoro.active_countdown.countdowntime)[0])
         
         #if what's currently displayed on the gui is equal to the countdown time
         #then you reset to zero, so we increment the reset counter by 1
