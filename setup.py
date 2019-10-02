@@ -5,16 +5,19 @@ except ImportError:
     from distutils.core import setup
 
 config = {
-    'description': 'My Project',
+    'description': 'Pomodoro App',
     'author': 'Andrea Anaya',
-    'url': 'URL to get it at.',
-    'download_url': 'Where to download it.',
+    'url': 'https://github.com/andrayantelo/pomodoroapp',
     'author-email': 'andrayantelo@gmail.com.',
     'version': '0.1',
     'install_requires': ['nose'],
-    'packages': ['stopwatch'],
-    'scripts': [],
-    'name': 'stopwatch'
+    'packages': ['pomodoroapp'],
+    'name': 'pomodoroapp',
+    'license': 'GPL3'
+     classifiers=[
+          "License :: OSI Approved :: "
+          "GNU General Public License v3",
+      ]
 }
 
 setup(**config)
